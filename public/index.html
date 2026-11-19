@@ -1,0 +1,575 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<meta name="theme-color" content="#365c53"><title>2026 마니또 산타마을 | 70명 실시간 멀티플레이</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap');
+:root{color-scheme:dark;--fg:#f8f4f9;--muted:#b0b4d3;--gold:#ffda87;--mint:#94f3da;--border:rgba(255,255,255,.16)}*{box-sizing:border-box}html,body{width:100%;height:100%;margin:0;overflow:hidden}body{font-family:'Nunito','Noto Sans KR',system-ui,sans-serif;background:#11152f;color:var(--fg);overscroll-behavior:none}#world{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none}#vignette{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 66% 72% at 50% 42%,transparent 45%,rgba(11,9,30,.5) 100%),linear-gradient(0deg,rgba(9,10,27,.66),transparent 29%);}
+.topbar{position:absolute;left:0;right:0;top:0;z-index:3;display:flex;align-items:center;justify-content:space-between;padding:22px 34px;gap:14px}.brand{display:flex;align-items:center;gap:12px;font-size:16px;letter-spacing:.04em;font-weight:900;text-shadow:0 3px 12px #17142d}.brand-icon{width:42px;height:42px;display:grid;place-items:center;font-size:24px;border:1px solid rgba(255,255,255,.26);border-radius:15px;background:rgba(21,27,56,.58);backdrop-filter:blur(14px)}.top-pills{display:flex;align-items:center;gap:9px}.pill{border:1px solid var(--border);background:rgba(13,19,42,.5);backdrop-filter:blur(14px);padding:10px 15px;border-radius:40px;color:#e8e9f8;font-size:12px;font-weight:800}.pill strong{color:var(--gold)}
+.intro{position:absolute;z-index:3;top:50%;left:clamp(25px,6.7vw,104px);transform:translateY(-44%);width:min(420px,42vw);transition:opacity .6s, transform .6s;pointer-events:auto}.intro.hidden{opacity:0;pointer-events:none;transform:translate(-20px,-44%)}.eyebrow{font-weight:900;font-size:12px;color:var(--mint);letter-spacing:.22em;margin-bottom:14px;display:flex;align-items:center;gap:9px}.eyebrow:before{content:'';width:25px;height:2px;background:var(--mint)}h1{font-size:clamp(36px,4vw,64px);line-height:1.19;letter-spacing:-.065em;margin:0 0 22px;font-weight:900;text-shadow:0 7px 22px rgba(8,8,27,.65)}h1 em{font-style:normal;color:var(--gold)}.sub{font-size:15px;line-height:1.85;color:#dadbef;max-width:350px;margin:0 0 28px;text-shadow:0 3px 10px #17142d}.main-btn,.action-btn{display:inline-flex;align-items:center;justify-content:center;gap:11px;border:0;border-radius:14px;color:#251b39;background:linear-gradient(135deg,#ffe6a8,#ffc777);padding:17px 28px;box-shadow:0 10px 27px rgba(233,164,91,.28),inset 0 1px 0 rgba(255,255,255,.7);cursor:pointer;font-size:15px;font-weight:900;transition:transform .17s,box-shadow .17s}.main-btn:hover,.action-btn:hover{transform:translateY(-2px);box-shadow:0 12px 35px rgba(255,207,129,.42)}.main-btn:active,.action-btn:active{transform:translateY(1px)}.tiny{margin-top:16px;color:#b7b9d8;font-size:12px;line-height:1.65}.tiny b{color:#f8e4b4}
+.hud{position:absolute;z-index:2;bottom:26px;left:50%;transform:translateX(-50%);display:flex;gap:20px;align-items:center;pointer-events:none;opacity:0;transition:opacity .5s;min-width:300px}.hud.show{opacity:1}.glass{background:rgba(14,19,44,.72);border:1px solid var(--border);box-shadow:0 10px 35px rgba(0,0,0,.18);backdrop-filter:blur(15px);border-radius:17px}.hint{padding:12px 19px;font-size:12px;white-space:nowrap;color:#e9e9fa}.key{display:inline-flex;padding:4px 7px;border:1px solid #8a8dae;border-radius:6px;min-width:25px;justify-content:center;margin:0 3px;font-size:11px;background:rgba(255,255,255,.08);font-weight:900}.progress{width:210px;padding:12px 18px}.progress span{font-size:11px;color:#c5c6e0}.progress .bar{height:6px;border-radius:8px;background:#444666;overflow:hidden;margin-top:9px}.progress .bar-inner{height:100%;width:0%;background:linear-gradient(90deg,#73d9cc,#ffcd76);transition:width .15s}
+.floating-btn{position:absolute;z-index:4;bottom:109px;left:50%;transform:translateX(-50%);border:1px solid rgba(255,237,192,.6);color:#30223a;background:linear-gradient(120deg,#fff0bf,#ffc981);box-shadow:0 8px 35px #e4af6f77;border-radius:18px;padding:17px 27px;font-size:17px;font-weight:900;cursor:pointer;display:none;white-space:nowrap;animation:bob 1.7s infinite ease-in-out}@keyframes bob{50%{transform:translateX(-50%) translateY(-7px)}}.floating-btn.visible{display:block}
+.floating-label{position:absolute;top:22%;left:52%;transform:translateX(-50%);z-index:2;text-align:center;pointer-events:none;opacity:0;transition:opacity .45s;text-shadow:0 2px 14px #100e28}.floating-label.show{opacity:1}.floating-label strong{font-size:21px;letter-spacing:-.04em}.floating-label small{display:block;font-size:12px;color:#ffdb95;margin-top:8px;font-weight:800;letter-spacing:.15em}
+#joystick{position:absolute;bottom:20px;left:18px;width:130px;height:130px;border:1px solid rgba(255,255,255,.28);border-radius:50%;background:rgba(18,21,47,.36);backdrop-filter:blur(6px);display:none;z-index:4;touch-action:none}#stick{position:absolute;width:55px;height:55px;border-radius:50%;background:rgba(255,226,168,.65);border:3px solid #fff3c4;top:36px;left:36px;box-shadow:0 3px 14px #1015277a}#mobileOpen{position:absolute;bottom:25px;right:18px;display:none;z-index:5;border:none;border-radius:16px;background:#ffda90;color:#242039;padding:19px 20px;font-weight:900;font-size:14px}
+.overlay{position:absolute;inset:0;z-index:10;background:rgba(5,8,27,.74);backdrop-filter:blur(13px);display:none;place-items:center;padding:20px}.overlay.open{display:grid}.modal{width:min(490px,95vw);border:1px solid rgba(255,255,255,.19);border-radius:27px;background:linear-gradient(156deg,#30355b,#1a203f 78%);box-shadow:0 28px 100px #050718ba;position:relative;text-align:center;padding:44px 35px 32px;overflow:hidden}.modal:before{content:'';position:absolute;width:350px;height:350px;left:50%;top:-250px;transform:translateX(-50%);border-radius:50%;background:#ffcf81;filter:blur(75px);opacity:.4;pointer-events:none}.modal>*{position:relative}.close{position:absolute;right:16px;top:14px;z-index:4;background:rgba(255,255,255,.1);border:0;border-radius:8px;color:#fff;font-size:23px;cursor:pointer;width:35px;height:35px}.gift-emoji{font-size:65px;filter:drop-shadow(0 10px 22px #efc27533);display:block;margin-bottom:14px}.overline{font-size:11px;letter-spacing:.23em;font-weight:900;color:#9cead8}.modal h2{font-size:28px;line-height:1.3;margin:13px 0 11px;letter-spacing:-.05em}.modal p{color:#c4c7e2;font-size:13px;line-height:1.8}.name-card{padding:21px 18px;background:linear-gradient(120deg,#fce3b4,#ffcb82);border-radius:16px;margin:23px 0 13px;color:#3b2941;box-shadow:0 12px 30px #ffd28a22}.name-card small{font-size:11px;letter-spacing:.17em;font-weight:900;display:block;opacity:.8}.name-card strong{font-size:34px;font-weight:900;display:block;margin:5px 0;overflow-wrap:anywhere}.mission{border:1px dashed rgba(255,255,255,.25);border-radius:12px;padding:15px;margin:15px 0 22px;text-align:left;background:#ffffff09}.mission .mt{font-size:12px;color:var(--gold);font-weight:900;margin-bottom:6px}.mission div{font-size:13px;color:#ececf8;line-height:1.8}.secondary-btn{background:rgba(255,255,255,.11);border:1px solid var(--border);color:#fff;padding:12px 20px;border-radius:12px;cursor:pointer;font-size:12px;font-weight:800;margin-left:8px}.actions{display:flex;justify-content:center;flex-wrap:wrap;align-items:center;gap:8px}.foot{position:absolute;right:27px;bottom:18px;z-index:2;font-size:10px;letter-spacing:.05em;color:#c9c7dd88}.toast{position:absolute;z-index:15;top:87px;left:50%;transform:translateX(-50%) translateY(-20px);opacity:0;transition:.3s;background:#ffebc3;color:#29233b;padding:12px 18px;border-radius:11px;font-weight:900;font-size:12px;pointer-events:none;box-shadow:0 10px 30px #05081780}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+@media(max-width:760px){.topbar{padding:13px 16px}.brand{font-size:13px}.brand-icon{width:34px;height:34px;border-radius:11px;font-size:18px}.pill{font-size:10px;padding:8px 10px}.pill.hide-sm{display:none}.intro{left:19px;top:33%;transform:translateY(-50%);width:min(410px,90vw)}.intro.hidden{transform:translate(-20px,-50%)}.intro h1{font-size:38px}.intro .sub{font-size:13px;max-width:290px}.intro .main-btn{padding:15px 23px}.hud{bottom:17px;left:auto;right:12px;transform:none;display:none}.hint{display:none}.progress{width:150px;padding:10px 13px}.floating-btn{bottom:143px;font-size:14px;padding:13px 17px}#joystick{display:block}#mobileOpen{display:block}.floating-label{top:18%;left:54%}.floating-label strong{font-size:16px}.foot{right:13px;bottom:7px;font-size:9px}.modal{padding:39px 21px 25px}.modal h2{font-size:25px}.name-card strong{font-size:29px}}
+
+/* Original cozy pastel village visual theme (not assets from any existing game) */
+:root{color-scheme:light;--fg:#355e50;--muted:#6a8776;--gold:#e6a05c;--mint:#53a888;--border:rgba(81,142,111,.18)}
+body{background:#c6eeeb;color:#355d4f}
+#vignette{background:linear-gradient(90deg,rgba(241,252,231,.47) 0%,rgba(241,252,231,.24) 30%,transparent 67%),linear-gradient(0deg,rgba(123,172,122,.22),transparent 30%)}
+.topbar{padding:19px 27px}.brand{color:#467365;text-shadow:0 1px 2px #fff;letter-spacing:.02em}.brand-icon{background:#fff9e2e6;border:2px solid #fff;border-radius:17px;box-shadow:0 5px 13px #7fbaaa2e}.pill{background:#fffcf0ed;border:1px solid #c9e5c8;color:#47776a;box-shadow:0 4px 12px #5591781d}.pill strong{color:#bd7f51}.mission-top{cursor:pointer;font-family:inherit;font-weight:900}.mission-top:hover{background:#e6ffeb}
+.intro{background:#fffaf0ef;border:2px solid #fffef6;border-radius:28px;padding:29px 33px 28px;box-shadow:0 16px 50px rgba(75,130,101,.18);width:min(450px,44vw);backdrop-filter:blur(12px)}.eyebrow{color:#62a588;font-size:10px;letter-spacing:.14em;margin-bottom:11px}.eyebrow:before{background:#62a588}h1{font-size:clamp(32px,3.6vw,49px);line-height:1.25;color:#3e7361;text-shadow:none;letter-spacing:-.065em;margin-bottom:14px}h1 em{color:#ef9c75}.sub{color:#628476;font-size:14px;line-height:1.8;text-shadow:none;margin-bottom:14px}
+.main-btn,.action-btn{border-radius:99px;background:linear-gradient(120deg,#ffaeb0,#ffc88f);color:#654a45;box-shadow:0 7px 0 #e99383,0 14px 26px #e9938355;padding:13px 22px}.main-btn:hover,.action-btn:hover{box-shadow:0 7px 0 #e99383,0 14px 26px #e9938355}.tiny{font-size:11px;color:#7b9180;margin-top:17px}.tiny b{color:#8b7f60}.glass{background:#fffaf0ed;border:2px solid #fff8e7;box-shadow:0 5px 20px #6eaa9066}.hint{color:#5e806f}.progress span{color:#607d6d}.progress .bar{background:#dce7d0}.progress .bar-inner{background:linear-gradient(90deg,#8bd3a5,#ffc6a5)}.key{background:#eff4e2;border-color:#b3c9b8}.floating-label{text-shadow:0 2px 3px #fff;color:#467b68}.floating-label small{color:#ae7660}.floating-btn{background:linear-gradient(120deg,#ffdca7,#ffb3ab);border:3px solid white;color:#6d6453;box-shadow:0 8px 25px #e9a97b85;border-radius:99px}.foot{color:#5a948077;font-weight:800}.toast{background:#fff9df;color:#4d7560;box-shadow:0 10px 30px #7eaa9170}
+.overlay{background:rgba(38,87,71,.45);backdrop-filter:blur(8px)}.modal{background:#fffbef;border:4px solid white;box-shadow:0 18px 60px #345c4d77;color:#3d6b58}.modal:before{background:#ffe1b5;opacity:.35}.modal p{color:#688879}.modal .overline{color:#69a78a}.close{background:#e5efd8;color:#4b806d;border-radius:14px}.name-card{background:linear-gradient(120deg,#d8f2d0,#ffe5bd);color:#426b59;box-shadow:0 10px 20px #b3d7b344}.mission{background:#f2f8e8;border:1px dashed #b4d2b6}.mission .mt{color:#b67955}.mission div{color:#5f8272}.secondary-btn{background:#e7f1dd;border:1px solid #cfe1cb;color:#4d7a66;border-radius:99px}.demo-select{margin:5px 0 14px}.demo-select label{font-size:12px;display:block;font-weight:900;margin-bottom:6px}.demo-select select{width:100%;max-width:280px;border:2px solid #b3dfc2;background:#fff;border-radius:12px;padding:9px 13px;color:#3c705c;font-weight:900;font-size:14px}.demo-select p{font-size:10px;margin:6px 0 2px;color:#829885}.mission-modal{text-align:left;max-height:93vh;overflow:auto}.mission-modal .gift-emoji,.mission-modal .overline,.mission-modal h2{text-align:center}.mission-modal label{display:block;font-size:13px;font-weight:900;color:#42725e;margin:14px 0 6px}.mission-modal textarea,.mission-modal input[type=file]{width:100%;border:2px solid #d3e7d1;background:#fffef9;color:#4b715f;border-radius:13px;padding:12px;font:inherit;font-size:13px}.mission-modal textarea{resize:vertical}.mission-modal input[type=file]{font-size:11px}.mission-modal #photoPreview{display:block;max-width:100%;max-height:210px;object-fit:contain;border-radius:13px;margin:12px auto}.status-info{background:#dff4df;border-radius:13px;padding:13px 15px;font-size:13px;font-weight:800;line-height:1.6}.demo-warning{font-size:11px!important;line-height:1.6!important;color:#9b897a!important;text-align:center}
+@media(max-width:760px){.topbar{padding:10px 12px;gap:4px}.top-pills{gap:5px}.brand{font-size:11px}.pill{font-size:10px;padding:7px 8px}.intro{left:12px;top:42%;width:min(350px,94vw);padding:20px 23px}.intro h1{font-size:31px}.intro .sub{font-size:12px}.intro .main-btn{font-size:13px;padding:12px 16px}.modal{padding:28px 17px 22px}.mission-modal{padding:27px 17px 20px}.mission-top{font-size:10px}}
+
+/* ORIGINAL CHRISTMAS COZY VILLAGE THEME — warm fairy lights, pine, cranberry and snow */
+:root{color-scheme:light;--fg:#3e4940;--muted:#757563;--gold:#e4a73d;--mint:#2f755b;--border:rgba(115,81,46,.18)}
+body{background:radial-gradient(ellipse 74% 65% at 56% 64%,#b19a72 0%,#8a8a71 30%,#587475 64%,#2b5157 100%);color:#33473a}
+#world{background:transparent} #sceneFallback{position:absolute;inset:0;display:block;width:100%;height:100%;pointer-events:none} .has3d #sceneFallback{display:none}
+#vignette{background:linear-gradient(90deg,rgba(255,241,206,.42) 0%,rgba(255,237,193,.13) 25%,transparent 50%),radial-gradient(ellipse 70% 100% at 50% 100%,rgba(255,198,112,.17),transparent 72%),linear-gradient(0deg,rgba(42,62,53,.20),transparent 26%)}
+.topbar{padding:18px 26px}.brand{color:#fff2d4;letter-spacing:.02em;text-shadow:0 2px 12px #254c50c4}
+.brand-icon{background:#fff6dce3;border:2px solid #fff8dd;color:#d27939;box-shadow:0 5px 19px #f4c0705b;border-radius:16px}
+.pill{background:#fff7e8f5;border:1px solid #fff5d9;color:#755333;box-shadow:0 5px 18px #4e634052}.pill strong{color:#aa5b30}.mission-top{cursor:pointer}.mission-top:hover{background:#fff0c7}
+.intro{background:linear-gradient(160deg,rgba(255,251,234,.98),rgba(255,242,211,.96));border:3px solid #fffbeb;border-radius:32px;padding:28px 32px 27px;box-shadow:0 14px 0 #cda16b35,0 24px 75px #223f395c;backdrop-filter:blur(15px);width:min(450px,43vw)}
+.intro:after{content:'✦    ❄    ✦';position:absolute;right:25px;top:21px;color:#d9a957;font-size:16px;letter-spacing:7px}
+.eyebrow{color:#b37a47;font-size:10px;letter-spacing:.16em;font-weight:900;margin-bottom:10px}.eyebrow:before{background:#c98c52}
+h1{color:#315b48;text-shadow:none;font-size:clamp(31px,3.5vw,47px);line-height:1.25;letter-spacing:-.065em;margin-bottom:12px}h1 em{color:#c66d52}
+.sub{color:#62765d;font-size:14px;line-height:1.77;text-shadow:none;margin-bottom:15px}.main-btn,.action-btn{border-radius:99px;background:linear-gradient(120deg,#e77b63,#d24d48);color:#fffaf2;box-shadow:0 6px 0 #a94742,0 13px 23px #ba5d4860;padding:14px 24px}
+.main-btn:hover,.action-btn:hover{box-shadow:0 6px 0 #a94742,0 13px 28px #ba5d4870}.tiny{font-size:11px;color:#897d65;margin-top:14px}.tiny b{color:#a96639}
+.glass{background:#fff9e9ed;border:2px solid #fff0c8;box-shadow:0 5px 21px #364a4673}.hint{color:#795a36}.progress span{color:#7d654b}.progress .bar{background:#e6d8b7}.progress .bar-inner{background:linear-gradient(90deg,#dc5e4b,#ffc66e)}.key{background:#ffefd1;border-color:#d5b780}
+.floating-label{color:#ffe8ab;text-shadow:0 2px 12px #2f3e33}.floating-label small{color:#ffe8b1}.floating-btn{background:linear-gradient(120deg,#ffe7a4,#ffca75);color:#67401e;border:3px solid #fffbde;box-shadow:0 8px 25px #e8b25b85}
+.overlay{background:rgba(26,48,42,.55)}.modal{background:linear-gradient(160deg,#fffdf0,#fff0d5);border:4px solid #fff9e7;box-shadow:0 16px 65px #263e3d8c;color:#3c5945}.modal:before{background:#ffd8a5}.modal p{color:#758069}.modal .overline{color:#bc8050}.close{background:#f8e4ca;color:#785e4b}.name-card{background:linear-gradient(120deg,#fff1bb,#ffdfb7);color:#654b34}.mission{background:#fff7e3;border:1px dashed #d5b78e}.mission .mt{color:#b66d46}.mission div{color:#62765d}.secondary-btn{background:#efe5c9;border:1px solid #dfcaab;color:#775b3e}.foot{color:#fff4d4a8;font-weight:900;text-shadow:0 2px 9px #314340}
+.demo-select{margin:5px 0 12px}.demo-select label{color:#755b40}.demo-select select{border:2px solid #dfc19c;background:#fffef8;color:#715638}.demo-select p{color:#948371}.mission-modal label{color:#795e45}.mission-modal textarea,.mission-modal input[type=file]{border:2px solid #e2caad;color:#765d42}.status-info{background:#f7ecd2;color:#6c6448}.demo-warning{color:#9e8877!important}
+.toast{background:#fff1c5;color:#664d2d;box-shadow:0 10px 30px #253d365a}
+#joystick{background:#fff4d244;border-color:#fff9df88}#stick{background:#ffd288c9;border-color:#fff9dd}#mobileOpen{background:#ffe1a7;color:#6e4a2b}
+@media(max-width:760px){.topbar{padding:10px}.brand{font-size:11px}.top-pills{gap:4px}.pill{padding:8px 7px;font-size:9px}.intro{left:12px;top:43%;width:min(365px,94vw);padding:22px}.intro h1{font-size:32px}.intro:after{right:14px;top:14px;font-size:11px}.sub{font-size:12px}.main-btn{font-size:13px;padding:12px 17px}}
+</style>
+</head>
+<body>
+<svg id="sceneFallback" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <radialGradient id="sky" cx="54%" cy="66%" r="85%"><stop stop-color="#ae9878"/><stop offset=".37" stop-color="#738477"/><stop offset=".76" stop-color="#3b6165"/><stop offset="1" stop-color="#244b58"/></radialGradient>
+  <radialGradient id="haze"><stop stop-color="#ffdd8c" stop-opacity=".65"/><stop offset="1" stop-color="#eec786" stop-opacity="0"/></radialGradient>
+  <radialGradient id="lamp"><stop stop-color="#fffde2"/><stop offset=".16" stop-color="#ffe7a0" stop-opacity=".9"/><stop offset=".50" stop-color="#ffd28c" stop-opacity=".2"/><stop offset="1" stop-color="#ffdf9d" stop-opacity="0"/></radialGradient>
+  <linearGradient id="snowfloor" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#f6eddb"/><stop offset="1" stop-color="#c8d5c7"/></linearGradient>
+  <linearGradient id="roof" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#c87764"/><stop offset="1" stop-color="#843e42"/></linearGradient>
+  <linearGradient id="tree" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#568369"/><stop offset="1" stop-color="#1e4c43"/></linearGradient>
+  <filter id="blur" x="-200%" y="-200%" width="500%" height="500%"><feGaussianBlur stdDeviation="20"/></filter>
+  <filter id="smallblur" x="-200%" y="-200%" width="500%" height="500%"><feGaussianBlur stdDeviation="6"/></filter>
+  <filter id="shadow" x="-40%" y="-40%" width="180%" height="190%"><feDropShadow dx="0" dy="9" stdDeviation="13" flood-color="#233e3b" flood-opacity=".34"/></filter>
+</defs>
+<path fill="url(#sky)" d="M0 0H1440V900H0z"/>
+<ellipse cx="895" cy="565" rx="530" ry="260" fill="url(#haze)"/>
+
+<circle cx="287" cy="278" r="1.1" fill="#fff5d1" opacity="0.48"/>
+<circle cx="915" cy="218" r="1.1" fill="#fff5d1" opacity="0.53"/>
+<circle cx="707" cy="111" r="1.4" fill="#fff5d1" opacity="0.32"/>
+<circle cx="101" cy="357" r="1.4" fill="#fff5d1" opacity="0.62"/>
+<circle cx="1403" cy="470" r="1.1" fill="#fff5d1" opacity="0.46"/>
+<circle cx="43" cy="300" r="1.7" fill="#fff5d1" opacity="0.39"/>
+<circle cx="369" cy="144" r="1.1" fill="#fff5d1" opacity="0.51"/>
+<circle cx="1254" cy="372" r="1.7" fill="#fff5d1" opacity="0.28"/>
+<circle cx="805" cy="349" r="1.4" fill="#fff5d1" opacity="0.33"/>
+<circle cx="554" cy="219" r="2.2" fill="#fff5d1" opacity="0.22"/>
+<circle cx="1089" cy="63" r="2.2" fill="#fff5d1" opacity="0.62"/>
+<circle cx="1036" cy="321" r="2.2" fill="#fff5d1" opacity="0.38"/>
+<circle cx="378" cy="344" r="1.7" fill="#fff5d1" opacity="0.38"/>
+<circle cx="51" cy="334" r="2.2" fill="#fff5d1" opacity="0.54"/>
+<circle cx="1081" cy="467" r="1.1" fill="#fff5d1" opacity="0.24"/>
+<circle cx="908" cy="394" r="1.1" fill="#fff5d1" opacity="0.39"/>
+<circle cx="824" cy="89" r="1.4" fill="#fff5d1" opacity="0.43"/>
+<circle cx="820" cy="36" r="1.1" fill="#fff5d1" opacity="0.41"/>
+<circle cx="396" cy="205" r="1.1" fill="#fff5d1" opacity="0.45"/>
+<circle cx="715" cy="213" r="1.7" fill="#fff5d1" opacity="0.61"/>
+<circle cx="1289" cy="225" r="2.2" fill="#fff5d1" opacity="0.22"/>
+<circle cx="1096" cy="167" r="1.4" fill="#fff5d1" opacity="0.50"/>
+<circle cx="206" cy="83" r="1.4" fill="#fff5d1" opacity="0.38"/>
+<circle cx="302" cy="501" r="1.1" fill="#fff5d1" opacity="0.58"/>
+<circle cx="1020" cy="168" r="1.7" fill="#fff5d1" opacity="0.65"/>
+<circle cx="968" cy="517" r="1.1" fill="#fff5d1" opacity="0.49"/>
+<circle cx="724" cy="143" r="1.7" fill="#fff5d1" opacity="0.62"/>
+<circle cx="37" cy="221" r="1.7" fill="#fff5d1" opacity="0.49"/>
+<circle cx="697" cy="129" r="1.4" fill="#fff5d1" opacity="0.48"/>
+<circle cx="1222" cy="474" r="1.7" fill="#fff5d1" opacity="0.28"/>
+<circle cx="156" cy="225" r="1.7" fill="#fff5d1" opacity="0.51"/>
+<circle cx="443" cy="291" r="2.2" fill="#fff5d1" opacity="0.59"/>
+<circle cx="369" cy="53" r="1.7" fill="#fff5d1" opacity="0.54"/>
+<circle cx="1189" cy="511" r="1.4" fill="#fff5d1" opacity="0.38"/>
+<circle cx="240" cy="214" r="1.1" fill="#fff5d1" opacity="0.31"/>
+<circle cx="1279" cy="63" r="1.4" fill="#fff5d1" opacity="0.29"/>
+<circle cx="1003" cy="421" r="1.1" fill="#fff5d1" opacity="0.54"/>
+<circle cx="858" cy="505" r="1.7" fill="#fff5d1" opacity="0.31"/>
+<circle cx="472" cy="145" r="1.7" fill="#fff5d1" opacity="0.62"/>
+<circle cx="1363" cy="191" r="1.4" fill="#fff5d1" opacity="0.60"/>
+<circle cx="1322" cy="356" r="1.1" fill="#fff5d1" opacity="0.21"/>
+<circle cx="324" cy="316" r="1.1" fill="#fff5d1" opacity="0.58"/>
+<circle cx="1434" cy="60" r="1.7" fill="#fff5d1" opacity="0.54"/>
+<circle cx="8" cy="250" r="2.2" fill="#fff5d1" opacity="0.58"/>
+<circle cx="477" cy="483" r="2.2" fill="#fff5d1" opacity="0.26"/>
+<circle cx="701" cy="295" r="1.1" fill="#fff5d1" opacity="0.52"/>
+<circle cx="1245" cy="139" r="1.4" fill="#fff5d1" opacity="0.58"/>
+<circle cx="1271" cy="400" r="1.7" fill="#fff5d1" opacity="0.58"/>
+<circle cx="1050" cy="299" r="1.4" fill="#fff5d1" opacity="0.32"/>
+<circle cx="1076" cy="192" r="1.7" fill="#fff5d1" opacity="0.58"/>
+<circle cx="1044" cy="537" r="2.2" fill="#fff5d1" opacity="0.57"/>
+<circle cx="1103" cy="225" r="2.2" fill="#fff5d1" opacity="0.38"/>
+<circle cx="158" cy="426" r="1.4" fill="#fff5d1" opacity="0.52"/>
+<circle cx="175" cy="81" r="2.2" fill="#fff5d1" opacity="0.35"/>
+<circle cx="111" cy="560" r="1.4" fill="#fff5d1" opacity="0.29"/>
+<circle cx="741" cy="30" r="1.7" fill="#fff5d1" opacity="0.55"/>
+<circle cx="44" cy="146" r="1.1" fill="#fff5d1" opacity="0.56"/>
+<circle cx="133" cy="130" r="1.1" fill="#fff5d1" opacity="0.61"/>
+<circle cx="527" cy="546" r="1.7" fill="#fff5d1" opacity="0.62"/>
+<circle cx="843" cy="370" r="1.7" fill="#fff5d1" opacity="0.64"/>
+<circle cx="107" cy="269" r="1.7" fill="#fff5d1" opacity="0.51"/>
+<circle cx="6" cy="274" r="1.4" fill="#fff5d1" opacity="0.23"/>
+<circle cx="644" cy="335" r="1.1" fill="#fff5d1" opacity="0.62"/>
+<circle cx="230" cy="135" r="2.2" fill="#fff5d1" opacity="0.57"/>
+<circle cx="359" cy="193" r="2.2" fill="#fff5d1" opacity="0.33"/>
+<circle cx="807" cy="392" r="1.4" fill="#fff5d1" opacity="0.57"/>
+<circle cx="628" cy="270" r="1.4" fill="#fff5d1" opacity="0.60"/>
+<circle cx="767" cy="71" r="2.2" fill="#fff5d1" opacity="0.63"/>
+<circle cx="1052" cy="252" r="1.1" fill="#fff5d1" opacity="0.26"/>
+<circle cx="489" cy="347" r="1.4" fill="#fff5d1" opacity="0.40"/>
+<circle cx="526" cy="279" r="1.4" fill="#fff5d1" opacity="0.25"/>
+<circle cx="984" cy="364" r="1.4" fill="#fff5d1" opacity="0.43"/>
+<circle cx="141" cy="377" r="1.4" fill="#fff5d1" opacity="0.37"/>
+<circle cx="1366" cy="499" r="2.2" fill="#fff5d1" opacity="0.48"/>
+<circle cx="99" cy="434" r="2.2" fill="#fff5d1" opacity="0.56"/>
+<circle cx="1373" cy="480" r="1.7" fill="#fff5d1" opacity="0.29"/>
+<circle cx="1408" cy="40" r="1.1" fill="#fff5d1" opacity="0.25"/>
+<circle cx="928" cy="111" r="1.4" fill="#fff5d1" opacity="0.45"/>
+<circle cx="1302" cy="303" r="1.4" fill="#fff5d1" opacity="0.21"/>
+<circle cx="330" cy="340" r="1.4" fill="#fff5d1" opacity="0.46"/>
+<circle cx="406" cy="375" r="2.2" fill="#fff5d1" opacity="0.40"/>
+<circle cx="358" cy="445" r="2.2" fill="#fff5d1" opacity="0.45"/>
+<circle cx="870" cy="298" r="1.4" fill="#fff5d1" opacity="0.55"/>
+<circle cx="461" cy="306" r="1.7" fill="#fff5d1" opacity="0.46"/>
+<circle cx="1232" cy="275" r="1.4" fill="#fff5d1" opacity="0.36"/>
+<circle cx="763" cy="156" r="1.4" fill="#fff5d1" opacity="0.36"/>
+<circle cx="766" cy="161" r="1.4" fill="#fff5d1" opacity="0.22"/>
+<circle cx="1238" cy="546" r="1.7" fill="#fff5d1" opacity="0.49"/>
+<circle cx="222" cy="159" r="1.4" fill="#fff5d1" opacity="0.38"/>
+<circle cx="209" cy="411" r="1.7" fill="#fff5d1" opacity="0.21"/>
+<circle cx="339" cy="482" r="1.7" fill="#fff5d1" opacity="0.27"/>
+<circle cx="334" cy="550" r="1.4" fill="#fff5d1" opacity="0.52"/>
+<circle cx="535" cy="409" r="1.1" fill="#fff5d1" opacity="0.41"/>
+<circle cx="359" cy="116" r="1.7" fill="#fff5d1" opacity="0.51"/>
+<circle cx="1101" cy="491" r="1.7" fill="#fff5d1" opacity="0.51"/>
+<circle cx="1182" cy="359" r="1.4" fill="#fff5d1" opacity="0.58"/>
+<circle cx="1305" cy="81" r="1.1" fill="#fff5d1" opacity="0.36"/>
+<circle cx="20" cy="452" r="1.7" fill="#fff5d1" opacity="0.63"/>
+<circle cx="193" cy="266" r="2.2" fill="#fff5d1" opacity="0.32"/>
+<circle cx="1166" cy="381" r="1.7" fill="#fff5d1" opacity="0.27"/>
+<circle cx="671" cy="438" r="1.1" fill="#fff5d1" opacity="0.61"/>
+<circle cx="1413" cy="388" r="1.1" fill="#fff5d1" opacity="0.27"/>
+<circle cx="25" cy="492" r="2.2" fill="#fff5d1" opacity="0.39"/>
+<circle cx="738" cy="58" r="2.2" fill="#fff5d1" opacity="0.37"/>
+<circle cx="591" cy="142" r="1.4" fill="#fff5d1" opacity="0.62"/>
+<path d="M0 625Q165 541 333 609T671 616Q801 553 968 611T1440 595V900H0Z" fill="#527568" opacity=".67"/>
+<path d="M0 721Q237 623 476 668T976 639Q1200 598 1440 696V900H0Z" fill="#e9e6d4"/>
+<path d="M0 774Q290 700 603 766Q925 685 1440 755V900H0Z" fill="url(#snowfloor)"/>
+<path d="M837 910L960 640H1093L1340 910Z" fill="#ccb194" opacity=".8"/><path d="M930 910L1000 659 1034 659 1130 910Z" fill="#ead6b6" opacity=".75"/>
+
+<path d="M560 150Q1000 265 1452 123" stroke="#5b6c52" stroke-width="4" fill="none"/>
+<path d="M560.0 150.0v20" stroke="#4c6c59" stroke-width="2"/><circle cx="560.0" cy="170.0" r="20" fill="#ffda77" opacity=".35" filter="url(#smallblur)"/><circle cx="560.0" cy="170.0" r="7" fill="#ffda77"/>
+<path d="M591.2 162.6v20" stroke="#4c6c59" stroke-width="2"/><circle cx="591.2" cy="182.6" r="20" fill="#ff9d6e" opacity=".35" filter="url(#smallblur)"/><circle cx="591.2" cy="182.6" r="7" fill="#ff9d6e"/>
+<path d="M622.4 175.1v20" stroke="#4c6c59" stroke-width="2"/><circle cx="622.4" cy="195.1" r="20" fill="#fff9ba" opacity=".35" filter="url(#smallblur)"/><circle cx="622.4" cy="195.1" r="7" fill="#fff9ba"/>
+<path d="M653.6 187.2v20" stroke="#4c6c59" stroke-width="2"/><circle cx="653.6" cy="207.2" r="20" fill="#dfeab1" opacity=".35" filter="url(#smallblur)"/><circle cx="653.6" cy="207.2" r="7" fill="#dfeab1"/>
+<path d="M684.8 198.9v20" stroke="#4c6c59" stroke-width="2"/><circle cx="684.8" cy="218.9" r="20" fill="#ffda77" opacity=".35" filter="url(#smallblur)"/><circle cx="684.8" cy="218.9" r="7" fill="#ffda77"/>
+<path d="M716.0 210.1v20" stroke="#4c6c59" stroke-width="2"/><circle cx="716.0" cy="230.1" r="20" fill="#ff9d6e" opacity=".35" filter="url(#smallblur)"/><circle cx="716.0" cy="230.1" r="7" fill="#ff9d6e"/>
+<path d="M747.2 220.4v20" stroke="#4c6c59" stroke-width="2"/><circle cx="747.2" cy="240.4" r="20" fill="#fff9ba" opacity=".35" filter="url(#smallblur)"/><circle cx="747.2" cy="240.4" r="7" fill="#fff9ba"/>
+<path d="M778.4 230.0v20" stroke="#4c6c59" stroke-width="2"/><circle cx="778.4" cy="250.0" r="20" fill="#dfeab1" opacity=".35" filter="url(#smallblur)"/><circle cx="778.4" cy="250.0" r="7" fill="#dfeab1"/>
+<path d="M809.6 238.6v20" stroke="#4c6c59" stroke-width="2"/><circle cx="809.6" cy="258.6" r="20" fill="#ffda77" opacity=".35" filter="url(#smallblur)"/><circle cx="809.6" cy="258.6" r="7" fill="#ffda77"/>
+<path d="M840.8 246.1v20" stroke="#4c6c59" stroke-width="2"/><circle cx="840.8" cy="266.1" r="20" fill="#ff9d6e" opacity=".35" filter="url(#smallblur)"/><circle cx="840.8" cy="266.1" r="7" fill="#ff9d6e"/>
+<path d="M872.0 252.4v20" stroke="#4c6c59" stroke-width="2"/><circle cx="872.0" cy="272.4" r="20" fill="#fff9ba" opacity=".35" filter="url(#smallblur)"/><circle cx="872.0" cy="272.4" r="7" fill="#fff9ba"/>
+<path d="M903.2 257.5v20" stroke="#4c6c59" stroke-width="2"/><circle cx="903.2" cy="277.5" r="20" fill="#dfeab1" opacity=".35" filter="url(#smallblur)"/><circle cx="903.2" cy="277.5" r="7" fill="#dfeab1"/>
+<path d="M934.4 261.4v20" stroke="#4c6c59" stroke-width="2"/><circle cx="934.4" cy="281.4" r="20" fill="#ffda77" opacity=".35" filter="url(#smallblur)"/><circle cx="934.4" cy="281.4" r="7" fill="#ffda77"/>
+<path d="M965.6 263.8v20" stroke="#4c6c59" stroke-width="2"/><circle cx="965.6" cy="283.8" r="20" fill="#ff9d6e" opacity=".35" filter="url(#smallblur)"/><circle cx="965.6" cy="283.8" r="7" fill="#ff9d6e"/>
+<path d="M996.8 264.9v20" stroke="#4c6c59" stroke-width="2"/><circle cx="996.8" cy="284.9" r="20" fill="#fff9ba" opacity=".35" filter="url(#smallblur)"/><circle cx="996.8" cy="284.9" r="7" fill="#fff9ba"/>
+<path d="M1028.0 264.7v20" stroke="#4c6c59" stroke-width="2"/><circle cx="1028.0" cy="284.7" r="20" fill="#dfeab1" opacity=".35" filter="url(#smallblur)"/><circle cx="1028.0" cy="284.7" r="7" fill="#dfeab1"/>
+<path d="M1059.2 263.0v20" stroke="#4c6c59" stroke-width="2"/><circle cx="1059.2" cy="283.0" r="20" fill="#ffda77" opacity=".35" filter="url(#smallblur)"/><circle cx="1059.2" cy="283.0" r="7" fill="#ffda77"/>
+<path d="M1090.4 260.0v20" stroke="#4c6c59" stroke-width="2"/><circle cx="1090.4" cy="280.0" r="20" fill="#ff9d6e" opacity=".35" filter="url(#smallblur)"/><circle cx="1090.4" cy="280.0" r="7" fill="#ff9d6e"/>
+<path d="M1121.6 255.6v20" stroke="#4c6c59" stroke-width="2"/><circle cx="1121.6" cy="275.6" r="20" fill="#fff9ba" opacity=".35" filter="url(#smallblur)"/><circle cx="1121.6" cy="275.6" r="7" fill="#fff9ba"/>
+<path d="M1152.8 250.0v20" stroke="#4c6c59" stroke-width="2"/><circle cx="1152.8" cy="270.0" r="20" fill="#dfeab1" opacity=".35" filter="url(#smallblur)"/><circle cx="1152.8" cy="270.0" r="7" fill="#dfeab1"/>
+<path d="M1184.0 243.1v20" stroke="#4c6c59" stroke-width="2"/><circle cx="1184.0" cy="263.1" r="20" fill="#ffda77" opacity=".35" filter="url(#smallblur)"/><circle cx="1184.0" cy="263.1" r="7" fill="#ffda77"/>
+<path d="M1215.2 235.2v20" stroke="#4c6c59" stroke-width="2"/><circle cx="1215.2" cy="255.2" r="20" fill="#ff9d6e" opacity=".35" filter="url(#smallblur)"/><circle cx="1215.2" cy="255.2" r="7" fill="#ff9d6e"/>
+<path d="M1246.4 226.2v20" stroke="#4c6c59" stroke-width="2"/><circle cx="1246.4" cy="246.2" r="20" fill="#fff9ba" opacity=".35" filter="url(#smallblur)"/><circle cx="1246.4" cy="246.2" r="7" fill="#fff9ba"/>
+<path d="M1277.6 216.3v20" stroke="#4c6c59" stroke-width="2"/><circle cx="1277.6" cy="236.3" r="20" fill="#dfeab1" opacity=".35" filter="url(#smallblur)"/><circle cx="1277.6" cy="236.3" r="7" fill="#dfeab1"/>
+<path d="M1308.8 205.6v20" stroke="#4c6c59" stroke-width="2"/><circle cx="1308.8" cy="225.6" r="20" fill="#ffda77" opacity=".35" filter="url(#smallblur)"/><circle cx="1308.8" cy="225.6" r="7" fill="#ffda77"/>
+<path d="M1340.0 194.2v20" stroke="#4c6c59" stroke-width="2"/><circle cx="1340.0" cy="214.2" r="20" fill="#ff9d6e" opacity=".35" filter="url(#smallblur)"/><circle cx="1340.0" cy="214.2" r="7" fill="#ff9d6e"/>
+<path d="M1371.2 182.3v20" stroke="#4c6c59" stroke-width="2"/><circle cx="1371.2" cy="202.3" r="20" fill="#fff9ba" opacity=".35" filter="url(#smallblur)"/><circle cx="1371.2" cy="202.3" r="7" fill="#fff9ba"/>
+<path d="M1402.4 170.0v20" stroke="#4c6c59" stroke-width="2"/><circle cx="1402.4" cy="190.0" r="20" fill="#dfeab1" opacity=".35" filter="url(#smallblur)"/><circle cx="1402.4" cy="190.0" r="7" fill="#dfeab1"/>
+<path d="M1433.6 157.4v20" stroke="#4c6c59" stroke-width="2"/><circle cx="1433.6" cy="177.4" r="20" fill="#ffda77" opacity=".35" filter="url(#smallblur)"/><circle cx="1433.6" cy="177.4" r="7" fill="#ffda77"/>
+<g filter="url(#shadow)"><rect x="595" y="558" width="220.32000000000002" height="142.56" rx="22" fill="#caa184"/><path d="M571.24 576.36 L692.2 473.76 L840.1600000000001 576.36 Z" fill="url(#roof)"/><path d="M571.24 570.96 L692.2 468.36 L840.1600000000001 570.96" fill="none" stroke="#fff5e7" stroke-width="16.200000000000003" stroke-linecap="round"/><ellipse cx="692.2" cy="472.68" rx="43.2" ry="8.64" fill="#fff9e8"/></g>
+<rect x="619.7104" y="595.8" width="47.52" height="57.24" rx="8" fill="#6a5140"/><rect x="625.1104" y="601.2" width="36.72" height="46.440000000000005" rx="4" fill="#ffd883"/><ellipse cx="643.4704" cy="620.64" rx="46.440000000000005" ry="38.88" fill="url(#lamp)"/><path d="M643.4704 601.2v46.440000000000005M625.1104 624.96h36.72" stroke="#a96b42" stroke-width="4.32"/>
+<rect x="734.2768000000001" y="595.8" width="47.52" height="57.24" rx="8" fill="#6a5140"/><rect x="739.6768000000001" y="601.2" width="36.72" height="46.440000000000005" rx="4" fill="#ffd883"/><ellipse cx="758.0368000000001" cy="620.64" rx="46.440000000000005" ry="38.88" fill="url(#lamp)"/><path d="M758.0368000000001 601.2v46.440000000000005M739.6768000000001 624.96h36.72" stroke="#a96b42" stroke-width="4.32"/>
+<rect x="687.88" y="633.6" width="39.96" height="65.88000000000001" rx="7" fill="#365b48"/><circle cx="717.04" cy="667.08" r="4.32" fill="#ffd98d"/>
+<circle cx="706.24" cy="631.44" r="19.44" fill="none" stroke="#366747" stroke-width="12.96"/><circle cx="706.24" cy="610.92" r="6.48" fill="#df6050"/>
+<g filter="url(#shadow)"><rect x="1230" y="576" width="204" height="132" rx="22" fill="#d4a88c"/><path d="M1208 593 L1320 498 L1457 593 Z" fill="url(#roof)"/><path d="M1208 588 L1320 493 L1457 588" fill="none" stroke="#fff5e7" stroke-width="15" stroke-linecap="round"/><ellipse cx="1320" cy="497" rx="40" ry="8" fill="#fff9e8"/></g>
+<rect x="1252.88" y="611" width="44" height="53" rx="8" fill="#6a5140"/><rect x="1257.88" y="616" width="34" height="43" rx="4" fill="#ffd883"/><ellipse cx="1274.88" cy="634" rx="43" ry="36" fill="url(#lamp)"/><path d="M1274.88 616v43M1257.88 638h34" stroke="#a96b42" stroke-width="4"/>
+<rect x="1358.96" y="611" width="44" height="53" rx="8" fill="#6a5140"/><rect x="1363.96" y="616" width="34" height="43" rx="4" fill="#ffd883"/><ellipse cx="1380.96" cy="634" rx="43" ry="36" fill="url(#lamp)"/><path d="M1380.96 616v43M1363.96 638h34" stroke="#a96b42" stroke-width="4"/>
+<rect x="1316" y="646" width="37" height="61" rx="7" fill="#365b48"/><circle cx="1343" cy="677" r="4" fill="#ffd98d"/>
+<circle cx="1333" cy="644" r="18" fill="none" stroke="#366747" stroke-width="12"/><circle cx="1333" cy="625" r="6" fill="#df6050"/>
+<g filter="url(#shadow)"><rect x="905" y="517" width="142.79999999999998" height="92.39999999999999" rx="22" fill="#c39a86"/><path d="M889.6 528.9 L968.0 462.4 L1063.8999999999999 528.9 Z" fill="url(#roof)"/><path d="M889.6 525.4 L968.0 458.9 L1063.8999999999999 525.4" fill="none" stroke="#fff5e7" stroke-width="10.5" stroke-linecap="round"/><ellipse cx="968.0" cy="461.7" rx="28.0" ry="5.6" fill="#fff9e8"/></g>
+<rect x="921.016" y="541.5" width="30.799999999999997" height="37.099999999999994" rx="8" fill="#6a5140"/><rect x="924.516" y="545.0" width="23.799999999999997" height="30.099999999999998" rx="4" fill="#ffd883"/><ellipse cx="936.4159999999999" cy="557.6" rx="30.099999999999998" ry="25.2" fill="url(#lamp)"/><path d="M936.4159999999999 545.0v30.099999999999998M924.516 560.4h23.799999999999997" stroke="#a96b42" stroke-width="2.8"/>
+<rect x="995.272" y="541.5" width="30.799999999999997" height="37.099999999999994" rx="8" fill="#6a5140"/><rect x="998.772" y="545.0" width="23.799999999999997" height="30.099999999999998" rx="4" fill="#ffd883"/><ellipse cx="1010.672" cy="557.6" rx="30.099999999999998" ry="25.2" fill="url(#lamp)"/><path d="M1010.672 545.0v30.099999999999998M998.772 560.4h23.799999999999997" stroke="#a96b42" stroke-width="2.8"/>
+<rect x="965.2" y="566.0" width="25.9" height="42.699999999999996" rx="7" fill="#365b48"/><circle cx="984.1" cy="587.7" r="2.8" fill="#ffd98d"/>
+<circle cx="977.1" cy="564.6" r="12.6" fill="none" stroke="#366747" stroke-width="8.399999999999999"/><circle cx="977.1" cy="551.3" r="4.199999999999999" fill="#df6050"/>
+<g filter="url(#shadow)"><rect x="1124.4" y="643.0" width="37.2" height="100.75" rx="8" fill="#82624d"/>
+<path d="M1143 269.45 Q1104.25 312.85 1000.4 480.25 Q1143 517.45 1285.6 480.25Z" fill="url(#tree)"/>
+<path d="M1143 354.7 Q1104.25 398.1 1019.0 565.5 Q1143 602.7 1267.0 565.5Z" fill="url(#tree)"/>
+<path d="M1143 439.95 Q1104.25 483.35 1034.5 650.75 Q1143 687.95 1251.5 650.75Z" fill="url(#tree)"/>
+</g>
+<circle cx="1153.9" cy="488.0" r="7.4" fill="#ffefac"/><circle cx="1153.9" cy="488.0" r="18.6" fill="#ffefac" opacity=".18"/>
+<circle cx="1154.9" cy="549.3" r="7.4" fill="#f9b26c"/><circle cx="1154.9" cy="549.3" r="18.6" fill="#f9b26c" opacity=".18"/>
+<circle cx="1143.5" cy="373.4" r="7.4" fill="#ffd886"/><circle cx="1143.5" cy="373.4" r="18.6" fill="#ffd886" opacity=".18"/>
+<circle cx="1157.7" cy="448.5" r="7.4" fill="#ff8b7b"/><circle cx="1157.7" cy="448.5" r="18.6" fill="#ff8b7b" opacity=".18"/>
+<circle cx="1115.3" cy="456.8" r="7.4" fill="#ffefac"/><circle cx="1115.3" cy="456.8" r="18.6" fill="#ffefac" opacity=".18"/>
+<circle cx="1126.3" cy="521.4" r="7.4" fill="#f9b26c"/><circle cx="1126.3" cy="521.4" r="18.6" fill="#f9b26c" opacity=".18"/>
+<circle cx="1052.7" cy="558.0" r="7.4" fill="#ffd886"/><circle cx="1052.7" cy="558.0" r="18.6" fill="#ffd886" opacity=".18"/>
+<circle cx="1129.7" cy="412.8" r="7.4" fill="#ff8b7b"/><circle cx="1129.7" cy="412.8" r="18.6" fill="#ff8b7b" opacity=".18"/>
+<circle cx="1154.3" cy="510.1" r="7.4" fill="#ffefac"/><circle cx="1154.3" cy="510.1" r="18.6" fill="#ffefac" opacity=".18"/>
+<circle cx="1212.9" cy="389.6" r="7.4" fill="#f9b26c"/><circle cx="1212.9" cy="389.6" r="18.6" fill="#f9b26c" opacity=".18"/>
+<circle cx="1084.1" cy="477.9" r="7.4" fill="#ffd886"/><circle cx="1084.1" cy="477.9" r="18.6" fill="#ffd886" opacity=".18"/>
+<circle cx="1150.8" cy="429.4" r="7.4" fill="#ff8b7b"/><circle cx="1150.8" cy="429.4" r="18.6" fill="#ff8b7b" opacity=".18"/>
+<circle cx="1145.7" cy="481.9" r="7.4" fill="#ffefac"/><circle cx="1145.7" cy="481.9" r="18.6" fill="#ffefac" opacity=".18"/>
+<circle cx="1121.9" cy="450.3" r="7.4" fill="#f9b26c"/><circle cx="1121.9" cy="450.3" r="18.6" fill="#f9b26c" opacity=".18"/>
+<circle cx="1235.0" cy="551.8" r="7.4" fill="#ffd886"/><circle cx="1235.0" cy="551.8" r="18.6" fill="#ffd886" opacity=".18"/>
+<circle cx="1137.9" cy="419.2" r="7.4" fill="#ff8b7b"/><circle cx="1137.9" cy="419.2" r="18.6" fill="#ff8b7b" opacity=".18"/>
+<circle cx="1092.1" cy="563.8" r="7.4" fill="#ffefac"/><circle cx="1092.1" cy="563.8" r="18.6" fill="#ffefac" opacity=".18"/>
+<path d="M1143 241.55 l18.6 40.300000000000004 43.4 3 -31.0 19 7.75 28 -27.75 -14 -27.75 14 7.75 -28 -31.0 -19 28*s -3Z" fill="#ffe7a1"/>
+<g filter="url(#shadow)"><rect x="800.2" y="654.0" width="15.600000000000001" height="42.25" rx="8" fill="#82624d"/>
+<path d="M808 497.35 Q791.75 515.55 748.2 585.75 Q808 601.35 867.8 585.75Z" fill="url(#tree)"/>
+<path d="M808 533.1 Q791.75 551.3 756.0 621.5 Q808 637.1 860.0 621.5Z" fill="url(#tree)"/>
+<path d="M808 568.85 Q791.75 587.05 762.5 657.25 Q808 672.85 853.5 657.25Z" fill="url(#tree)"/>
+</g>
+<circle cx="810.5" cy="619.0" r="2.5" fill="#ffefac"/><circle cx="810.5" cy="619.0" r="7.8" fill="#ffefac" opacity=".18"/>
+<circle cx="812.0" cy="548.1" r="2.5" fill="#f9b26c"/><circle cx="812.0" cy="548.1" r="7.8" fill="#f9b26c" opacity=".18"/>
+<circle cx="804.0" cy="540.9" r="2.5" fill="#ffd886"/><circle cx="804.0" cy="540.9" r="7.8" fill="#ffd886" opacity=".18"/>
+<circle cx="794.0" cy="569.7" r="2.5" fill="#ff8b7b"/><circle cx="794.0" cy="569.7" r="7.8" fill="#ff8b7b" opacity=".18"/>
+<circle cx="802.1" cy="573.5" r="2.5" fill="#ffefac"/><circle cx="802.1" cy="573.5" r="7.8" fill="#ffefac" opacity=".18"/>
+<circle cx="814.0" cy="619.2" r="2.5" fill="#f9b26c"/><circle cx="814.0" cy="619.2" r="7.8" fill="#f9b26c" opacity=".18"/>
+<circle cx="825.1" cy="547.7" r="2.5" fill="#ffd886"/><circle cx="825.1" cy="547.7" r="7.8" fill="#ffd886" opacity=".18"/>
+<circle cx="787.8" cy="604.6" r="2.5" fill="#ff8b7b"/><circle cx="787.8" cy="604.6" r="7.8" fill="#ff8b7b" opacity=".18"/>
+<circle cx="809.9" cy="548.8" r="2.5" fill="#ffefac"/><circle cx="809.9" cy="548.8" r="7.8" fill="#ffefac" opacity=".18"/>
+<g filter="url(#shadow)"><rect x="1368.0" y="733.0" width="18.0" height="48.75" rx="8" fill="#82624d"/>
+<path d="M1377 552.25 Q1358.25 573.25 1308.0 654.25 Q1377 672.25 1446.0 654.25Z" fill="url(#tree)"/>
+<path d="M1377 593.5 Q1358.25 614.5 1317.0 695.5 Q1377 713.5 1437.0 695.5Z" fill="url(#tree)"/>
+<path d="M1377 634.75 Q1358.25 655.75 1324.5 736.75 Q1377 754.75 1429.5 736.75Z" fill="url(#tree)"/>
+</g>
+<circle cx="1377.0" cy="640.2" r="2.9" fill="#ffefac"/><circle cx="1377.0" cy="640.2" r="9.0" fill="#ffefac" opacity=".18"/>
+<circle cx="1359.0" cy="663.4" r="2.9" fill="#f9b26c"/><circle cx="1359.0" cy="663.4" r="9.0" fill="#f9b26c" opacity=".18"/>
+<circle cx="1366.2" cy="626.4" r="2.9" fill="#ffd886"/><circle cx="1366.2" cy="626.4" r="9.0" fill="#ffd886" opacity=".18"/>
+<circle cx="1380.9" cy="673.3" r="2.9" fill="#ff8b7b"/><circle cx="1380.9" cy="673.3" r="9.0" fill="#ff8b7b" opacity=".18"/>
+<circle cx="1397.9" cy="660.3" r="2.9" fill="#ffefac"/><circle cx="1397.9" cy="660.3" r="9.0" fill="#ffefac" opacity=".18"/>
+<circle cx="1382.2" cy="668.4" r="2.9" fill="#f9b26c"/><circle cx="1382.2" cy="668.4" r="9.0" fill="#f9b26c" opacity=".18"/>
+<circle cx="1385.7" cy="673.0" r="2.9" fill="#ffd886"/><circle cx="1385.7" cy="673.0" r="9.0" fill="#ffd886" opacity=".18"/>
+<circle cx="1378.4" cy="700.0" r="2.9" fill="#ff8b7b"/><circle cx="1378.4" cy="700.0" r="9.0" fill="#ff8b7b" opacity=".18"/>
+<circle cx="1376.6" cy="607.5" r="2.9" fill="#ffefac"/><circle cx="1376.6" cy="607.5" r="9.0" fill="#ffefac" opacity=".18"/>
+<g filter="url(#shadow)"><rect x="552.4" y="721.0" width="19.200000000000003" height="52.0" rx="8" fill="#82624d"/>
+<path d="M562 528.2 Q542.0 550.6 488.4 637.0 Q562 656.2 635.6 637.0Z" fill="url(#tree)"/>
+<path d="M562 572.2 Q542.0 594.6 498.0 681.0 Q562 700.2 626.0 681.0Z" fill="url(#tree)"/>
+<path d="M562 616.2 Q542.0 638.6 506.0 725.0 Q562 744.2 618.0 725.0Z" fill="url(#tree)"/>
+</g>
+<circle cx="548.8" cy="653.3" r="3.1" fill="#ffefac"/><circle cx="548.8" cy="653.3" r="9.6" fill="#ffefac" opacity=".18"/>
+<circle cx="544.8" cy="651.9" r="3.1" fill="#f9b26c"/><circle cx="544.8" cy="651.9" r="9.6" fill="#f9b26c" opacity=".18"/>
+<circle cx="581.8" cy="653.0" r="3.1" fill="#ffd886"/><circle cx="581.8" cy="653.0" r="9.6" fill="#ffd886" opacity=".18"/>
+<circle cx="566.9" cy="677.5" r="3.1" fill="#ff8b7b"/><circle cx="566.9" cy="677.5" r="9.6" fill="#ff8b7b" opacity=".18"/>
+<circle cx="563.9" cy="611.7" r="3.1" fill="#ffefac"/><circle cx="563.9" cy="611.7" r="9.6" fill="#ffefac" opacity=".18"/>
+<circle cx="567.7" cy="601.7" r="3.1" fill="#f9b26c"/><circle cx="567.7" cy="601.7" r="9.6" fill="#f9b26c" opacity=".18"/>
+<circle cx="574.6" cy="585.5" r="3.1" fill="#ffd886"/><circle cx="574.6" cy="585.5" r="9.6" fill="#ffd886" opacity=".18"/>
+<circle cx="546.0" cy="652.0" r="3.1" fill="#ff8b7b"/><circle cx="546.0" cy="652.0" r="9.6" fill="#ff8b7b" opacity=".18"/>
+<circle cx="566.4" cy="654.2" r="3.1" fill="#ffefac"/><circle cx="566.4" cy="654.2" r="9.6" fill="#ffefac" opacity=".18"/>
+<path d="M607 635v150" stroke="#435b4b" stroke-width="11" stroke-linecap="round"/><path d="M589 638h36" stroke="#6f6746" stroke-width="8"/><ellipse cx="607" cy="635" rx="66" ry="66" fill="url(#lamp)"/><rect x="593" y="614" width="28" height="44" rx="10" fill="#fce29a" stroke="#876d47" stroke-width="4"/><circle cx="607" cy="635" r="15" fill="#fffbce"/>
+<path d="M1360 659v150" stroke="#435b4b" stroke-width="11" stroke-linecap="round"/><path d="M1342 662h36" stroke="#6f6746" stroke-width="8"/><ellipse cx="1360" cy="659" rx="66" ry="66" fill="url(#lamp)"/><rect x="1346" y="638" width="28" height="44" rx="10" fill="#fce29a" stroke="#876d47" stroke-width="4"/><circle cx="1360" cy="659" r="15" fill="#fffbce"/>
+<path d="M876 680v150" stroke="#435b4b" stroke-width="11" stroke-linecap="round"/><path d="M858 683h36" stroke="#6f6746" stroke-width="8"/><ellipse cx="876" cy="680" rx="66" ry="66" fill="url(#lamp)"/><rect x="862" y="659" width="28" height="44" rx="10" fill="#fce29a" stroke="#876d47" stroke-width="4"/><circle cx="876" cy="680" r="15" fill="#fffbce"/>
+<ellipse cx="1002" cy="812" rx="120" ry="32" fill="#57786f" opacity=".23"/>
+<rect x="958" y="740" width="88" height="80" rx="12" fill="#c54b48" stroke="#8c504b" stroke-width="4"/><path d="M990 740v80M958 776h88" stroke="#ffdb7c" stroke-width="18"/>
+<path d="M996 741Q941 723 964 701Q985 683 1003 732Q1016 677 1042 705Q1063 732 1003 741" fill="none" stroke="#ffda7b" stroke-width="13" stroke-linecap="round"/>
+
+<g filter="url(#shadow)"><ellipse cx="1175" cy="840" rx="44" ry="13" fill="#7f9685" opacity=".2"/><ellipse cx="1175" cy="802" rx="34" ry="41" fill="#ba6253"/><ellipse cx="1175" cy="758" rx="35" ry="37" fill="#efcda8"/><path d="M1140 740Q1175 682 1210 739Z" fill="#b9494e"/><ellipse cx="1175" cy="735" rx="38" ry="9" fill="#fffcf0"/><circle cx="1189" cy="695" r="13" fill="#fffcf0"/><circle cx="1163" cy="763" r="4" fill="#443f3e"/><circle cx="1187" cy="763" r="4" fill="#443f3e"/><ellipse cx="1152" cy="780" rx="9" ry="6" fill="#de9693"/><ellipse cx="1198" cy="780" rx="9" ry="6" fill="#de9693"/></g><rect x="1142" y="669" width="66" height="26" rx="13" fill="#fff4d8" stroke="#ddb579" stroke-width="2"/><text x="1175" y="687" text-anchor="middle" font-size="14" font-weight="900" fill="#745637">1번</text>
+<g filter="url(#shadow)"><ellipse cx="1272" cy="884" rx="44" ry="13" fill="#7f9685" opacity=".2"/><ellipse cx="1272" cy="846" rx="34" ry="41" fill="#4c806b"/><ellipse cx="1272" cy="802" rx="35" ry="37" fill="#efcda8"/><path d="M1237 784Q1272 726 1307 783Z" fill="#6e9c7d"/><ellipse cx="1272" cy="779" rx="38" ry="9" fill="#fffcf0"/><circle cx="1286" cy="739" r="13" fill="#fffcf0"/><circle cx="1260" cy="807" r="4" fill="#443f3e"/><circle cx="1284" cy="807" r="4" fill="#443f3e"/><ellipse cx="1249" cy="824" rx="9" ry="6" fill="#de9693"/><ellipse cx="1295" cy="824" rx="9" ry="6" fill="#de9693"/></g><rect x="1239" y="713" width="66" height="26" rx="13" fill="#fff4d8" stroke="#ddb579" stroke-width="2"/><text x="1272" y="731" text-anchor="middle" font-size="14" font-weight="900" fill="#745637">2번</text>
+<circle cx="820" cy="504" r="1.9" fill="#fff7e0" opacity="0.74"/>
+<circle cx="1278" cy="310" r="2.1" fill="#fff7e0" opacity="0.87"/>
+<circle cx="1299" cy="386" r="1.6" fill="#fff7e0" opacity="0.57"/>
+<circle cx="591" cy="593" r="2.0" fill="#fff7e0" opacity="0.69"/>
+<circle cx="956" cy="746" r="2.9" fill="#fff7e0" opacity="0.59"/>
+<circle cx="1318" cy="572" r="2.9" fill="#fff7e0" opacity="0.41"/>
+<circle cx="805" cy="494" r="2.9" fill="#fff7e0" opacity="0.77"/>
+<circle cx="1058" cy="833" r="2.4" fill="#fff7e0" opacity="0.63"/>
+<circle cx="953" cy="820" r="2.7" fill="#fff7e0" opacity="0.85"/>
+<circle cx="915" cy="639" r="1.6" fill="#fff7e0" opacity="0.60"/>
+<circle cx="1009" cy="337" r="2.5" fill="#fff7e0" opacity="0.85"/>
+<circle cx="1223" cy="793" r="1.4" fill="#fff7e0" opacity="0.85"/>
+<circle cx="1243" cy="564" r="2.6" fill="#fff7e0" opacity="0.73"/>
+<circle cx="1277" cy="246" r="2.1" fill="#fff7e0" opacity="0.84"/>
+<circle cx="1301" cy="607" r="1.2" fill="#fff7e0" opacity="0.48"/>
+<circle cx="855" cy="688" r="1.6" fill="#fff7e0" opacity="0.55"/>
+<circle cx="715" cy="575" r="1.6" fill="#fff7e0" opacity="0.62"/>
+<circle cx="548" cy="579" r="1.4" fill="#fff7e0" opacity="0.39"/>
+<circle cx="1251" cy="640" r="2.9" fill="#fff7e0" opacity="0.74"/>
+<circle cx="1027" cy="343" r="2.2" fill="#fff7e0" opacity="0.77"/>
+<circle cx="1022" cy="288" r="2.3" fill="#fff7e0" opacity="0.41"/>
+<circle cx="1052" cy="528" r="1.3" fill="#fff7e0" opacity="0.55"/>
+<circle cx="694" cy="304" r="2.5" fill="#fff7e0" opacity="0.80"/>
+<circle cx="1228" cy="410" r="2.2" fill="#fff7e0" opacity="0.44"/>
+<circle cx="1012" cy="445" r="1.4" fill="#fff7e0" opacity="0.44"/>
+<circle cx="789" cy="398" r="1.7" fill="#fff7e0" opacity="0.52"/>
+<circle cx="550" cy="777" r="1.9" fill="#fff7e0" opacity="0.55"/>
+<circle cx="802" cy="577" r="2.3" fill="#fff7e0" opacity="0.70"/>
+<circle cx="755" cy="528" r="2.9" fill="#fff7e0" opacity="0.38"/>
+<circle cx="794" cy="288" r="2.3" fill="#fff7e0" opacity="0.68"/>
+<circle cx="1104" cy="343" r="3.0" fill="#fff7e0" opacity="0.53"/>
+<circle cx="1150" cy="514" r="2.2" fill="#fff7e0" opacity="0.40"/>
+<circle cx="987" cy="338" r="2.4" fill="#fff7e0" opacity="0.76"/>
+<circle cx="956" cy="428" r="1.7" fill="#fff7e0" opacity="0.43"/>
+<circle cx="1397" cy="227" r="1.4" fill="#fff7e0" opacity="0.62"/>
+<circle cx="1111" cy="783" r="2.3" fill="#fff7e0" opacity="0.48"/>
+<circle cx="1272" cy="232" r="1.9" fill="#fff7e0" opacity="0.84"/>
+<circle cx="775" cy="639" r="1.4" fill="#fff7e0" opacity="0.43"/>
+<circle cx="1271" cy="807" r="1.7" fill="#fff7e0" opacity="0.51"/>
+<circle cx="1085" cy="275" r="1.8" fill="#fff7e0" opacity="0.43"/>
+<circle cx="1420" cy="470" r="2.3" fill="#fff7e0" opacity="0.55"/>
+<circle cx="909" cy="255" r="1.4" fill="#fff7e0" opacity="0.64"/>
+<circle cx="1304" cy="720" r="2.5" fill="#fff7e0" opacity="0.40"/>
+<circle cx="1325" cy="548" r="2.6" fill="#fff7e0" opacity="0.68"/>
+<circle cx="810" cy="742" r="1.5" fill="#fff7e0" opacity="0.69"/>
+<circle cx="1160" cy="411" r="2.6" fill="#fff7e0" opacity="0.72"/>
+<circle cx="1283" cy="833" r="1.6" fill="#fff7e0" opacity="0.60"/>
+<circle cx="546" cy="708" r="3.0" fill="#fff7e0" opacity="0.41"/>
+<circle cx="936" cy="841" r="2.5" fill="#fff7e0" opacity="0.82"/>
+<circle cx="827" cy="724" r="1.4" fill="#fff7e0" opacity="0.81"/>
+<circle cx="1232" cy="621" r="1.7" fill="#fff7e0" opacity="0.58"/>
+<circle cx="1147" cy="522" r="2.2" fill="#fff7e0" opacity="0.77"/>
+<circle cx="1412" cy="447" r="2.9" fill="#fff7e0" opacity="0.44"/>
+<circle cx="994" cy="330" r="2.4" fill="#fff7e0" opacity="0.58"/>
+<circle cx="738" cy="717" r="2.1" fill="#fff7e0" opacity="0.77"/>
+<circle cx="531" cy="837" r="1.7" fill="#fff7e0" opacity="0.66"/>
+<circle cx="1054" cy="315" r="1.6" fill="#fff7e0" opacity="0.69"/>
+<circle cx="754" cy="544" r="2.1" fill="#fff7e0" opacity="0.79"/>
+<circle cx="652" cy="848" r="2.0" fill="#fff7e0" opacity="0.63"/>
+<circle cx="715" cy="558" r="2.0" fill="#fff7e0" opacity="0.50"/>
+<circle cx="1027" cy="462" r="2.8" fill="#fff7e0" opacity="0.60"/>
+<circle cx="1428" cy="546" r="1.3" fill="#fff7e0" opacity="0.68"/>
+<circle cx="1312" cy="375" r="1.3" fill="#fff7e0" opacity="0.55"/>
+<circle cx="1160" cy="771" r="2.1" fill="#fff7e0" opacity="0.63"/>
+<circle cx="592" cy="601" r="1.7" fill="#fff7e0" opacity="0.80"/>
+<circle cx="857" cy="700" r="1.9" fill="#fff7e0" opacity="0.55"/>
+<circle cx="544" cy="634" r="2.8" fill="#fff7e0" opacity="0.72"/>
+<circle cx="662" cy="391" r="2.9" fill="#fff7e0" opacity="0.48"/>
+<circle cx="1286" cy="736" r="2.2" fill="#fff7e0" opacity="0.68"/>
+<circle cx="1161" cy="346" r="2.4" fill="#fff7e0" opacity="0.81"/>
+<circle cx="509" cy="337" r="2.0" fill="#fff7e0" opacity="0.68"/>
+<circle cx="786" cy="717" r="1.4" fill="#fff7e0" opacity="0.82"/>
+<circle cx="1415" cy="751" r="2.9" fill="#fff7e0" opacity="0.62"/>
+<circle cx="548" cy="343" r="1.5" fill="#fff7e0" opacity="0.65"/>
+<circle cx="516" cy="479" r="2.9" fill="#fff7e0" opacity="0.36"/>
+<circle cx="527" cy="590" r="2.4" fill="#fff7e0" opacity="0.72"/>
+<circle cx="551" cy="460" r="2.5" fill="#fff7e0" opacity="0.77"/>
+<circle cx="709" cy="818" r="2.5" fill="#fff7e0" opacity="0.80"/>
+<circle cx="658" cy="472" r="2.6" fill="#fff7e0" opacity="0.50"/>
+<circle cx="500" cy="311" r="2.9" fill="#fff7e0" opacity="0.80"/>
+</svg>
+<canvas id="world" aria-label="크리스마스 3D 마니또 마을"></canvas><div id="vignette"></div>
+<div class="topbar"><div class="brand"><span class="brand-icon">🎄</span><span>MANITTO <span style="color:var(--gold)">WORLD</span><span style="font-weight:700;font-size:10px;vertical-align:top;margin-left:4px;color:#bbbfdf">2026</span></span></div><div class="top-pills"><span class="pill hide-sm" id="modePill">🎅 70명 산타마을</span><button class="pill mission-top" id="missionTop" type="button">📸 미션 인증</button><span class="pill">🎁 선물 <strong>15,000원</strong></span></div></div>
+<div class="intro" id="intro"><div class="eyebrow">WELCOME TO SANTA VILLAGE · 2026</div><h1>반짝반짝,<br><em>우리들의</em><br>마니또 산타마을!</h1><p class="sub">황금빛 전구가 반짝이는 겨울 마을!<br>친구들과 함께 크리스마스 광장으로 걸어가<br>나만의 비밀 선물 상자를 열어보세요.</p><div id="demoSelectWrap" class="demo-select"><label for="demoNumber">🎁 체험할 참가자 번호 <b>(1~70)</b></label><select id="demoNumber" aria-label="체험 참가자 선택"></select><p>체험에서는 번호 변경이 가능합니다. 실제 운영은 개인별 비밀 링크로 입장해요.</p></div><button class="main-btn" id="start">🎄 산타마을 입장하기 <span>→</span></button><div class="tiny">🕹 이동 <b>W A S D</b> / 방향키 &nbsp; · &nbsp; 선물 열기 <b>E</b><br><span id="welcome">체험용 모드 · 실제 배정은 운영자 링크로 입장</span></div></div>
+<div class="floating-label" id="chestLabel"><strong>🎁 산타의 비밀 선물 상자</strong><small>가까이 다가가서 열어보세요</small></div>
+<div class="hud" id="hud"><div class="hint glass">이동 <span class="key">W</span><span class="key">A</span><span class="key">S</span><span class="key">D</span> &nbsp; 상자 열기 <span class="key">E</span></div><div class="progress glass"><span id="distanceLabel">선물 상자까지 이동 중</span><div class="bar"><div class="bar-inner" id="proBar"></div></div></div></div>
+<button id="openGift" class="floating-btn">🎁 비밀 선물 상자 열기 <span style="font-size:13px">[ E ]</span></button>
+<div id="joystick"><div id="stick"></div></div><button id="mobileOpen">🎁 열기</button>
+<div class="foot">SANTA VILLAGE · 70 FRIENDS · CHRISTMAS 2026</div>
+<div id="toast" class="toast"></div>
+<div class="overlay" id="resultOverlay"><div class="modal"><button class="close" id="closeModal" aria-label="닫기">×</button><span class="gift-emoji">🎁</span><div class="overline">YOUR SECRET FRIEND HAS ARRIVED</div><h2 id="resultTitle">당신의 마니또가 공개됐어요!</h2><p id="resultDescription">이름은 비밀! 연말까지 몰래 챙겨주세요.</p><div class="name-card"><small>MY SECRET SANTA MISSION</small><strong id="resultName">?</strong><span style="font-size:12px;font-weight:900">이 분의 마니또가 되어주세요 💛</span></div><div class="mission"><div class="mt">✨ 당신의 비밀 미션</div><div id="resultMission">포스트잇에 마니또 초상화 그려주기</div><div style="margin-top:7px;color:#d8d5ee;font-size:12px">🎁 준비할 선물: 15,000원 이하</div></div><div class="actions"><button class="action-btn" id="copyResult">📋 나만 보기로 복사</button><button class="secondary-btn" id="backWorld">마을로 돌아가기</button><button class="secondary-btn" id="missionFromResult">📸 미션 인증하기</button></div><p style="font-size:11px;margin-bottom:0">⚠ 링크나 결과를 공개하면 비밀이 풀릴 수 있어요.</p></div></div>
+<div class="overlay" id="missionOverlay"><div class="modal mission-modal"><button class="close" id="missionClose" aria-label="닫기">×</button><span class="gift-emoji">📮</span><div class="overline">MY LITTLE MISSION LOG</div><h2>미션 인증 우체통</h2><div class="mission" style="text-align:left"><div class="mt">오늘의 개별 미션</div><div id="missionTask">마니또에게 포스트잇 초상화 그려주기</div></div><div id="missionStatusBox" class="status-info">📌 아직 인증 전이에요.</div><form id="missionForm"><label for="missionNote">✏️ 미션 완료 내용</label><textarea id="missionNote" rows="3" placeholder="예) 초상화 포스트잇을 몰래 전달했어요!" minlength="3" maxlength="500" required></textarea><label for="missionPhoto">📷 인증 사진 (JPG / PNG / WebP, 2MB 이하)</label><input type="file" id="missionPhoto" accept="image/png,image/jpeg,image/webp" required><img id="photoPreview" alt="선택한 인증 사진 미리보기" style="display:none"><button type="submit" id="submitMission" class="action-btn" style="margin-top:14px;width:100%">🌟 인증 제출하기</button></form><p class="demo-warning" id="missionWarning">※ 체험판에서는 현재 브라우저에만 저장됩니다. 실제 행사는 운영자 서버에 저장되어 검토됩니다.</p></div></div>
+<script>
+(()=>{'use strict';
+const $=id=>document.getElementById(id);const canvas=$('world');const gl=canvas.getContext('webgl2',{antialias:true,alpha:true,powerPreference:'high-performance'});if(!gl){$('welcome').textContent='⚠ 이 환경은 3D 가속을 지원하지 않습니다. 크롬/엣지에서 열면 3D 마을을 움직일 수 있어요.';return;}document.documentElement.classList.add('has3d');
+const vs=`#version 300 es\nin vec3 aPos; in vec3 aNor; uniform mat4 uModel; uniform mat4 uVP; out vec3 vNor; out vec3 vWorld; void main(){vec4 w=uModel*vec4(aPos,1.);vWorld=w.xyz;vNor=mat3(uModel)*aNor;gl_Position=uVP*w;}`;
+const fs=`#version 300 es\nprecision highp float;in vec3 vNor;in vec3 vWorld;uniform vec4 uColor;uniform vec3 uCamera;uniform float uGlow;out vec4 outColor;void main(){vec3 n=normalize(vNor);float sun=max(dot(n,normalize(vec3(-0.35,0.93,0.48))),0.);float brightness=0.64+0.34*sun;vec3 c=uColor.rgb*brightness;float warm=0.;vec2 a=vWorld.xz;warm+=1.6/(1.+dot(a-vec2(-4.,4.),a-vec2(-4.,4.))*.22);warm+=1.6/(1.+dot(a-vec2(4.,4.),a-vec2(4.,4.))*.22);warm+=1.6/(1.+dot(a-vec2(-4.,11.),a-vec2(-4.,11.))*.22);warm+=1.6/(1.+dot(a-vec2(4.,11.),a-vec2(4.,11.))*.22);warm+=1.0/(1.+dot(a-vec2(0.,0.),a-vec2(0.,0.))*.27);c+=uColor.rgb*vec3(.24,.13,.035)*min(1.,warm);c=mix(c,uColor.rgb,uGlow);c+=vec3(1.,.76,.34)*uGlow*.12;float d=length(vWorld.xz-uCamera.xz);float fog=smoothstep(27.,62.,d)*.55;c=mix(c,vec3(.43,.51,.48),fog);outColor=vec4(min(c,vec3(1.)),uColor.a);}`;
+function shader(type,src){const s=gl.createShader(type);gl.shaderSource(s,src);gl.compileShader(s);if(!gl.getShaderParameter(s,gl.COMPILE_STATUS))throw new Error(gl.getShaderInfoLog(s));return s;}
+const program=gl.createProgram();gl.attachShader(program,shader(gl.VERTEX_SHADER,vs));gl.attachShader(program,shader(gl.FRAGMENT_SHADER,fs));gl.linkProgram(program);if(!gl.getProgramParameter(program,gl.LINK_STATUS))throw new Error(gl.getProgramInfoLog(program));gl.useProgram(program);
+const U={model:gl.getUniformLocation(program,'uModel'),vp:gl.getUniformLocation(program,'uVP'),color:gl.getUniformLocation(program,'uColor'),camera:gl.getUniformLocation(program,'uCamera'),glow:gl.getUniformLocation(program,'uGlow')};
+function buildMesh(p,n,i){let va=gl.createVertexArray();gl.bindVertexArray(va);let b=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,b);let data=new Float32Array(p.length/3*6);for(let k=0;k<p.length/3;k++){data.set(p.slice(k*3,k*3+3),k*6);data.set(n.slice(k*3,k*3+3),k*6+3)}gl.bufferData(gl.ARRAY_BUFFER,data,gl.STATIC_DRAW);let a=gl.getAttribLocation(program,'aPos'),nn=gl.getAttribLocation(program,'aNor');gl.enableVertexAttribArray(a);gl.vertexAttribPointer(a,3,gl.FLOAT,false,24,0);gl.enableVertexAttribArray(nn);gl.vertexAttribPointer(nn,3,gl.FLOAT,false,24,12);let ib=gl.createBuffer();gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,ib);gl.bufferData(gl.ELEMENT_ARRAY_BUFFER,new Uint16Array(i),gl.STATIC_DRAW);gl.bindVertexArray(null);return {va,count:i.length};}
+function cubeMesh(){const faces=[[[0,0,1],[-1,-1,1],[1,-1,1],[1,1,1],[-1,1,1]],[[0,0,-1],[1,-1,-1],[-1,-1,-1],[-1,1,-1],[1,1,-1]],[[1,0,0],[1,-1,1],[1,-1,-1],[1,1,-1],[1,1,1]],[[-1,0,0],[-1,-1,-1],[-1,-1,1],[-1,1,1],[-1,1,-1]],[[0,1,0],[-1,1,1],[1,1,1],[1,1,-1],[-1,1,-1]],[[0,-1,0],[-1,-1,-1],[1,-1,-1],[1,-1,1],[-1,-1,1]]];let p=[],n=[],idx=[];for(const f of faces){let c=p.length/3;for(let j=1;j<=4;j++){p.push(...f[j]);n.push(...f[0])}idx.push(c,c+1,c+2,c,c+2,c+3)}return buildMesh(p,n,idx)}
+function roundMesh(rings=12,segments=18){let p=[],n=[],idx=[];for(let y=0;y<=rings;y++){let t=y/rings*Math.PI;for(let x=0;x<=segments;x++){let a=x/segments*2*Math.PI;let X=Math.cos(a)*Math.sin(t),Y=Math.cos(t),Z=Math.sin(a)*Math.sin(t);p.push(X,Y,Z);n.push(X,Y,Z)}}for(let y=0;y<rings;y++)for(let x=0;x<segments;x++){let i=y*(segments+1)+x;idx.push(i,i+segments+1,i+1,i+1,i+segments+1,i+segments+2)}return buildMesh(p,n,idx)}
+function coneMesh(seg=22){let p=[],n=[],idx=[];for(let j=0;j<seg;j++){let a=j*2*Math.PI/seg,b=(j+1)*2*Math.PI/seg;let nn=[Math.cos((a+b)/2)*.9,.4,Math.sin((a+b)/2)*.9];let q=p.length/3;p.push(Math.cos(a),-1,Math.sin(a),Math.cos(b),-1,Math.sin(b),0,1,0);n.push(...nn,...nn,...nn);idx.push(q,q+1,q+2);let r=p.length/3;p.push(0,-1,0,Math.cos(b),-1,Math.sin(b),Math.cos(a),-1,Math.sin(a));n.push(0,-1,0,0,-1,0,0,-1,0);idx.push(r,r+1,r+2)}return buildMesh(p,n,idx)}
+function cylinderMesh(seg=22){let p=[],n=[],idx=[];for(let j=0;j<seg;j++){let a=j*2*Math.PI/seg,b=(j+1)*2*Math.PI/seg;let ca=Math.cos(a),sa=Math.sin(a),cb=Math.cos(b),sb=Math.sin(b);let q=p.length/3;p.push(ca,-1,sa,cb,-1,sb,cb,1,sb,ca,1,sa);n.push(ca,0,sa,cb,0,sb,cb,0,sb,ca,0,sa);idx.push(q,q+1,q+2,q,q+2,q+3);for(let t of [-1,1]){let k=p.length/3;p.push(0,t,0,ca,t,sa,cb,t,sb);n.push(0,t,0,0,t,0,0,t,0);idx.push(k,k+(t===1?1:2),k+(t===1?2:1))}}return buildMesh(p,n,idx)}
+const mesh={cube:cubeMesh(),sphere:roundMesh(),cone:coneMesh(),cylinder:cylinderMesh()};const id=()=>new Float32Array([1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1]);
+function mul(a,b){let o=new Float32Array(16);for(let c=0;c<4;c++)for(let r=0;r<4;r++)for(let k=0;k<4;k++)o[c*4+r]+=a[k*4+r]*b[c*4+k];return o}
+function matObj(pos,scale,rot=0){const m=id(),co=Math.cos(rot),s=Math.sin(rot);m[0]=co*scale[0];m[2]=-s*scale[0];m[5]=scale[1];m[8]=s*scale[2];m[10]=co*scale[2];m[12]=pos[0];m[13]=pos[1];m[14]=pos[2];return m}
+function perspective(fov,ratio,near,far){let f=1/Math.tan(fov/2),o=new Float32Array(16);o[0]=f/ratio;o[5]=f;o[10]=(far+near)/(near-far);o[11]=-1;o[14]=2*far*near/(near-far);return o}
+function lookAt(eye,to){const norm=v=>{let l=Math.hypot(...v)||1;return v.map(x=>x/l)},sub=(a,b)=>a.map((x,i)=>x-b[i]),cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];let z=norm(sub(eye,to)),x=norm(cross([0,1,0],z)),y=cross(z,x);return new Float32Array([x[0],y[0],z[0],0,x[1],y[1],z[1],0,x[2],y[2],z[2],0,-x.reduce((a,b,i)=>a+b*eye[i],0),-y.reduce((a,b,i)=>a+b*eye[i],0),-z.reduce((a,b,i)=>a+b*eye[i],0),1])}
+function hex(c){let h=c.replace('#','');return [parseInt(h.substring(0,2),16)/255,parseInt(h.substring(2,4),16)/255,parseInt(h.substring(4,6),16)/255]}
+
+const colors={snow:'#dce1d6',snow2:'#fff7e7',ice:'#bacfbb',pine:'#477c5c',pineLight:'#6fa078',pineDark:'#254f43',red:'#d85d50',red2:'#a84143',gold:'#ffcf65',yellow:'#ffe69c',brown:'#84533b',wood:'#c79570',white:'#fff9e9',dark:'#446255',roof:'#a94d48',window:'#ffd98a',mint:'#a3c4a0',sky:'#47636b',gray:'#b4bda9'};
+const objects=[];function obj(type,p,s,col,r=0,alpha=1,glow=0){objects.push({type,p,s,col,r,alpha,glow})}function box(p,s,c,r=0){obj('cube',p,s,c,r)}function sph(p,s,c,glow=0){obj('sphere',p,s,c,0,1,glow)}function cone(p,s,c){obj('cone',p,s,c)}function cyl(p,s,c){obj('cylinder',p,s,c)}
+let rngSeed=321100;function rnd(){rngSeed=(rngSeed*1664525+1013904223)>>>0;return rngSeed/4294967296}
+// Frosted island and curved soft snowbanks
+cyl([0,-.9,0],[25,.75,25],colors.pineDark);cyl([0,-.39,0],[24.3,.12,24.3],colors.snow);cyl([0,-.31,0],[23.7,.06,23.7],colors.snow2);
+for(let j=0;j<22;j++){let a=j*2*Math.PI/22;let x=Math.cos(a)*(16.7+rnd()*4),z=Math.sin(a)*(16.7+rnd()*4);sph([x,-.24,z],[1.45+rnd()*1.3,.25,1.1+rnd()*.7],j%2?'#ecede0':'#fbf2da')}
+// Paved amber-snow road toward the secret gift plaza
+for(let z=2.9;z<17;z+=1.15){box([0,-.195,z],[3.55,.055,.9],Math.floor(z)%3===0?'#d8b69a':'#d0af92');for(const x of [-2.25,2.25])sph([x,-.24,z],[.35,.12,.5],'#fff4da')}
+// Holiday plaza circular rug and gift chest
+cyl([0,-.22,0],[3.25,.09,3.25],'#b66c54');cyl([0,-.15,0],[3.00,.055,3.00],'#f4e5c3');cyl([0,-.095,0],[2.7,.07,2.7],'#ad5548');
+for(let i=0;i<12;i++){const a=i/12*Math.PI*2;sph([Math.cos(a)*2.47,-.01,Math.sin(a)*2.47],[.17,.06,.17],'#ffd883',1)}
+function christmasTree(x,z,h=1,hero=false){let y=-.27;const gr=hero?colors.pineDark:[colors.pine,colors.pineLight,colors.pineDark][Math.floor(rnd()*3)];cyl([x,y+.68*h,z],[.28*h,.95*h,.28*h],colors.wood);for(let q=0;q<3;q++){const yy=y+(1.15+q*.90)*h,rad=(1.50-q*.27)*h;sph([x,yy,z],[rad,.76*h,rad],q===0?colors.pineDark:gr)}
+  sph([x,y+3.55*h,z],[.86*h,.7*h,.86*h],gr);
+  for(let band=0;band<3;band++)for(let i=0;i<(hero?11:7);i++){const a=(i+.37*band)*Math.PI*2/(hero?11:7),r=(1.28-band*.22)*h;const yy=y+(1.2+band*.88)*h+Math.sin(a*2)*.13*h;let color=['#ffe7a2','#f5ba80','#e28b74','#fff0c8'][i%4];sph([x+Math.cos(a)*r,yy,z+Math.sin(a)*r],[(hero?.135:.11)*h,(hero?.135:.11)*h,(hero?.135:.11)*h],color,1)}
+  if(hero){sph([x,y+4.02*h,z],[.40*h,.42*h,.40*h],'#ffe396',1);for(let q=0;q<5;q++){const a=q*Math.PI*2/5;sph([x+Math.cos(a)*.36*h,y+(4.04+Math.sin(a)*.35)*h,z],[.14*h,.14*h,.14*h],'#ffdf7a',1)}}else{sph([x,y+4.02*h,z],[.25*h,.3*h,.25*h],'#ffe09a',1)}
+}
+// Main 8-meter decorated Christmas tree and snowy little pines
+christmasTree(-8,-2.5,1.85,true);
+[[-15,-10,1.12],[15,-11,1.2],[-13,9,1.05],[14,10,.95],[-17,1,1.0],[17,1,.95],[-6,-13,1.07],[6,-13,.92],[-11,13,.85],[10,15,.8],[-17,13,.85],[17,13,.82],[-8,11,.78],[8,11,.75]].forEach(t=>christmasTree(...t));
+// Warm windows and snow-capped gingerbread cottages
+function holidayHouse(x,z,wall='#b9826d',roof='#af514c'){box([x,1.20,z],[4.2,2.75,3.45],wall);box([x,2.63,z],[4.35,.18,3.55],'#fff1d9');cone([x,3.63,z],[3.05,1.43,2.76],roof);sph([x,4.46,z],[.58,.25,.52],colors.white);box([x+.38,4.33,z],[.4,.63,.40],wall);sph([x+.38,4.69,z],[.4,.20,.4],colors.white);
+ for(const dx of [-1.12,1.12]){box([x+dx,1.62,z+1.76],[.82,.94,.09],colors.brown);box([x+dx,1.62,z+1.82],[.64,.74,.10],colors.window);box([x+dx,1.62,z+1.94],[.095,.83,.10],colors.wood);box([x+dx,1.62,z+1.94],[.73,.085,.10],colors.wood);sph([x+dx,1.65,z+2.08],[.40,.34,.12],'#ffd47c',1)}
+ box([x,.59,z+1.78],[.95,1.75,.13],colors.pineDark);sph([x+.31,.72,z+1.89],[.075,.075,.07],colors.gold,1);
+ sph([x,1.45,z+1.93],[.33,.33,.12],colors.pine);for(let j=0;j<6;j++){let a=j*Math.PI/3;sph([x+Math.cos(a)*.28,1.45+Math.sin(a)*.28,z+2.03],[.065,.06,.06],colors.red,1)}
+ for(const zz of [-1.5,1.5])sph([x-1.89,2.48,z+zz],[.23,.17,.24],colors.white);
+}
+holidayHouse(-11,-9,'#d2a28a','#bd6660');holidayHouse(11,-9,'#cfaa83','#b85c53');holidayHouse(-13,4,'#c99a83','#a75b50');holidayHouse(13,4,'#d4ad86','#bd6a61');
+// Cozy market huts and parcel kiosk
+function kiosk(x,z){box([x,.75,z],[2.65,1.50,1.75],'#987054');box([x,1.55,z+1.0],[3.0,.28,.20],colors.red);cone([x,2.14,z],[2.03,.70,1.52],'#b45c4c');sph([x,2.80,z],[.54,.22,.48],colors.white);box([x,.9,z+1.05],[2.35,.18,.48],'#f4d5ad');for(let i=0;i<5;i++)sph([x-1.1+i*.55,1.85,z+1.0],[.13,.13,.13],'#ffe09a',1);}
+kiosk(-8,8);kiosk(8,8);
+// Wooden lampposts, bright gas-light glass globes, warm pools and garlands
+const lampPositions=[];
+function lamp(x,z){lampPositions.push([x,2.88,z]);cyl([x,1.12,z],[.11,1.55,.11],'#45594a');cyl([x,2.43,z],[.22,.12,.22],'#826448');box([x,2.68,z],[.58,.60,.56],'#9b7450');sph([x,2.72,z],[.40,.42,.40],'#ffe7a0',1);sph([x,2.74,z],[.26,.28,.27],'#fff4c8',1);cone([x,3.16,z],[.43,.19,.43],'#624c39');sph([x,-.14,z],[.96,.08,.96],'#f8e1ad')}
+for(const z of [3.5,10.5,16])for(const x of [-3.55,3.55])lamp(x,z);
+for(const [z,side] of [[3.5,0],[10.5,1],[16,2]])for(let i=0;i<15;i++){let x=-3.5+i*.5;let y=3.62+Math.sin(i/14*Math.PI)*.4;const color=i%3===0?'#ffedb8':i%3===1?'#ffb879':'#ffe18a';sph([x,y,z],[.12,.12,.12],color,1)}
+// Candy canes and snowmen. Simple cute low-poly shapes.
+function candy(x,z){cyl([x,.31,z],[.14,.55,.14],'#fff6e9');for(let j=0;j<5;j++)sph([x,.02+j*.20,z],[.16,.06,.16],j%2?colors.red2:'#fff5e5');sph([x+.16,.90,z],[.30,.17,.16],colors.white);sph([x+.36,.75,z],[.16,.16,.15],colors.red2)}
+for(const [x,z] of [[-5.2,6],[5.2,6],[-5.2,12],[5.2,12],[-6,-4],[6,-4]])candy(x,z);
+function snowman(x,z){sph([x,.40,z],[.75,.78,.75],'#fffdf2');sph([x,1.49,z],[.55,.56,.54],'#fffdf7');sph([x-.19,1.53,z+.52],[.06,.08,.05],'#4b504d');sph([x+.19,1.53,z+.52],[.06,.08,.05],'#4b504d');cone([x,1.37,z+.58],[.14,.24,.15],'#ec9865');box([x,1.09,z],[.95,.17,.84],colors.red);cyl([x,2.07,z],[.41,.12,.42],'#724b44');box([x,2.31,z],[.65,.43,.61],'#744a44');sph([x,2.59,z],[.48,.10,.45],colors.white)}snowman(-5.8,12.5);snowman(6,13);
+// Gift stacks with ribbon and bows
+function packageGift(x,z,s=1){let col=rnd()>.5?colors.red2:colors.pine;sph([x,-.23,z],[.48*s,.16*s,.48*s],'#efe9da');box([x,.20*s,z],[.62*s,.64*s,.62*s],col);box([x,.21*s,z],[.16*s,.68*s,.64*s],colors.gold);box([x,.21*s,z],[.64*s,.69*s,.15*s],colors.gold);sph([x,.60*s,z],[.18*s,.17*s,.18*s],colors.gold,1)}
+[[-5.9,-1.4,1.1],[-6.7,-1.1,.74],[-8.5,2.3,.75],[6.8,-3.1,1.0],[7.4,-2.6,.7],[-6.7,8.5,.8],[6.9,8.5,.8],[0,18,1.1],[-1,18.5,.65],[2.4,-12,.9]].forEach(g=>packageGift(...g));
+// Tiny gold ground glitter / puffs of snow
+for(let i=0;i<80;i++){const x=(rnd()-.5)*40,z=(rnd()-.5)*40;if(Math.hypot(x,z)>22||Math.abs(x)<3&&z>2&&z<17)continue;sph([x,-.19,z],[.10+rnd()*.12,.04,.09+rnd()*.1],i%3?'#fff8e9':'#ffe1ac')}
+// Center gift platform, bow and gentle magical glow
+cyl([0,.00,0],[2.38,.18,2.38],'#e7b770');cyl([0,.12,0],[2.18,.12,2.18],'#fff3d5');box([0,.98,0],[1.48,1.28,1.39],colors.red2);box([0,.98,.72],[.28,1.33,.09],colors.gold);box([0,.99,0],[1.52,1.34,.30],colors.gold);box([0,1.67,0],[1.69,.24,1.55],colors.red);sph([-.22,1.97,0],[.27,.18,.2],colors.gold,1);sph([.22,1.97,0],[.27,.18,.2],colors.gold,1);sph([0,2.00,0],[.15,.23,.16],colors.gold,1);
+const sparkles=[];for(let j=0;j<65;j++){const a=rnd()*Math.PI*2,rr=.95+rnd()*3.2;sparkles.push([Math.cos(a)*rr,.55+rnd()*4.7,Math.sin(a)*rr,.04+rnd()*.075,rnd()*6.28])}
+function draw(type,pos,scale,col,rot=0,alpha=1,glow=0){const m=mesh[type],c=hex(col);gl.uniform1f(U.glow,glow);gl.uniformMatrix4fv(U.model,false,matObj(pos,scale,rot));gl.uniform4f(U.color,c[0],c[1],c[2],alpha);gl.bindVertexArray(m.va);gl.drawElements(gl.TRIANGLES,m.count,gl.UNSIGNED_SHORT,0)}
+const snow=[];for(let i=0;i<85;i++)snow.push({x:(rnd()-.5)*36,y:.2+rnd()*11,z:(rnd()-.5)*37,spd:.35+rnd()*.7,phase:rnd()*6.28,size:.025+rnd()*.065});
+const player={x:0,z:12,yaw:Math.PI,walking:false};let started=false,opened=false,revealed=false,token=new URLSearchParams(location.search).get('token'),playerName='체험 참가자',actualMission='포스트잇에 마니또 초상화 그려주기',receiver='?',demoNumber=1,missionRecord=null;
+let keys=new Set(),joy={x:0,y:0},last=0,clock=0,cam=[12,14,21],target=[0,1,4],readyToOpen=false,showToastTimeout;
+const demoMissions=['포스트잇에 마니또 초상화 그려주기','마니또에게 익명 응원 메시지 전달하기','마니또에게 어울리는 노래 추천하기','마니또에게 따뜻한 칭찬 메모 남기기','마니또가 좋아하는 간식 취향 알아보기','마니또를 위한 연말 응원 카드 쓰기'];
+// Demo 1-70 random permutation in one cycle, same assign-each-once guarantee as server.
+const demoOrder=Array.from({length:70},(_,i)=>i+1);let demoSeed=20261224;
+for(let i=69;i>0;i--){demoSeed=(demoSeed*1664525+1013904223)>>>0;let j=demoSeed%(i+1);[demoOrder[i],demoOrder[j]]=[demoOrder[j],demoOrder[i]]}
+const demoMatches=new Map(demoOrder.map((n,i)=>[n,demoOrder[(i+1)%70]]));
+const numberSelect=$('demoNumber');for(let i=1;i<=70;i++){const op=document.createElement('option');op.value=String(i);op.textContent=i+'번 참가자';numberSelect.appendChild(op)}
+function demoStatus(){try{return JSON.parse(localStorage.getItem('cozyManittoDemoMission'+demoNumber)||'null')}catch{return null}}
+function setDemoStatus(r){missionRecord=r;try{localStorage.setItem('cozyManittoDemoMission'+demoNumber,JSON.stringify(r))}catch{}}
+function useNumber(){demoNumber=Number(numberSelect.value);playerName=demoNumber+'번';actualMission=demoMissions[(demoNumber-1)%demoMissions.length];receiver=demoMatches.get(demoNumber)+'번';missionRecord=demoStatus();$('welcome').textContent=playerName+' 체험 모드 · 실제 운영 전용 링크와는 달라요';$('missionTask').textContent=actualMission;refreshMissionStatus()}
+numberSelect.addEventListener('change',()=>{useNumber();if(started)connectWorld()});useNumber();
+function toast(t){$('toast').textContent=t;$('toast').classList.add('show');clearTimeout(showToastTimeout);showToastTimeout=setTimeout(()=>$('toast').classList.remove('show'),3500)}
+function inRange(){return Math.hypot(player.x,player.z)<3.3}
+function updateUI(){let d=Math.hypot(player.x,player.z);$('proBar').style.width=`${Math.min(100,Math.max(0,(1-d/13)*100))}%`;$('distanceLabel').textContent=d<3.3?'✨ 선물 상자에 도착했어요':'선물 상자까지 '+Math.ceil(d)+'m';$('openGift').classList.toggle('visible',started&&inRange()&&!opened);$('chestLabel').classList.toggle('show',started&&d<9&&!opened);$('mobileOpen').style.opacity=started&&d<3.3?'1':'.65'}
+function move(dt){let vx=0,vz=0;if(keys.has('w')||keys.has('arrowup'))vz--;if(keys.has('s')||keys.has('arrowdown'))vz++;if(keys.has('a')||keys.has('arrowleft'))vx--;if(keys.has('d')||keys.has('arrowright'))vx++;vx+=joy.x;vz+=joy.y;const v=Math.hypot(vx,vz);player.walking=started&&v>.04;if(player.walking){vx/=v;vz/=v;let speed=5.6;player.x=Math.max(-17,Math.min(17,player.x+vx*dt*speed));player.z=Math.max(-17,Math.min(17,player.z+vz*dt*speed));if(Math.hypot(player.x,player.z)<1.1){player.x-=vx*dt*speed;player.z-=vz*dt*speed}player.yaw=Math.atan2(vx,vz)}if(!started)player.yaw=Math.PI;updateUI()}
+function avatar(){let x=player.x,z=player.z,bob=player.walking?Math.sin(clock*12)*.066:Math.sin(clock*2)*.025,r=player.yaw;function part(type,offset,scale,col){let dx=offset[0]*Math.cos(r)+offset[2]*Math.sin(r),dz=-offset[0]*Math.sin(r)+offset[2]*Math.cos(r);draw(type,[x+dx,offset[1]+bob,z+dz],scale,col,r)}
+part('sphere',[0,.08,0],[.45,.07,.36],'#c6dcbd');part('sphere',[0,.92,0],[.49,.62,.37],'#bf6455');part('sphere',[0,1.33,.23],[.42,.15,.32],'#fff7e5');part('sphere',[0,1.78,0],[.61,.60,.56],'#f5d9b6');part('sphere',[0,2.18,-.13],[.61,.36,.57],'#8c6d58');part('sphere',[0,2.39,-.18],[.47,.26,.43],'#bb4b47');part('sphere',[0,2.62,-.17],[.19,.19,.19],colors.white);part('sphere',[-.22,1.79,.54],[.055,.075,.045],'#453c43');part('sphere',[.22,1.79,.54],[.055,.075,.045],'#453c43');part('sphere',[-.38,1.62,.44],[.16,.09,.06],'#f8a5a6');part('sphere',[.38,1.62,.44],[.16,.09,.06],'#f8a5a6');part('sphere',[0,1.57,.56],[.085,.05,.045],'#eeb0a2');let swing=player.walking?Math.sin(clock*12)*.19:0;part('sphere',[-.57,.94,-swing],[.20,.36,.21],'#bf6455');part('sphere',[.57,.94,swing],[.20,.36,.21],'#bf6455');part('sphere',[-.22,.34,swing],[.21,.36,.22],'#7e776d');part('sphere',[.22,.34,-swing],[.21,.36,.22],'#7e776d')}
+
+
+// ─────────────────────────────────────────────────────────────────────
+// 실시간 공용 마을: 참가자 이름/위치만 전송, 비밀 마니또 배정은 전송하지 않음.
+const otherPlayers=new Map(), nameTags=new Map();
+let worldSocket=null, worldId='',worldConnected=false,connectTimeout=null,lastWorldSend=0,worldOnline=0,worldCapacity=70;
+const overlayNames=document.createElement('div');overlayNames.id='avatar-name-overlay';document.body.appendChild(overlayNames);
+const labelStyle=document.createElement('style');labelStyle.textContent=`
+#avatar-name-overlay{position:fixed;inset:0;z-index:2;pointer-events:none;overflow:hidden}
+.nameflag{position:absolute;left:0;top:0;transform:translate(-50%,-100%);font-family:'Noto Sans KR',system-ui,sans-serif;font-size:12px;font-weight:900;white-space:nowrap;letter-spacing:-.25px;border-radius:99px;padding:6px 11px;background:rgba(255,247,225,.96);color:#70523a;border:2px solid #e9c181;box-shadow:0 3px 8px #53432944,0 1px 1px #ffffff;max-width:140px;overflow:hidden;text-overflow:ellipsis}
+.nameflag.self{background:#ffe4ad;color:#704020;border-color:#dda04b}.nameflag::after{content:'';position:absolute;left:50%;bottom:-5px;transform:translateX(-50%) rotate(45deg);width:7px;height:7px;background:inherit;border-right:1px solid #e9c181;border-bottom:1px solid #e9c181}
+.top-pills #onlineIndicator{background:rgba(255,247,223,.94);border-color:rgba(243,193,119,.7);color:#75512f;box-shadow:0 3px 12px #88653e54;font-size:13px}
+`;document.head.appendChild(labelStyle);
+const onlineIndicator=document.createElement('div');onlineIndicator.id='onlineIndicator';onlineIndicator.className='pill';onlineIndicator.setAttribute('role','status');onlineIndicator.textContent='👥 함께 접속: 연결 전';document.querySelector('.top-pills')?.prepend(onlineIndicator);
+function displayConnection(t){onlineIndicator.textContent=t;}
+function labelFor(id,name,self=false){let e=nameTags.get(id);if(!e){e=document.createElement('div');e.className='nameflag'+(self?' self':'');overlayNames.appendChild(e);nameTags.set(id,e)} if(e.textContent!==name)e.textContent=name;return e;}
+function clearDisconnected(keep){for(const [id,el] of nameTags)if(!keep.has(id)){el.remove();nameTags.delete(id)}}
+function positionLabel(vp,width,height,id,name,x,y,z,self=false){const out=[0,0,0,0],pos=[x,y,z,1];for(let row=0;row<4;row++)for(let col=0;col<4;col++)out[row]+=vp[col*4+row]*pos[col];
+  const el=labelFor(id,name,self);const w=out[3];if(w<=.05){el.style.display='none';return;}
+  const sx=out[0]/w,sy=out[1]/w;
+  if(Math.abs(sx)>1.06||Math.abs(sy)>1.05||Math.hypot(x-cam[0],z-cam[2])>34){el.style.display='none';return;}
+  el.style.display='block';el.style.left=((sx*.5+.5)*width)+'px';el.style.top=((-sy*.5+.5)*height)+'px';
+}
+const remotePalette=['#c96956','#d89978','#739e83','#a47c72','#bc735f','#8bb89a','#dba27e','#b85c56','#ad8f71','#6e9986'];
+function drawOtherAvatar(p){let x=p.x,z=p.z,r=p.yaw;if(Math.hypot(x-player.x,z-player.z)>25)return;let bob=p.moving?Math.sin(clock*12+(Number(p.id.replace(/\D/g,''))||1))*.075:Math.sin(clock*2+p.x)*.024;
+  let n=Number(p.id.replace(/\D/g,''))||0,col=remotePalette[n%remotePalette.length];
+  function part(type,offset,scale,color){let dx=offset[0]*Math.cos(r)+offset[2]*Math.sin(r),dz=-offset[0]*Math.sin(r)+offset[2]*Math.cos(r);draw(type,[x+dx,offset[1]+bob,z+dz],scale,color,r)}
+  if(Math.hypot(x-player.x,z-player.z)>13){part('sphere',[0,.98,0],[.48,.66,.39],col);part('sphere',[0,1.78,0],[.59,.60,.54],'#f6d7b8');part('sphere',[0,2.32,-.10],[.46,.23,.42],'#bc6556');part('sphere',[0,2.51,-.13],[.19,.18,.19],colors.white);return;}
+  part('sphere',[0,.08,0],[.48,.08,.37],'#c1d9b6');
+  part('sphere',[0,.96,0],[.48,.60,.38],col);
+  part('sphere',[0,1.31,.20],[.39,.14,.35],'#fdf0da');
+  part('sphere',[0,1.78,0],[.59,.60,.54],'#f6d7b8');
+  part('sphere',[0,2.2,-.12],[.59,.30,.54],n%3===0?'#a68062':n%3===1?'#6c5a5a':'#826e75');
+  part('sphere',[0,2.38,-.1],[.43,.18,.44],n%2?'#ffe1a2':'#e9a8b6');
+  part('sphere',[-.21,1.79,.51],[.058,.076,.040],'#42383b');
+  part('sphere',[.21,1.79,.51],[.058,.076,.040],'#42383b');
+  part('sphere',[-.37,1.60,.43],[.13,.08,.06],'#f3a6a8');
+  part('sphere',[.37,1.60,.43],[.13,.08,.06],'#f3a6a8');
+  let swing=p.moving?Math.sin(clock*12+n)*.15:0;
+  part('sphere',[-.54,.95,-swing],[.19,.31,.2],col);
+  part('sphere',[.54,.95,swing],[.19,.31,.2],col);
+  part('sphere',[-.22,.33,swing],[.21,.32,.21],'#7c817d');
+  part('sphere',[.22,.33,-swing],[.21,.32,.21],'#7c817d');
+}
+function drawRemotes(dt){const t=Math.min(1,dt*2.2);for(const p of otherPlayers.values()){p.x+=(p.tx-p.x)*t;p.z+=(p.tz-p.z)*t;let d=((p.tyaw-p.yaw+Math.PI*3)%(Math.PI*2))-Math.PI;p.yaw+=d*t;drawOtherAvatar(p)}}
+function renderNameTags(vp,width,height){const keep=new Set();
+  if(started){const me='self';keep.add(me);positionLabel(vp,width,height,me,playerName+' · 나',player.x,3.35,player.z,true);}
+  for(const [id,p] of otherPlayers){keep.add(id);positionLabel(vp,width,height,id,p.name,p.x,3.25,p.z)}
+  clearDisconnected(keep);
+}
+// 실시간 마을: WebSocket 대신 Supabase 함수(village_sync)를 2.5초마다 호출 (무료 한도 안에서 동작)
+const SYNC_MS=2500;let villageCfg=null,myPid='',syncTimer=null,syncBusy=false,lastSyncPos=null;
+function connectWorld(){if(!started)return;
+  clearTimeout(syncTimer);worldConnected=false;otherPlayers.clear();clearDisconnected(new Set());
+  if(!token){displayConnection('👥 단독 체험 모드 · 실제 행사는 개인 링크로');return;}
+  if(!villageCfg||!villageCfg.url||!villageCfg.key||!myPid){displayConnection('📡 마을 동기화 설정이 없어요');return;}
+  worldId=myPid;const n=Number(myPid.replace(/[^\d]/g,''))||1,angle=(n*2.399963229728653)%(2*Math.PI),radius=8+(n%7)*0.7;
+  player.x=Math.cos(angle)*radius;player.z=Math.sin(angle)*radius;player.yaw=Math.PI;cam=[player.x+11,13,player.z+15];target=[player.x,1,player.z];
+  displayConnection('📡 마을에 연결 중...');syncWorld();
+}
+async function syncWorld(){clearTimeout(syncTimer);if(!started||!token||!villageCfg)return;
+  if(document.hidden){syncTimer=setTimeout(syncWorld,SYNC_MS);return;}
+  if(syncBusy)return;syncBusy=true;
+  const r2=v=>Math.round(v*100)/100,moved=!lastSyncPos||Math.hypot(player.x-lastSyncPos[0],player.z-lastSyncPos[1])>0.08;lastSyncPos=[player.x,player.z];
+  const headers={'Content-Type':'application/json',apikey:villageCfg.key};if(villageCfg.key.startsWith('eyJ'))headers.Authorization='Bearer '+villageCfg.key;
+  try{const r=await fetch(villageCfg.url.replace(/\/$/,'')+'/rest/v1/rpc/village_sync',{method:'POST',headers,cache:'no-store',body:JSON.stringify({p_token:token,p_x:r2(player.x),p_z:r2(player.z),p_yaw:r2(player.yaw),p_moving:moved||player.walking})});
+    if(!r.ok)throw Error('HTTP '+r.status);const m=await r.json();const list=Array.isArray(m.p)?m.p:[];
+    worldConnected=true;worldOnline=Math.max(1,list.length);const active=new Set();
+    for(const [id,name,x,z,yaw,moving] of list){if(id===worldId)continue;active.add(id);let p=otherPlayers.get(id);
+      if(!p){p={id,name,x,z,yaw,tx:x,tz:z,tyaw:yaw,moving};otherPlayers.set(id,p)}else{p.name=name;p.tx=x;p.tz=z;p.tyaw=yaw;p.moving=moving}}
+    for(const id of otherPlayers.keys())if(!active.has(id))otherPlayers.delete(id);
+    displayConnection('🟢 '+worldOnline+' / '+worldCapacity+'명 접속 중');
+  }catch(e){worldConnected=false;displayConnection('📡 연결 불안정 · 다시 시도 중');}
+  finally{syncBusy=false;if(started)syncTimer=setTimeout(syncWorld,SYNC_MS);}
+}
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&started&&token)syncWorld()});
+function sendWorldMovement(){}
+
+function render(ts){if(!last)last=ts;let dt=Math.min((ts-last)/1000,.035);last=ts;clock+=dt;move(dt);const width=canvas.clientWidth,height=canvas.clientHeight;let pr=Math.min(window.devicePixelRatio||1,1.7);if(canvas.width!==Math.floor(width*pr)||canvas.height!==Math.floor(height*pr)){canvas.width=Math.floor(width*pr);canvas.height=Math.floor(height*pr);gl.viewport(0,0,canvas.width,canvas.height)}gl.enable(gl.DEPTH_TEST);gl.disable(gl.CULL_FACE);gl.enable(gl.BLEND);gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA);gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
+let targetCam=started?[player.x+11,13.2,player.z+15]:[12.8,15.6,19],targetLook=started?[player.x*.9,1.0,player.z-1.2]:[0,1,2.2];for(let j=0;j<3;j++){cam[j]+=(targetCam[j]-cam[j])*Math.min(1,dt*1.5);target[j]+=(targetLook[j]-target[j])*Math.min(1,dt*1.6)}let vp=mul(perspective(48*Math.PI/180,width/height,.1,100),lookAt(cam,target));gl.uniformMatrix4fv(U.vp,false,vp);gl.uniform3f(U.camera,...cam);
+for(const o of objects)draw(o.type,o.p,o.s,o.col,o.r,o.alpha,o.glow);
+for(let i=0;i<sparkles.length;i++){let sp=sparkles[i],yy=sp[1]+Math.sin(clock*1.8+sp[4])*.24;draw('sphere',[sp[0],yy,sp[2]],[sp[3],sp[3],sp[3]],i%4===0?'#fffcda':colors.gold,0,1,1)}
+for(const s of snow){s.y-=dt*s.spd;s.x+=Math.sin(clock*1.6+s.phase)*dt*.35;if(s.y<-.2){s.y=9+rnd()*3;s.x=(rnd()-.5)*40;s.z=(rnd()-.5)*40}draw('sphere',[s.x,s.y,s.z],[s.size,s.size,s.size],'#fff9e8',0,.85,1)}avatar();drawRemotes(dt);renderNameTags(vp,width,height);sendWorldMovement();requestAnimationFrame(render)}
+requestAnimationFrame(render);
+function startGame(){started=true;$('intro').classList.add('hidden');$('hud').classList.add('show');toast('🎄 반짝이는 산타마을에 오신 걸 환영해요!');connectWorld()}
+$('start').addEventListener('click',startGame);window.addEventListener('keydown',e=>{if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight',' '].includes(e.key))e.preventDefault();if(e.key.toLowerCase()==='e'&&started){if(inRange())openGift();else toast('🎁 선물 상자에 조금 더 가까이 다가가세요!')}keys.add(e.key.toLowerCase())});window.addEventListener('keyup',e=>keys.delete(e.key.toLowerCase()));window.addEventListener('blur',()=>keys.clear());
+let joyPointer=null;const joyEl=$('joystick');function joyMove(e){const r=joyEl.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;let dx=e.clientX-cx,dy=e.clientY-cy,len=Math.hypot(dx,dy);if(len>41){dx=dx/len*41;dy=dy/len*41}joy.x=dx/41;joy.y=dy/41;$('stick').style.transform=`translate(${dx}px,${dy}px)`}joyEl.addEventListener('pointerdown',e=>{joyPointer=e.pointerId;joyEl.setPointerCapture(e.pointerId);joyMove(e);if(!started)startGame()});joyEl.addEventListener('pointermove',e=>{if(e.pointerId===joyPointer)joyMove(e)});function stopJoy(){joyPointer=null;joy.x=0;joy.y=0;$('stick').style.transform='translate(0,0)'}joyEl.addEventListener('pointerup',stopJoy);joyEl.addEventListener('pointercancel',stopJoy);
+$('openGift').addEventListener('click',openGift);$('mobileOpen').addEventListener('click',()=>{if(!started)startGame();if(inRange())openGift();else toast('선물 상자에 가까이 다가가세요!')});
+async function openGift(){if(opened)return;if(!inRange()){toast('상자 앞에서 열 수 있어요!');return}opened=true;toast('✨ 두근두근! 비밀 친구를 확인하는 중...');let name=receiver;try{if(token){let r=await fetch('/api/reveal?token='+encodeURIComponent(token),{cache:'no-store'}),data=await r.json();if(!r.ok)throw Error(data.error||'결과 확인 실패');name=data.recipient;actualMission=data.mission||actualMission;}}catch(e){opened=false;toast('결과를 불러오지 못했어요: '+e.message);return}receiver=name;$('resultName').textContent=receiver;$('resultMission').textContent=actualMission;$('resultOverlay').classList.add('open');refreshMissionStatus();$('openGift').classList.remove('visible');revealed=true;}
+function closeModal(){$('resultOverlay').classList.remove('open');opened=false} $('closeModal').addEventListener('click',closeModal);$('backWorld').addEventListener('click',closeModal);
+$('copyResult').addEventListener('click',async()=>{let s=`🎄 2026 마니또 월드\n나의 마니또 상대: ${receiver}\n미션: ${actualMission}\n선물 예산: 15,000원`;try{await navigator.clipboard.writeText(s);toast('📋 개인 결과를 복사했어요!')}catch{toast('브라우저에서 복사를 지원하지 않아요.')}});
+if(token){$('demoSelectWrap').style.display='none';$('modePill').textContent='🔒 개인 비밀 입장';$('missionWarning').textContent='※ 인증은 운영자 서버에 저장됩니다. 사진에 타인의 개인정보가 보이지 않도록 확인해주세요.';fetch('/api/me?token='+encodeURIComponent(token),{cache:'no-store'}).then(async r=>{let d=await r.json();if(!r.ok)throw Error(d.error||'초대 링크 오류');playerName=d.name;actualMission=d.mission||actualMission;villageCfg=d.village||null;myPid='p-'+d.id;worldCapacity=d.capacity||worldCapacity;if(started)connectWorld();missionRecord=d.status;$('missionTask').textContent=actualMission;$('welcome').textContent=playerName+'님 전용 입장권 · 개인 링크는 비밀로!';$('start').textContent='🎄 '+playerName+'님, 산타마을 입장하기 →';refreshMissionStatus()}).catch(e=>{$('welcome').textContent='⚠ 유효하지 않은 초대 링크: '+e.message;$('start').disabled=true;$('start').style.opacity='.55'})}
+function refreshMissionStatus(){const status=missionRecord?.status||'not_submitted';const labels={not_submitted:'📌 아직 미션을 인증하지 않았어요. 사진을 올려주세요!',pending:'🕒 인증 제출 완료! 운영자 확인을 기다리고 있어요.',approved:'🎉 운영자가 미션을 승인했어요!',rejected:'🔁 인증이 반려됐어요. 내용을 보완해 다시 제출해주세요.'};$('missionStatusBox').textContent=labels[status]+(missionRecord?.feedback?' 이유: '+missionRecord.feedback:'');$('missionForm').style.display=['pending','approved'].includes(status)?'none':'block';}
+function openMission(){if(!token)missionRecord=demoStatus();$('missionTask').textContent=actualMission;refreshMissionStatus();$('missionOverlay').classList.add('open')}
+$('missionTop').onclick=openMission;$('missionFromResult').onclick=()=>{$('resultOverlay').classList.remove('open');openMission()};$('missionClose').onclick=()=>$('missionOverlay').classList.remove('open');
+$('missionPhoto').addEventListener('change',e=>{const f=e.target.files?.[0],img=$('photoPreview');img.style.display='none';if(!f)return;if(f.size>2*1024*1024){toast('사진은 2MB 이하만 가능합니다.');e.target.value='';return}const u=URL.createObjectURL(f);img.src=u;img.style.display='block';img.onload=()=>URL.revokeObjectURL(u)});
+$('missionForm').addEventListener('submit',async e=>{e.preventDefault();let f=$('missionPhoto').files?.[0],note=$('missionNote').value.trim();if(!f||note.length<3){toast('사진과 완료 내용을 입력해주세요.');return}if(f.size>2*1024*1024){toast('사진은 2MB 이하여야 해요.');return}if(!['image/jpeg','image/png','image/webp'].includes(f.type)){toast('JPG / PNG / WebP만 업로드할 수 있어요.');return}const submit=$('submitMission');submit.disabled=true;submit.textContent='📮 사진 제출 중...';try{const encoded=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=()=>reject(Error('사진을 읽지 못했습니다'));reader.readAsDataURL(f)});if(token){let r=await fetch('/api/mission?token='+encodeURIComponent(token),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({note,imageData:encoded}),cache:'no-store'}),d=await r.json();if(!r.ok)throw Error(d.error||'제출 실패');missionRecord=d}else{setDemoStatus({status:'pending',note,hasImage:true,submittedAt:new Date().toISOString(),feedback:''})}refreshMissionStatus();toast('✅ 미션 인증을 제출했어요! 운영자 확인을 기다려주세요.')}catch(err){toast('⚠ '+err.message)}finally{submit.disabled=false;submit.textContent='🌟 인증 제출하기'}});
+
+})();
+</script>
+</body></html>
