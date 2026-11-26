@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
-<meta name="theme-color" content="#365c53"><title>2026 마니또 산타마을 | 70명 실시간 멀티플레이</title>
+<meta name="theme-color" content="#365c53"><title>2026 마니또 산타마을 | 실시간 멀티플레이</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap');
 :root{color-scheme:dark;--fg:#f8f4f9;--muted:#b0b4d3;--gold:#ffda87;--mint:#94f3da;--border:rgba(255,255,255,.16)}*{box-sizing:border-box}html,body{width:100%;height:100%;margin:0;overflow:hidden}body{font-family:'Nunito','Noto Sans KR',system-ui,sans-serif;background:#11152f;color:var(--fg);overscroll-behavior:none}#world{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none}#vignette{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 66% 72% at 50% 42%,transparent 45%,rgba(11,9,30,.5) 100%),linear-gradient(0deg,rgba(9,10,27,.66),transparent 29%);}
@@ -46,6 +46,23 @@ h1{color:#315b48;text-shadow:none;font-size:clamp(31px,3.5vw,47px);line-height:1
 .toast{background:#fff1c5;color:#664d2d;box-shadow:0 10px 30px #253d365a}
 #joystick{background:#fff4d244;border-color:#fff9df88}#stick{background:#ffd288c9;border-color:#fff9dd}#mobileOpen{background:#ffe1a7;color:#6e4a2b}
 @media(max-width:760px){.topbar{padding:10px}.brand{font-size:11px}.top-pills{gap:4px}.pill{padding:8px 7px;font-size:9px}.intro{left:12px;top:43%;width:min(365px,94vw);padding:22px}.intro h1{font-size:32px}.intro:after{right:14px;top:14px;font-size:11px}.sub{font-size:12px}.main-btn{font-size:13px;padding:12px 17px}}
+
+.login-box label{display:block;font-size:12px;font-weight:900;color:#7a5a3a;margin:8px 0 4px}.login-box input{width:100%;border:2px solid #dfc19c;border-radius:12px;padding:11px 12px;font-size:15px;font-family:inherit;background:#fffef8;color:#4d3b2a}.login-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.login-help{font-size:11.5px;color:#8b7356;margin:10px 0 12px;line-height:1.5}.logout-link{display:block;margin-top:10px;border:none;background:none;color:#a0784f;text-decoration:underline;font-size:12px;cursor:pointer;font-family:inherit}
+.nameflag.zoneflag{background:#3d6b58e6;color:#fff6dc;border-color:#fff1c8;font-size:13px;padding:7px 13px}
+.pill.alert{background:#ffd9c2;color:#a3402e;animation:pulse 1.2s infinite}@keyframes pulse{50%{transform:scale(1.06)}}
+.near-hint{position:absolute;z-index:4;left:50%;bottom:170px;transform:translateX(-50%);background:#fff7e3f2;color:#6b4a2b;border:2px solid #f3d29c;border-radius:99px;padding:8px 16px;font-size:13px;font-weight:900;opacity:0;transition:opacity .25s;pointer-events:none;white-space:nowrap}.near-hint.show{opacity:1}
+.mobile-act{position:absolute;right:18px;z-index:5;display:none;border:none;border-radius:16px;background:#ffe1a7;color:#6e4a2b;width:58px;height:54px;font-size:22px;font-weight:900}
+@media(max-width:760px){.top-pills .pill{white-space:nowrap}.brand>span:not(.brand-icon){display:none}.top-pills #onlineIndicator{max-width:118px;overflow:hidden;text-overflow:ellipsis;font-size:10px}.top-pills{flex-wrap:nowrap}.mobile-act{display:block}.near-hint{bottom:150px;font-size:12px}}
+.roulette-window{margin:20px auto 10px;padding:22px 10px;border-radius:18px;background:linear-gradient(120deg,#fff1bb,#ffdfb7);border:3px dashed #e4a73d;min-height:86px;display:grid;place-items:center}
+#rouletteName{font-size:32px;font-weight:900;color:#7a3f22;letter-spacing:-.03em}#rouletteName.pop{animation:pop .12s}#rouletteName.final{font-size:40px;color:#c0392b;animation:bigpop .6s}
+@keyframes pop{from{transform:translateY(-8px);opacity:.4}to{transform:none;opacity:1}}@keyframes bigpop{0%{transform:scale(.6)}60%{transform:scale(1.18)}100%{transform:scale(1)}}
+.note-modal{background:linear-gradient(160deg,#eef7ec,#fff4dc)}.note-intro{font-weight:900;color:#5c7b52;font-size:14px;margin:4px 0 14px}
+.paper{background:repeating-linear-gradient(0deg,#fffdf4 0 29px,#e9dcc0 29px 30px);border:2px solid #ead7b1;border-radius:14px;padding:18px 20px 14px;text-align:left;transform:rotate(-1.2deg);box-shadow:0 10px 24px #8a6d4033}
+.paper-title{font-size:18px;font-weight:900;color:#7a4b2a;margin-bottom:8px}.paper-body{font-size:15px;line-height:30px;color:#5a4a3a;white-space:pre-wrap}.paper-sign{text-align:right;font-size:12px;color:#a58662;margin-top:6px;font-weight:800}.note-count{margin-top:16px;font-weight:900;color:#a0622f}
+.notebook{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px;text-align:left}.nb-item{border-radius:12px;padding:10px 12px;font-size:12.5px;font-weight:800;background:#f1ead8;color:#9b8f78;border:none;font-family:inherit}.nb-item.found{background:#fff2c9;color:#7a4b2a;cursor:pointer;box-shadow:0 3px 0 #e8c98a}
+.post-modal{text-align:left;max-height:92vh;overflow:auto}.post-modal h2,.post-modal .overline,.post-modal .gift-emoji{text-align:center;display:block}.tabs{display:flex;gap:6px;margin:12px 0}.tabs button{flex:1;border:none;border-radius:12px;padding:10px 4px;font-weight:900;font-family:inherit;background:#f1e6cf;color:#7a6146;cursor:pointer;font-size:12.5px}.tabs button.on{background:#e77b63;color:#fff}
+.post-pane{max-height:46vh;overflow:auto}.post-pane label{display:block;font-size:13px;font-weight:900;color:#795e45;margin:12px 0 6px}.post-pane select,.post-pane textarea{width:100%;border:2px solid #dfc19c;border-radius:12px;padding:10px;font-family:inherit;font-size:14px;background:#fffef8}.post-pane label.check{display:flex;gap:8px;align-items:center}.post-note{font-size:11.5px;color:#9a8466;margin:8px 0 12px}
+.letter{background:#fffdf5;border:2px solid #f0e0bf;border-radius:14px;padding:12px 14px;margin-bottom:9px}.letter.new{border-color:#e77b63;box-shadow:0 0 0 3px #ffd9c2}.letter-from{font-weight:900;font-size:12.5px;color:#a0622f}.letter-body{font-size:14.5px;color:#4d4337;line-height:1.6;margin:6px 0;white-space:pre-wrap;word-break:break-word}.letter-at{font-size:11px;color:#b3a28a;text-align:right}.post-empty{text-align:center;color:#9a8466;padding:24px 8px}
 </style>
 </head>
 <body>
@@ -375,14 +392,21 @@ h1{color:#315b48;text-shadow:none;font-size:clamp(31px,3.5vw,47px);line-height:1
 <circle cx="500" cy="311" r="2.9" fill="#fff7e0" opacity="0.80"/>
 </svg>
 <canvas id="world" aria-label="크리스마스 3D 마니또 마을"></canvas><div id="vignette"></div>
-<div class="topbar"><div class="brand"><span class="brand-icon">🎄</span><span>MANITTO <span style="color:var(--gold)">WORLD</span><span style="font-weight:700;font-size:10px;vertical-align:top;margin-left:4px;color:#bbbfdf">2026</span></span></div><div class="top-pills"><span class="pill hide-sm" id="modePill">🎅 70명 산타마을</span><button class="pill mission-top" id="missionTop" type="button">📸 미션 인증</button><span class="pill">🎁 선물 <strong>15,000원</strong></span></div></div>
-<div class="intro" id="intro"><div class="eyebrow">WELCOME TO SANTA VILLAGE · 2026</div><h1>반짝반짝,<br><em>우리들의</em><br>마니또 산타마을!</h1><p class="sub">황금빛 전구가 반짝이는 겨울 마을!<br>친구들과 함께 크리스마스 광장으로 걸어가<br>나만의 비밀 선물 상자를 열어보세요.</p><div id="demoSelectWrap" class="demo-select"><label for="demoNumber">🎁 체험할 참가자 번호 <b>(1~70)</b></label><select id="demoNumber" aria-label="체험 참가자 선택"></select><p>체험에서는 번호 변경이 가능합니다. 실제 운영은 개인별 비밀 링크로 입장해요.</p></div><button class="main-btn" id="start">🎄 산타마을 입장하기 <span>→</span></button><div class="tiny">🕹 이동 <b>W A S D</b> / 방향키 &nbsp; · &nbsp; 선물 열기 <b>E</b><br><span id="welcome">체험용 모드 · 실제 배정은 운영자 링크로 입장</span></div></div>
+<div class="topbar"><div class="brand"><span class="brand-icon">🎄</span><span>MANITTO <span style="color:var(--gold)">WORLD</span><span style="font-weight:700;font-size:10px;vertical-align:top;margin-left:4px;color:#bbbfdf">2026</span></span></div><div class="top-pills"><span class="pill hide-sm" id="zonePill">📍 🎄 광장</span><button class="pill mission-top" id="notesPill" type="button">📜 0/12</button><button class="pill mission-top" id="mailPill" type="button">📮 우체통</button><span class="pill hide-sm" id="modePill">🎅 우리 회사 산타마을</span><button class="pill mission-top" id="missionTop" type="button">📸 미션 인증</button><span class="pill hide-sm">🎁 선물 <strong>15,000원</strong></span></div></div>
+<div class="intro" id="intro"><div class="eyebrow">WELCOME TO SANTA VILLAGE · 2026</div><h1>반짝반짝,<br><em>우리들의</em><br>마니또 산타마을!</h1><p class="sub">황금빛 전구가 반짝이는 겨울 마을!<br>친구들과 함께 크리스마스 광장으로 걸어가<br>나만의 비밀 선물 상자를 열어보세요.</p><div id="demoSelectWrap" class="demo-select"><label for="demoNumber">🎁 체험할 참가자 번호 <b>(1~70)</b></label><select id="demoNumber" aria-label="체험 참가자 선택"></select><p>체험에서는 번호 변경이 가능합니다. 실제 운영은 개인별 비밀 링크로 입장해요.</p></div><form id="loginWrap" class="login-box" style="display:none" autocomplete="off"><label for="loginName">이름</label><input id="loginName" placeholder="예: 홍길동" maxlength="40"><div class="login-row"><div><label for="loginBirth">생일 (월일 4자리)</label><input id="loginBirth" inputmode="numeric" maxlength="4" placeholder="0315"></div><div><label for="loginPin">PIN 숫자 4자리</label><input id="loginPin" type="password" inputmode="numeric" maxlength="4" placeholder="••••"></div></div><p class="login-help">🔐 <b>처음 입장</b>이면 지금 입력한 PIN이 내 비밀번호가 돼요. 꼭 기억해 주세요!</p><button class="main-btn" id="loginBtn" type="submit">🎄 산타마을 입장하기 →</button></form><button class="main-btn" id="start">🎄 산타마을 입장하기 <span>→</span></button><button type="button" id="logoutBtn" class="logout-link" style="display:none">다른 이름으로 입장하기</button><div class="tiny">🕹 이동 <b>W A S D</b> / 방향키 &nbsp; · &nbsp; E 상호작용 · Space 눈 · F 뿅망치<br><span id="welcome">체험용 모드 · 실제 배정은 운영자 링크로 입장</span></div></div>
 <div class="floating-label" id="chestLabel"><strong>🎁 산타의 비밀 선물 상자</strong><small>가까이 다가가서 열어보세요</small></div>
-<div class="hud" id="hud"><div class="hint glass">이동 <span class="key">W</span><span class="key">A</span><span class="key">S</span><span class="key">D</span> &nbsp; 상자 열기 <span class="key">E</span></div><div class="progress glass"><span id="distanceLabel">선물 상자까지 이동 중</span><div class="bar"><div class="bar-inner" id="proBar"></div></div></div></div>
+<div class="hud" id="hud"><div class="hint glass">이동 <span class="key">W</span><span class="key">A</span><span class="key">S</span><span class="key">D</span> &nbsp; 상호작용 <span class="key">E</span> 눈 <span class="key">Space</span> 뿅망치 <span class="key">F</span></div><div class="progress glass"><span id="distanceLabel">선물 상자까지 이동 중</span><div class="bar"><div class="bar-inner" id="proBar"></div></div></div></div>
 <button id="openGift" class="floating-btn">🎁 비밀 선물 상자 열기 <span style="font-size:13px">[ E ]</span></button>
-<div id="joystick"><div id="stick"></div></div><button id="mobileOpen">🎁 열기</button>
-<div class="foot">SANTA VILLAGE · 70 FRIENDS · CHRISTMAS 2026</div>
+<div id="joystick"><div id="stick"></div></div><button id="mobileOpen">✋ E</button><button id="mobileSnow" class="mobile-act" style="bottom:95px">❄️</button><button id="mobileBonk" class="mobile-act" style="bottom:160px">🔨</button><div id="nearHint" class="near-hint"></div>
+<div class="foot">SANTA VILLAGE · FRIENDS · CHRISTMAS 2026</div>
 <div id="toast" class="toast"></div>
+<div class="overlay" id="rouletteOverlay"><div class="modal roulette-modal"><span class="gift-emoji">🎰</span><div class="overline">SPINNING THE SANTA ROULETTE</div><h2>나의 마니또는 과연…?</h2><div class="roulette-window"><div id="rouletteName">?</div></div><p id="rouletteHint">두근두근… 산타 룰렛이 돌아가는 중!</p></div></div>
+<div class="overlay" id="noteOverlay"><div class="modal note-modal"><button class="close" id="noteClose" aria-label="닫기">×</button><div id="noteIntro" class="note-intro"></div><div class="paper"><div id="noteTitle" class="paper-title"></div><div id="noteBody" class="paper-body"></div><div class="paper-sign">— 산타마을에서 ✉️</div></div><div id="noteCount" class="note-count"></div></div></div>
+<div class="overlay" id="notebookOverlay"><div class="modal"><button class="close" id="notebookClose" aria-label="닫기">×</button><span class="gift-emoji">📖</span><div class="overline">HIDDEN NOTES COLLECTION</div><h2>쪽지 도감</h2><p>마을 곳곳에 쪽지가 숨어 있어요. 나무는 <b>E</b>로 흔들고, 수상한 눈더미엔 <b>Space</b>로 눈을 뿌려봐요! 반짝이는 곳을 잘 보세요 ✨</p><div id="notebookList" class="notebook"></div></div></div>
+<div class="overlay" id="postOverlay"><div class="modal post-modal"><button class="close" id="postClose" aria-label="닫기">×</button><span class="gift-emoji">📮</span><div class="overline">SANTA VILLAGE POST</div><h2>산타 우체통</h2><div class="tabs" id="postTabs"><button type="button" data-tab="inbox">📬 받은 편지</button><button type="button" data-tab="write">✏️ 편지 쓰기</button><button type="button" data-tab="board">💬 게시판</button></div>
+<div id="postInbox" class="post-pane"></div><div id="postBoard" class="post-pane"></div>
+<form id="postWrite" class="post-pane"><label for="postKind">보내는 방법</label><select id="postKind"><option value="board">💬 게시판에 붙이기 (모두가 읽어요)</option><option value="direct">✉️ 한 사람에게 보내기</option><option value="manitto">🎅 내 마니또에게 몰래 보내기</option></select><div id="postToWrap"><label for="postTo">받는 사람</label><select id="postTo"></select></div><label class="check"><input type="checkbox" id="postAnon" checked> 익명으로 보내기</label><label for="postBody">내용 (최대 500자)</label><textarea id="postBody" maxlength="500" rows="5" placeholder="따뜻한 한마디를 남겨주세요 ✨"></textarea><p class="post-note">※ 익명이어도 운영자는 보낸 사람을 확인할 수 있어요. 서로 기분 좋은 말만 나눠요!</p><button class="action-btn" id="postSend" type="submit">📮 보내기</button></form></div></div>
+
 <div class="overlay" id="resultOverlay"><div class="modal"><button class="close" id="closeModal" aria-label="닫기">×</button><span class="gift-emoji">🎁</span><div class="overline">YOUR SECRET FRIEND HAS ARRIVED</div><h2 id="resultTitle">당신의 마니또가 공개됐어요!</h2><p id="resultDescription">이름은 비밀! 연말까지 몰래 챙겨주세요.</p><div class="name-card"><small>MY SECRET SANTA MISSION</small><strong id="resultName">?</strong><span style="font-size:12px;font-weight:900">이 분의 마니또가 되어주세요 💛</span></div><div class="mission"><div class="mt">✨ 당신의 비밀 미션</div><div id="resultMission">포스트잇에 마니또 초상화 그려주기</div><div style="margin-top:7px;color:#d8d5ee;font-size:12px">🎁 준비할 선물: 15,000원 이하</div></div><div class="actions"><button class="action-btn" id="copyResult">📋 나만 보기로 복사</button><button class="secondary-btn" id="backWorld">마을로 돌아가기</button><button class="secondary-btn" id="missionFromResult">📸 미션 인증하기</button></div><p style="font-size:11px;margin-bottom:0">⚠ 링크나 결과를 공개하면 비밀이 풀릴 수 있어요.</p></div></div>
 <div class="overlay" id="missionOverlay"><div class="modal mission-modal"><button class="close" id="missionClose" aria-label="닫기">×</button><span class="gift-emoji">📮</span><div class="overline">MY LITTLE MISSION LOG</div><h2>미션 인증 우체통</h2><div class="mission" style="text-align:left"><div class="mt">오늘의 개별 미션</div><div id="missionTask">마니또에게 포스트잇 초상화 그려주기</div></div><div id="missionStatusBox" class="status-info">📌 아직 인증 전이에요.</div><form id="missionForm"><label for="missionNote">✏️ 미션 완료 내용</label><textarea id="missionNote" rows="3" placeholder="예) 초상화 포스트잇을 몰래 전달했어요!" minlength="3" maxlength="500" required></textarea><label for="missionPhoto">📷 인증 사진 (JPG / PNG / WebP, 2MB 이하)</label><input type="file" id="missionPhoto" accept="image/png,image/jpeg,image/webp" required><img id="photoPreview" alt="선택한 인증 사진 미리보기" style="display:none"><button type="submit" id="submitMission" class="action-btn" style="margin-top:14px;width:100%">🌟 인증 제출하기</button></form><p class="demo-warning" id="missionWarning">※ 체험판에서는 현재 브라우저에만 저장됩니다. 실제 행사는 운영자 서버에 저장되어 검토됩니다.</p></div></div>
 <script>
@@ -406,10 +430,10 @@ function lookAt(eye,to){const norm=v=>{let l=Math.hypot(...v)||1;return v.map(x=
 function hex(c){let h=c.replace('#','');return [parseInt(h.substring(0,2),16)/255,parseInt(h.substring(2,4),16)/255,parseInt(h.substring(4,6),16)/255]}
 
 const colors={snow:'#dce1d6',snow2:'#fff7e7',ice:'#bacfbb',pine:'#477c5c',pineLight:'#6fa078',pineDark:'#254f43',red:'#d85d50',red2:'#a84143',gold:'#ffcf65',yellow:'#ffe69c',brown:'#84533b',wood:'#c79570',white:'#fff9e9',dark:'#446255',roof:'#a94d48',window:'#ffd98a',mint:'#a3c4a0',sky:'#47636b',gray:'#b4bda9'};
-const objects=[];function obj(type,p,s,col,r=0,alpha=1,glow=0){objects.push({type,p,s,col,r,alpha,glow})}function box(p,s,c,r=0){obj('cube',p,s,c,r)}function sph(p,s,c,glow=0){obj('sphere',p,s,c,0,1,glow)}function cone(p,s,c){obj('cone',p,s,c)}function cyl(p,s,c){obj('cylinder',p,s,c)}
+const objects=[];let curGroup=0;function obj(type,p,s,col,r=0,alpha=1,glow=0){objects.push({type,p,s,col,r,alpha,glow,g:curGroup})}function box(p,s,c,r=0){obj('cube',p,s,c,r)}function sph(p,s,c,glow=0){obj('sphere',p,s,c,0,1,glow)}function cone(p,s,c){obj('cone',p,s,c)}function cyl(p,s,c){obj('cylinder',p,s,c)}
 let rngSeed=321100;function rnd(){rngSeed=(rngSeed*1664525+1013904223)>>>0;return rngSeed/4294967296}
 // Frosted island and curved soft snowbanks
-cyl([0,-.9,0],[25,.75,25],colors.pineDark);cyl([0,-.39,0],[24.3,.12,24.3],colors.snow);cyl([0,-.31,0],[23.7,.06,23.7],colors.snow2);
+cyl([0,-.9,0],[50,.75,50],colors.pineDark);cyl([0,-.39,0],[49.3,.12,49.3],colors.snow);cyl([0,-.31,0],[48.7,.06,48.7],colors.snow2);
 for(let j=0;j<22;j++){let a=j*2*Math.PI/22;let x=Math.cos(a)*(16.7+rnd()*4),z=Math.sin(a)*(16.7+rnd()*4);sph([x,-.24,z],[1.45+rnd()*1.3,.25,1.1+rnd()*.7],j%2?'#ecede0':'#fbf2da')}
 // Paved amber-snow road toward the secret gift plaza
 for(let z=2.9;z<17;z+=1.15){box([0,-.195,z],[3.55,.055,.9],Math.floor(z)%3===0?'#d8b69a':'#d0af92');for(const x of [-2.25,2.25])sph([x,-.24,z],[.35,.12,.5],'#fff4da')}
@@ -451,10 +475,50 @@ function packageGift(x,z,s=1){let col=rnd()>.5?colors.red2:colors.pine;sph([x,-.
 for(let i=0;i<80;i++){const x=(rnd()-.5)*40,z=(rnd()-.5)*40;if(Math.hypot(x,z)>22||Math.abs(x)<3&&z>2&&z<17)continue;sph([x,-.19,z],[.10+rnd()*.12,.04,.09+rnd()*.1],i%3?'#fff8e9':'#ffe1ac')}
 // Center gift platform, bow and gentle magical glow
 cyl([0,.00,0],[2.38,.18,2.38],'#e7b770');cyl([0,.12,0],[2.18,.12,2.18],'#fff3d5');box([0,.98,0],[1.48,1.28,1.39],colors.red2);box([0,.98,.72],[.28,1.33,.09],colors.gold);box([0,.99,0],[1.52,1.34,.30],colors.gold);box([0,1.67,0],[1.69,.24,1.55],colors.red);sph([-.22,1.97,0],[.27,.18,.2],colors.gold,1);sph([.22,1.97,0],[.27,.18,.2],colors.gold,1);sph([0,2.00,0],[.15,.23,.16],colors.gold,1);
+// ───── 확장 맵: 🌲 눈 덮인 숲(북) · ⛄ 눈밭(동) · ❄️ 얼음 호수(서) · 🏠 골목길(남) ─────
+const WORLD_R=44,LAKE={x:-31,z:0,r:10},MAILBOX={x:3.7,z:-5.4},BOARD={x:-3.9,z:-5.6};
+const trees=[],spots=[],zoneSigns=[];let gidSeq=0;
+function pine(x,z,h=1){const gid=++gidSeq;curGroup=gid;const y=-.27;cyl([x,y+.55*h,z],[.2*h,.75*h,.2*h],colors.wood);cone([x,y+1.75*h,z],[1.45*h,1.0*h,1.45*h],colors.pineDark);cone([x,y+2.55*h,z],[1.12*h,.9*h,1.12*h],gid%2?colors.pine:colors.pineLight);cone([x,y+3.3*h,z],[.78*h,.78*h,.78*h],colors.pineLight);sph([x,y+2.95*h,z],[.62*h,.1*h,.62*h],colors.snow2);sph([x,y+4.05*h,z],[.2*h,.2*h,.2*h],'#fffdf2');curGroup=0;const t={gid,x,z,h,seq:0};trees.push(t);return t}
+function snowPile(x,z,s=1){const gid=++gidSeq;curGroup=gid;sph([x,-.12,z],[1.35*s,.72*s,1.15*s],'#fbf6ea');sph([x+.7*s,-.2,z+.35*s],[.75*s,.45*s,.7*s],'#f3efe2');sph([x-.6*s,-.22,z-.3*s],[.62*s,.38*s,.58*s],'#fffdf4');curGroup=0;return gid}
+function road(x0,z0,x1,z1){const len=Math.hypot(x1-x0,z1-z0),n=Math.ceil(len/1.15),rot=Math.atan2(x1-x0,z1-z0);for(let i=0;i<=n;i++){const t=i/n;box([x0+(x1-x0)*t,-.195,z0+(z1-z0)*t],[3.2,.055,.9],i%3===0?'#d8b69a':'#d0af92',rot)}}
+function signpost(x,z,name){cyl([x,.55,z],[.09,.85,.09],'#6c5240');box([x,1.35,z],[1.5,.42,.1],'#c79570');box([x,1.35,z+.06],[1.32,.28,.02],'#f3dfbd');sph([x,1.62,z],[.78,.08,.14],colors.white);zoneSigns.push({name,x,z,y:2.35})}
+// 길: 광장 → 숲(북), 광장 → 골목길(남)
+road(0,-3.6,0,-40);road(0,17.6,0,40);
+// 🌲 눈 덮인 숲 — 나무를 E로 흔들어보세요 (그중 4그루에 쪽지)
+const noteTreePos=[[-9,-27],[12,-31],[-15,-37],[6,-40]];
+for(let gx=-26;gx<=26;gx+=4.4)for(let gz=-21.5;gz>=-44;gz-=4.4){const x=gx+(rnd()-.5)*2.4,z=gz+(rnd()-.5)*2.4;if(Math.hypot(x,z)>42.5||Math.abs(x)<2.9)continue;if(noteTreePos.some(([a,b])=>Math.hypot(a-x,b-z)<3.1))continue;pine(x,z,.85+rnd()*.45)}
+noteTreePos.forEach(([x,z],i)=>{const t=pine(x,z,1.08);t.seq=i+1;spots.push({seq:i+1,kind:'tree',x,z,y:2.2,tree:t})});
+signpost(2.6,-19.5,'🌲 눈 덮인 숲');
+// ⛄ 눈밭 — 수상한 눈더미에 Space로 눈을 뿌리면…
+[[27,-6,1],[35,4,1.1],[30,10,1]].forEach(([x,z,s],i)=>{const gid=snowPile(x,z,s);spots.push({seq:5+i,kind:'snow',x,z,y:1.15,gid})});
+[[24,-11],[33,-12],[40,-3],[38,11],[25,7],[29,2],[36,-6],[22,12]].forEach(([x,z])=>snowPile(x,z,.65+rnd()*.5));
+snowman(26,1.5);snowman(33,-1.8);snowman(39.5,4.5);snowman(35.5,9.6);spots.push({seq:8,kind:'snowman',x:35.5,z:9.6,y:2.9});
+for(const [x,z,w,r] of [[31,-8.6,4.2,0],[28.9,-6.9,2.2,1.57],[33.1,-6.9,2.2,1.57]])box([x,.25,z],[w,.6,.7],'#f4efe3',r);
+signpost(21.5,-2.6,'⛄ 눈밭');
+// ❄️ 얼음 호수 — 미끄러워요! 얼음 구멍을 살펴보세요
+cyl([LAKE.x,-.27,LAKE.z],[LAKE.r+.6,.05,LAKE.r+.6],'#e9efe8');cyl([LAKE.x,-.235,LAKE.z],[LAKE.r,.04,LAKE.r],'#b9dde6');cyl([LAKE.x,-.205,LAKE.z],[LAKE.r-1.4,.02,LAKE.r-1.4],'#cfeaf0');
+for(let i=0;i<26;i++){const a=i/26*Math.PI*2;sph([LAKE.x+Math.cos(a)*(LAKE.r+.4),-.15,LAKE.z+Math.sin(a)*(LAKE.r+.4)],[.55+rnd()*.3,.28,.5+rnd()*.25],i%2?'#9aa59a':'#b6bdb2')}
+for(let i=0;i<12;i++){const a=rnd()*6.28,r=rnd()*7.5;box([LAKE.x+Math.cos(a)*r,-.18,LAKE.z+Math.sin(a)*r],[.05,.012,1.7],'#eaf7fa',rnd()*3.1)}
+cyl([-34,-.18,3],[.95,.03,.95],'#f7f9f4');cyl([-34,-.16,3],[.72,.03,.72],'#2f6170');sph([-34,-.12,3],[.3,.02,.3],'#4b8796');spots.push({seq:9,kind:'ice',x:-34,z:3,y:.7});
+for(const [x,z] of [[-22.8,9.2],[-24.5,-8.6]]){box([x,.45,z],[2.1,.14,.6],colors.wood);for(const dx of [-.85,.85])box([x+dx,.15,z],[.12,.5,.5],colors.brown);box([x,.85,z-.28],[2.1,.6,.1],colors.wood)}
+signpost(-21,4.4,'❄️ 얼음 호수');
+// 🏠 골목길 — 굴뚝과 가로등을 살펴보세요
+holidayHouse(8.5,23,'#d9b08f','#b8605a');holidayHouse(-8.5,25,'#c99f8a','#a9564c');holidayHouse(8.5,32,'#d1a586','#c2675c');holidayHouse(-8.5,34,'#dcb594','#b35a52');holidayHouse(8,40.5,'#cfa284','#ad5a50');
+spots.push({seq:10,kind:'chimney',x:-8.5,z:27.6,gx:-8.12,gz:25,y:5.1},{seq:11,kind:'chimney',x:8.5,z:34.6,gx:8.88,gz:32,y:5.1});
+for(const z of [22,28,34,40])for(const x of [-3.2,3.2])lamp(x,z);spots.push({seq:12,kind:'lamp',x:-3.2,z:34,y:3.35});
+signpost(2.6,19.2,'🏠 골목길');
+// 📮 우체통 · 💬 게시판 (광장 북쪽)
+cyl([MAILBOX.x,.45,MAILBOX.z],[.09,.75,.09],'#5d4a3a');box([MAILBOX.x,1.35,MAILBOX.z],[.72,.58,.52],colors.red);sph([MAILBOX.x,1.63,MAILBOX.z],[.36,.2,.26],colors.red2);box([MAILBOX.x,1.42,MAILBOX.z+.27],[.38,.05,.03],'#3b2a2a');sph([MAILBOX.x,1.86,MAILBOX.z],[.4,.09,.3],colors.white);sph([MAILBOX.x+.42,1.5,MAILBOX.z],[.05,.05,.05],colors.gold,1);
+for(const dx of [-1,1])cyl([BOARD.x+dx,.7,BOARD.z],[.08,1.0,.08],'#6c5240');box([BOARD.x,1.45,BOARD.z],[2.3,1.2,.12],'#b98a5f');box([BOARD.x,2.1,BOARD.z],[2.5,.12,.2],'#8a6446');sph([BOARD.x,2.2,BOARD.z],[1.3,.1,.25],colors.white);
+for(let i=0;i<5;i++)box([BOARD.x-.85+i*.42,1.45+(i%2?.2:-.15),BOARD.z+.08],[.32,.36,.02],['#fff4d6','#ffe1e1','#e3f4ff','#fff1b8','#e8ffe3'][i]);
+zoneSigns.push({name:'📮 우체통',x:MAILBOX.x,z:MAILBOX.z,y:2.6},{name:'💬 게시판',x:BOARD.x,z:BOARD.z,y:2.85});
+// 바깥쪽 눈 반짝이
+for(let i=0;i<140;i++){const a=rnd()*6.283,r=22+rnd()*24,x=Math.cos(a)*r,z=Math.sin(a)*r;if(Math.hypot(x-LAKE.x,z-LAKE.z)<LAKE.r+1||Math.abs(x)<1.8)continue;sph([x,-.19,z],[.1+rnd()*.12,.04,.09+rnd()*.1],i%3?'#fff8e9':'#ffe1ac')}
+
 const sparkles=[];for(let j=0;j<65;j++){const a=rnd()*Math.PI*2,rr=.95+rnd()*3.2;sparkles.push([Math.cos(a)*rr,.55+rnd()*4.7,Math.sin(a)*rr,.04+rnd()*.075,rnd()*6.28])}
 function draw(type,pos,scale,col,rot=0,alpha=1,glow=0){const m=mesh[type],c=hex(col);gl.uniform1f(U.glow,glow);gl.uniformMatrix4fv(U.model,false,matObj(pos,scale,rot));gl.uniform4f(U.color,c[0],c[1],c[2],alpha);gl.bindVertexArray(m.va);gl.drawElements(gl.TRIANGLES,m.count,gl.UNSIGNED_SHORT,0)}
-const snow=[];for(let i=0;i<85;i++)snow.push({x:(rnd()-.5)*36,y:.2+rnd()*11,z:(rnd()-.5)*37,spd:.35+rnd()*.7,phase:rnd()*6.28,size:.025+rnd()*.065});
-const player={x:0,z:12,yaw:Math.PI,walking:false};let started=false,opened=false,revealed=false,token=new URLSearchParams(location.search).get('token'),playerName='체험 참가자',actualMission='포스트잇에 마니또 초상화 그려주기',receiver='?',demoNumber=1,missionRecord=null;
+const snow=[];for(let i=0;i<60;i++)snow.push({x:(rnd()-.5)*36,y:.2+rnd()*11,z:(rnd()-.5)*37,spd:.35+rnd()*.7,phase:rnd()*6.28,size:.025+rnd()*.065});
+const player={x:0,z:12,yaw:Math.PI,walking:false};let started=false,opened=false,revealed=false,tokenFromStore=false,token=new URLSearchParams(location.search).get('token')||(()=>{try{const t=localStorage.getItem('manittoToken');if(t)tokenFromStore=true;return t}catch{return null}})(),playerName='체험 참가자',actualMission='포스트잇에 마니또 초상화 그려주기',receiver='?',demoNumber=1,missionRecord=null;
 let keys=new Set(),joy={x:0,y:0},last=0,clock=0,cam=[12,14,21],target=[0,1,4],readyToOpen=false,showToastTimeout;
 const demoMissions=['포스트잇에 마니또 초상화 그려주기','마니또에게 익명 응원 메시지 전달하기','마니또에게 어울리는 노래 추천하기','마니또에게 따뜻한 칭찬 메모 남기기','마니또가 좋아하는 간식 취향 알아보기','마니또를 위한 연말 응원 카드 쓰기'];
 // Demo 1-70 random permutation in one cycle, same assign-each-once guarantee as server.
@@ -468,8 +532,11 @@ function useNumber(){demoNumber=Number(numberSelect.value);playerName=demoNumber
 numberSelect.addEventListener('change',()=>{useNumber();if(started)connectWorld()});useNumber();
 function toast(t){$('toast').textContent=t;$('toast').classList.add('show');clearTimeout(showToastTimeout);showToastTimeout=setTimeout(()=>$('toast').classList.remove('show'),3500)}
 function inRange(){return Math.hypot(player.x,player.z)<3.3}
-function updateUI(){let d=Math.hypot(player.x,player.z);$('proBar').style.width=`${Math.min(100,Math.max(0,(1-d/13)*100))}%`;$('distanceLabel').textContent=d<3.3?'✨ 선물 상자에 도착했어요':'선물 상자까지 '+Math.ceil(d)+'m';$('openGift').classList.toggle('visible',started&&inRange()&&!opened);$('chestLabel').classList.toggle('show',started&&d<9&&!opened);$('mobileOpen').style.opacity=started&&d<3.3?'1':'.65'}
-function move(dt){let vx=0,vz=0;if(keys.has('w')||keys.has('arrowup'))vz--;if(keys.has('s')||keys.has('arrowdown'))vz++;if(keys.has('a')||keys.has('arrowleft'))vx--;if(keys.has('d')||keys.has('arrowright'))vx++;vx+=joy.x;vz+=joy.y;const v=Math.hypot(vx,vz);player.walking=started&&v>.04;if(player.walking){vx/=v;vz/=v;let speed=5.6;player.x=Math.max(-17,Math.min(17,player.x+vx*dt*speed));player.z=Math.max(-17,Math.min(17,player.z+vz*dt*speed));if(Math.hypot(player.x,player.z)<1.1){player.x-=vx*dt*speed;player.z-=vz*dt*speed}player.yaw=Math.atan2(vx,vz)}if(!started)player.yaw=Math.PI;updateUI()}
+function updateUI(){let d=Math.hypot(player.x,player.z);$('proBar').style.width=`${Math.min(100,Math.max(0,(1-d/13)*100))}%`;$('distanceLabel').textContent=d<3.3?'✨ 선물 상자에 도착했어요':'선물 상자까지 '+Math.ceil(d)+'m';$('openGift').classList.toggle('visible',started&&inRange()&&!opened);$('chestLabel').classList.toggle('show',started&&d<9&&!opened);$('mobileOpen').style.opacity='1';if(started&&clock-nearT>.2){nearT=clock;const zn=zoneName();if(zn!==lastZone){lastZone=zn;$('zonePill').textContent='📍 '+zn}const h=nearHint();const nh=$('nearHint');if(nh.textContent!==h){nh.textContent=h;nh.classList.toggle('show',!!h)}}}
+function move(dt){let vx=0,vz=0;if(keys.has('w')||keys.has('arrowup'))vz--;if(keys.has('s')||keys.has('arrowdown'))vz++;if(keys.has('a')||keys.has('arrowleft'))vx--;if(keys.has('d')||keys.has('arrowright'))vx++;vx+=joy.x;vz+=joy.y;const v=Math.hypot(vx,vz),want=started&&!anyModal()&&v>.04;if(want){vx/=v;vz/=v}else{vx=0;vz=0}
+  const speed=6.4,onIce=Math.hypot(player.x-LAKE.x,player.z-LAKE.z)<LAKE.r-.3,k=onIce?Math.min(1,dt*1.3):1;player.vx=(player.vx||0)+(vx*speed-(player.vx||0))*k;player.vz=(player.vz||0)+(vz*speed-(player.vz||0))*k;const sp=Math.hypot(player.vx,player.vz);player.walking=started&&sp>.25;
+  if(started&&sp>.01){let nx=player.x+player.vx*dt,nz=player.z+player.vz*dt;const rr=Math.hypot(nx,nz);if(rr>WORLD_R){nx*=WORLD_R/rr;nz*=WORLD_R/rr}if(Math.hypot(nx,nz)>=1.1){player.x=nx;player.z=nz}else{player.vx=0;player.vz=0}if(want)player.yaw=Math.atan2(vx,vz);else if(sp>.4)player.yaw=Math.atan2(player.vx,player.vz)}
+  if(!started)player.yaw=Math.PI;if(onIce&&sp>2&&!iceToastShown){iceToastShown=true;toast('❄️ 얼음 호수! 미끄러워요~ 얼음 구멍도 살펴보세요')}updateUI()}
 function avatar(){let x=player.x,z=player.z,bob=player.walking?Math.sin(clock*12)*.066:Math.sin(clock*2)*.025,r=player.yaw;function part(type,offset,scale,col){let dx=offset[0]*Math.cos(r)+offset[2]*Math.sin(r),dz=-offset[0]*Math.sin(r)+offset[2]*Math.cos(r);draw(type,[x+dx,offset[1]+bob,z+dz],scale,col,r)}
 part('sphere',[0,.08,0],[.45,.07,.36],'#c6dcbd');part('sphere',[0,.92,0],[.49,.62,.37],'#bf6455');part('sphere',[0,1.33,.23],[.42,.15,.32],'#fff7e5');part('sphere',[0,1.78,0],[.61,.60,.56],'#f5d9b6');part('sphere',[0,2.18,-.13],[.61,.36,.57],'#8c6d58');part('sphere',[0,2.39,-.18],[.47,.26,.43],'#bb4b47');part('sphere',[0,2.62,-.17],[.19,.19,.19],colors.white);part('sphere',[-.22,1.79,.54],[.055,.075,.045],'#453c43');part('sphere',[.22,1.79,.54],[.055,.075,.045],'#453c43');part('sphere',[-.38,1.62,.44],[.16,.09,.06],'#f8a5a6');part('sphere',[.38,1.62,.44],[.16,.09,.06],'#f8a5a6');part('sphere',[0,1.57,.56],[.085,.05,.045],'#eeb0a2');let swing=player.walking?Math.sin(clock*12)*.19:0;part('sphere',[-.57,.94,-swing],[.20,.36,.21],'#bf6455');part('sphere',[.57,.94,swing],[.20,.36,.21],'#bf6455');part('sphere',[-.22,.34,swing],[.21,.36,.22],'#7e776d');part('sphere',[.22,.34,-swing],[.21,.36,.22],'#7e776d')}
 
@@ -477,7 +544,7 @@ part('sphere',[0,.08,0],[.45,.07,.36],'#c6dcbd');part('sphere',[0,.92,0],[.49,.6
 // ─────────────────────────────────────────────────────────────────────
 // 실시간 공용 마을: 참가자 이름/위치만 전송, 비밀 마니또 배정은 전송하지 않음.
 const otherPlayers=new Map(), nameTags=new Map();
-let worldSocket=null, worldId='',worldConnected=false,connectTimeout=null,lastWorldSend=0,worldOnline=0,worldCapacity=70;
+let worldSocket=null, worldId='',worldConnected=false,connectTimeout=null,lastWorldSend=0,worldOnline=0,worldCapacity=100;
 const overlayNames=document.createElement('div');overlayNames.id='avatar-name-overlay';document.body.appendChild(overlayNames);
 const labelStyle=document.createElement('style');labelStyle.textContent=`
 #avatar-name-overlay{position:fixed;inset:0;z-index:2;pointer-events:none;overflow:hidden}
@@ -487,7 +554,7 @@ const labelStyle=document.createElement('style');labelStyle.textContent=`
 `;document.head.appendChild(labelStyle);
 const onlineIndicator=document.createElement('div');onlineIndicator.id='onlineIndicator';onlineIndicator.className='pill';onlineIndicator.setAttribute('role','status');onlineIndicator.textContent='👥 함께 접속: 연결 전';document.querySelector('.top-pills')?.prepend(onlineIndicator);
 function displayConnection(t){onlineIndicator.textContent=t;}
-function labelFor(id,name,self=false){let e=nameTags.get(id);if(!e){e=document.createElement('div');e.className='nameflag'+(self?' self':'');overlayNames.appendChild(e);nameTags.set(id,e)} if(e.textContent!==name)e.textContent=name;return e;}
+function labelFor(id,name,self=false){let e=nameTags.get(id);if(!e){e=document.createElement('div');e.className='nameflag'+(self===true?' self':self?' '+self:'');overlayNames.appendChild(e);nameTags.set(id,e)} if(e.textContent!==name)e.textContent=name;return e;}
 function clearDisconnected(keep){for(const [id,el] of nameTags)if(!keep.has(id)){el.remove();nameTags.delete(id)}}
 function positionLabel(vp,width,height,id,name,x,y,z,self=false){const out=[0,0,0,0],pos=[x,y,z,1];for(let row=0;row<4;row++)for(let col=0;col<4;col++)out[row]+=vp[col*4+row]*pos[col];
   const el=labelFor(id,name,self);const w=out[3];if(w<=.05){el.style.display='none';return;}
@@ -499,7 +566,7 @@ const remotePalette=['#c96956','#d89978','#739e83','#a47c72','#bc735f','#8bb89a'
 function drawOtherAvatar(p){let x=p.x,z=p.z,r=p.yaw;if(Math.hypot(x-player.x,z-player.z)>25)return;let bob=p.moving?Math.sin(clock*12+(Number(p.id.replace(/\D/g,''))||1))*.075:Math.sin(clock*2+p.x)*.024;
   let n=Number(p.id.replace(/\D/g,''))||0,col=remotePalette[n%remotePalette.length];
   function part(type,offset,scale,color){let dx=offset[0]*Math.cos(r)+offset[2]*Math.sin(r),dz=-offset[0]*Math.sin(r)+offset[2]*Math.cos(r);draw(type,[x+dx,offset[1]+bob,z+dz],scale,color,r)}
-  if(Math.hypot(x-player.x,z-player.z)>13){part('sphere',[0,.98,0],[.48,.66,.39],col);part('sphere',[0,1.78,0],[.59,.60,.54],'#f6d7b8');part('sphere',[0,2.32,-.10],[.46,.23,.42],'#bc6556');part('sphere',[0,2.51,-.13],[.19,.18,.19],colors.white);return;}
+  if(Math.hypot(x-player.x,z-player.z)>13||detailBudget--<=0){part('sphere',[0,.98,0],[.48,.66,.39],col);part('sphere',[0,1.78,0],[.59,.60,.54],'#f6d7b8');part('sphere',[0,2.32,-.10],[.46,.23,.42],'#bc6556');part('sphere',[0,2.51,-.13],[.19,.18,.19],colors.white);return;}
   part('sphere',[0,.08,0],[.48,.08,.37],'#c1d9b6');
   part('sphere',[0,.96,0],[.48,.60,.38],col);
   part('sphere',[0,1.31,.20],[.39,.14,.35],'#fdf0da');
@@ -516,10 +583,11 @@ function drawOtherAvatar(p){let x=p.x,z=p.z,r=p.yaw;if(Math.hypot(x-player.x,z-p
   part('sphere',[-.22,.33,swing],[.21,.32,.21],'#7c817d');
   part('sphere',[.22,.33,-swing],[.21,.32,.21],'#7c817d');
 }
-function drawRemotes(dt){const t=Math.min(1,dt*2.2);for(const p of otherPlayers.values()){p.x+=(p.tx-p.x)*t;p.z+=(p.tz-p.z)*t;let d=((p.tyaw-p.yaw+Math.PI*3)%(Math.PI*2))-Math.PI;p.yaw+=d*t;drawOtherAvatar(p)}}
+let detailBudget=0;function drawRemotes(dt){const t=Math.min(1,dt*2.2);detailBudget=20;const arr=[];for(const p of otherPlayers.values()){p.x+=(p.tx-p.x)*t;p.z+=(p.tz-p.z)*t;let d=((p.tyaw-p.yaw+Math.PI*3)%(Math.PI*2))-Math.PI;p.yaw+=d*t;p._d=Math.hypot(p.x-player.x,p.z-player.z);if(visible(p.x,p.z,1))arr.push(p)}arr.sort((a,b)=>a._d-b._d);for(const p of arr)drawOtherAvatar(p)}
 function renderNameTags(vp,width,height){const keep=new Set();
   if(started){const me='self';keep.add(me);positionLabel(vp,width,height,me,playerName+' · 나',player.x,3.35,player.z,true);}
   for(const [id,p] of otherPlayers){keep.add(id);positionLabel(vp,width,height,id,p.name,p.x,3.25,p.z)}
+  zoneSigns.forEach((z,i)=>{if(Math.hypot(z.x-player.x,z.z-player.z)<24){const id='zone-'+i;keep.add(id);positionLabel(vp,width,height,id,z.name,z.x,z.y,z.z,'zoneflag')}});
   clearDisconnected(keep);
 }
 // 실시간 마을: WebSocket 대신 Supabase 함수(village_sync)를 2.5초마다 호출 (무료 한도 안에서 동작)
@@ -532,39 +600,133 @@ function connectWorld(){if(!started)return;
   player.x=Math.cos(angle)*radius;player.z=Math.sin(angle)*radius;player.yaw=Math.PI;cam=[player.x+11,13,player.z+15];target=[player.x,1,player.z];
   displayConnection('📡 마을에 연결 중...');syncWorld();
 }
+let syncFn='village_sync_v2',lastEventId=-1;
 async function syncWorld(){clearTimeout(syncTimer);if(!started||!token||!villageCfg)return;
   if(document.hidden){syncTimer=setTimeout(syncWorld,SYNC_MS);return;}
   if(syncBusy)return;syncBusy=true;
   const r2=v=>Math.round(v*100)/100,moved=!lastSyncPos||Math.hypot(player.x-lastSyncPos[0],player.z-lastSyncPos[1])>0.08;lastSyncPos=[player.x,player.z];
   const headers={'Content-Type':'application/json',apikey:villageCfg.key};if(villageCfg.key.startsWith('eyJ'))headers.Authorization='Bearer '+villageCfg.key;
-  try{const r=await fetch(villageCfg.url.replace(/\/$/,'')+'/rest/v1/rpc/village_sync',{method:'POST',headers,cache:'no-store',body:JSON.stringify({p_token:token,p_x:r2(player.x),p_z:r2(player.z),p_yaw:r2(player.yaw),p_moving:moved||player.walking})});
+  const ev=pendingEvent;pendingEvent=null;
+  const payload={p_token:token,p_x:r2(player.x),p_z:r2(player.z),p_yaw:r2(player.yaw),p_moving:moved||player.walking};
+  if(syncFn==='village_sync_v2')Object.assign(payload,{p_event:ev?ev.kind:null,p_target:ev?ev.target:null,p_since:lastEventId});
+  try{const r=await fetch(villageCfg.url.replace(/\/$/,'')+'/rest/v1/rpc/'+syncFn,{method:'POST',headers,cache:'no-store',body:JSON.stringify(payload)});
+    if(r.status===404&&syncFn==='village_sync_v2'){syncFn='village_sync';throw Error('v2 없음')}
     if(!r.ok)throw Error('HTTP '+r.status);const m=await r.json();const list=Array.isArray(m.p)?m.p:[];
     worldConnected=true;worldOnline=Math.max(1,list.length);const active=new Set();
     for(const [id,name,x,z,yaw,moving] of list){if(id===worldId)continue;active.add(id);let p=otherPlayers.get(id);
       if(!p){p={id,name,x,z,yaw,tx:x,tz:z,tyaw:yaw,moving};otherPlayers.set(id,p)}else{p.name=name;p.tx=x;p.tz=z;p.tyaw=yaw;p.moving=moving}}
     for(const id of otherPlayers.keys())if(!active.has(id))otherPlayers.delete(id);
+    if(Array.isArray(m.e)&&lastEventId>=0)handleEvents(m.e);if(typeof m.last==='number')lastEventId=m.last;
+    if(typeof m.u==='number'){if(m.u>unread)toast('📬 새 편지가 도착했어요! 위쪽 우체통 버튼을 눌러보세요');unread=m.u;updateMailPill()}
     displayConnection('🟢 '+worldOnline+' / '+worldCapacity+'명 접속 중');
   }catch(e){worldConnected=false;displayConnection('📡 연결 불안정 · 다시 시도 중');}
-  finally{syncBusy=false;if(started)syncTimer=setTimeout(syncWorld,SYNC_MS);}
+  finally{syncBusy=false;if(started)syncTimer=setTimeout(syncWorld,pendingEvent?200:SYNC_MS);}
 }
 document.addEventListener('visibilitychange',()=>{if(!document.hidden&&started&&token)syncWorld()});
 function sendWorldMovement(){}
+if(new URLSearchParams(location.search).has('debug'))setTimeout(()=>{window.__v={player,cam,target,interact,throwSnow,bonk,spots,trees,openPost,openNotebook,fx}},0);
+// ───── 확장 상호작용: 숨겨진 쪽지 · 우체통 · 눈 뿌리기 · 뿅망치 · 룰렛 ─────
+const shaking=new Map(),hiddenGroups=new Set(),fx=[],foundNotes=new Set(),noteCache=new Map();
+let camShake=0,iceToastShown=false,lastZone='',noteTotal=12,unread=0,lastSnow=-9,lastBonk=-9,pendingEvent=null,nearT=0;
+const NOTE_HINT={tree:'🌲 숲 속 어느 나무',snow:'⛄ 눈밭의 수상한 눈더미',snowman:'⛄ 눈밭의 눈사람',ice:'❄️ 얼음 호수 어딘가',chimney:'🏠 골목길 어느 굴뚝',lamp:'💡 골목길 어느 가로등'};
+const FUN=['🍎 사과가 툭! …겨울인데?','❄️ 눈만 우수수 떨어졌어요','🐿️ 다람쥐가 깜짝 놀라 도망갔어요','🍂 아무것도 없네요. 다른 나무를 흔들어봐요!','🦉 부엉이: 부엉… (방해하지 마)','✨ 반짝이는 무언가가… 착각이었어요'];
+function anyModal(){return !!document.querySelector('.overlay.open')}
+function dist(a){return Math.hypot(a.x-player.x,a.z-player.z)}
+function nearestOf(list,max){let best=null,bd=max;for(const s of list){const d=dist(s);if(d<bd){bd=d;best=s}}return best}
+function zoneName(){if(Math.hypot(player.x-LAKE.x,player.z-LAKE.z)<LAKE.r+2)return '❄️ 얼음 호수';if(player.z<-19)return '🌲 눈 덮인 숲';if(player.x>20)return '⛄ 눈밭';if(player.z>18)return '🏠 골목길';return '🎄 광장'}
+function snowBurst(x,z,n=18,t0=0){fx.push({k:'snow',x,z,t:t0,parts:Array.from({length:n},()=>({a:Math.random()*6.283,s:1.2+Math.random()*2.2,u:2.2+Math.random()*2}))})}
+function visible(x,z,pad){const vx=x-target[0],vz=z-target[2];let dx=target[0]-cam[0],dz=target[2]-cam[2];const l=Math.hypot(dx,dz)||1;dx/=l;dz/=l;const f=vx*dx+vz*dz,side=Math.abs(vx*dz-vz*dx);return f>-15-pad&&f<36+pad&&side<24+pad+f*.35}
+function drawWorld(dt){const tx=target[0],tz=target[2];
+  for(const o of objects){if(o.g&&hiddenGroups.has(o.g))continue;if(o.s[0]<6&&!visible(o.p[0],o.p[2],Math.max(o.s[0],o.s[2])))continue;
+    if(o.g&&shaking.has(o.g)){const t=clock-shaking.get(o.g);if(t>1)shaking.delete(o.g);else{const amp=Math.sin(t*34)*.17*(1-t)*Math.max(0,o.p[1]+.3)/3;draw(o.type,[o.p[0]+amp,o.p[1],o.p[2]+amp*.4],o.s,o.col,o.r,o.alpha,o.glow);continue}}
+    draw(o.type,o.p,o.s,o.col,o.r,o.alpha,o.glow)}
+  // 아직 못 찾은 쪽지 자리는 가끔 반짝여요
+  for(const s of spots){if(foundNotes.has(s.seq)||(s.gid&&hiddenGroups.has(s.gid)))continue;if(Math.abs(s.x-tx)+Math.abs(s.z-tz)>40)continue;const tw=Math.sin(clock*2.1+s.seq*1.7);if(tw<.8)continue;const k=(tw-.8)/.2,r=.03+.11*k;draw('sphere',[s.gx??s.x,s.y+Math.sin(clock*3+s.seq)*.1,s.gz??s.z],[r,r,r],'#fff6c0',0,1,1)}
+  for(let i=fx.length-1;i>=0;i--){const f=fx[i];f.t+=dt;
+    if(f.k==='snow'){for(const p of f.parts){const r=p.s*f.t,y=.7+p.u*f.t-3.2*f.t*f.t;if(y<-.2)continue;draw('sphere',[f.x+Math.cos(p.a)*r,y,f.z+Math.sin(p.a)*r],[.11,.11,.11],'#ffffff',0,.95,1)}if(f.t>1.3)fx.splice(i,1)}
+    else if(f.k==='bonk'){const tp=f.to==='self'?player:(f.to?otherPlayers.get(f.to):null),x=tp?tp.x:f.x,z=tp?tp.z:f.z,down=Math.min(1,f.t/.22),hy=4.5-down*1.25;
+      if(f.t<.5){draw('cylinder',[x+.6,hy+.2,z],[.07,.6,.07],'#8a5a3a');draw('cube',[x+.6,hy+.85,z],[.8,.48,.48],'#e25b5b');draw('cube',[x+.6,hy+.85,z],[.84,.14,.5],'#ffd76a')}
+      if(f.t>.2){const tt=f.t-.2;for(let j=0;j<7;j++){const a=j/7*6.283+tt*3,r=.45+tt*1.6;draw('sphere',[x+Math.cos(a)*r,3.0+tt*.6,z+Math.sin(a)*r],[.13,.13,.13],j%2?'#ffe066':'#fff6c8',0,1,1)}}
+      if(f.t>1)fx.splice(i,1)}}
+}
+function shakeTree(t){shaking.set(t.gid,clock);snowBurst(t.x,t.z,10,.25)}
+function interact(){if(inRange()){openGift();return}
+  if(dist(MAILBOX)<2.7){openPost('write');return}
+  if(dist(BOARD)<2.9){openPost('board');return}
+  const s=nearestOf(spots.filter(s=>s.kind!=='snow'),2.9);
+  if(s){doSpot(s);return}
+  if(nearestOf(spots.filter(s=>s.kind==='snow'&&!hiddenGroups.has(s.gid)),3.4)){toast('❄️ 눈더미가 수상해요… 눈을 뿌려보세요! [Space]');return}
+  const t=nearestOf(trees,2.7);if(t){shakeTree(t);toast(FUN[Math.floor(Math.random()*FUN.length)]);return}
+  toast('🎁 선물 상자 · 📮 우체통 · 🌲 나무 · ⛄ 눈사람 가까이에서 E를 눌러보세요!')}
+function doSpot(s){if(s.kind==='tree'){shakeTree(s.tree);setTimeout(()=>findNote(s.seq,'🌲 나무를 흔들었더니 쪽지가 툭 떨어졌어요!'),550);return}
+  const msg={snowman:'⛄ 눈사람 모자 밑에서 쪽지를 발견했어요!',ice:'🎣 얼음 구멍 속에서 쪽지를 건졌어요!',chimney:'🏠 굴뚝에서 쪽지가 퐁! 튀어나왔어요!',lamp:'💡 가로등 불빛 아래 쪽지가 있었어요!'}[s.kind]||'📜 쪽지를 찾았어요!';
+  if(s.kind==='chimney')snowBurst(s.gx,s.gz,8,.1);findNote(s.seq,msg)}
+function throwSnow(){if(clock-lastSnow<1)return;lastSnow=clock;snowBurst(player.x,player.z);queueEvent('snow','');
+  const pile=nearestOf(spots.filter(s=>s.kind==='snow'&&!hiddenGroups.has(s.gid)),3.6);
+  if(pile){hiddenGroups.add(pile.gid);snowBurst(pile.x,pile.z,26);setTimeout(()=>findNote(pile.seq,'❄️ 눈이 걷히자 쪽지가 나타났어요!'),500)}}
+function bonk(){if(clock-lastBonk<2.5){toast('🔨 뿅망치 충전 중…');return}lastBonk=clock;let best=null,bd=3.2;for(const p of otherPlayers.values()){const d=dist(p);if(d<bd){bd=d;best=p}}
+  if(best){fx.push({k:'bonk',to:best.id,x:best.x,z:best.z,t:0});queueEvent('bonk',best.id);toast('🔨 '+best.name+'님에게 뿅!')}
+  else{fx.push({k:'bonk',to:'',x:player.x+Math.sin(player.yaw)*1.3,z:player.z+Math.cos(player.yaw)*1.3,t:0});toast('🔨 허공에 뿅! 가까이 있는 사람에게 써보세요')}}
+function queueEvent(kind,target){if(!token||!villageCfg)return;pendingEvent={kind,target};if(!syncBusy)syncWorld()}
+function handleEvents(list){for(const [id,kind,from,to,x,z,fromName] of list){if(from===worldId)continue;
+  if(kind==='snow'){if(Math.hypot(x-player.x,z-player.z)<34)snowBurst(x,z)}
+  else if(kind==='bonk'){if(to===worldId){fx.push({k:'bonk',to:'self',x:player.x,z:player.z,t:0});camShake=.45;toast('💥 '+fromName+'님의 뿅망치에 맞았어요!')}else fx.push({k:'bonk',to,x,z,t:0})}}}
+// 쪽지
+function updateNotePill(){$('notesPill').textContent='📜 '+foundNotes.size+'/'+noteTotal}
+async function loadNotes(){if(!token)return;try{const r=await fetch('/api/notes?token='+encodeURIComponent(token),{cache:'no-store'}),d=await r.json();if(!r.ok)throw Error(d.error);noteTotal=d.total||12;for(const n of d.found||[]){foundNotes.add(n.seq);noteCache.set(n.seq,n)}for(const s of spots)if(s.gid&&foundNotes.has(s.seq))hiddenGroups.add(s.gid);updateNotePill()}catch(e){}}
+async function findNote(seq,intro){
+  if(!token){const isNew=!foundNotes.has(seq);foundNotes.add(seq);updateNotePill();showNote({seq,title:'📜 숨겨진 쪽지 #'+seq,body:'체험 모드예요. 실제 행사에서는 운영자가 숨겨둔 TMI·감동글이 여기에 나타나요!'},intro,isNew);return}
+  if(noteCache.has(seq)){showNote(noteCache.get(seq),'📜 이미 찾은 쪽지예요. 다시 읽어볼까요?',false);return}
+  try{const r=await fetch('/api/notes?token='+encodeURIComponent(token),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({seq}),cache:'no-store'}),d=await r.json();if(!r.ok)throw Error(d.error||'오류');foundNotes.add(seq);noteCache.set(seq,d.note);noteTotal=d.total||noteTotal;updateNotePill();showNote(d.note,intro,d.isNew)}catch(e){toast('쪽지를 펼치지 못했어요: '+e.message)}}
+function showNote(n,intro,isNew){$('noteIntro').textContent=intro;$('noteTitle').textContent=n.title;$('noteBody').textContent=n.body;$('noteCount').textContent='📜 '+foundNotes.size+' / '+noteTotal+' 발견'+(isNew&&foundNotes.size>=noteTotal?' · 🏅 산타마을 탐험가 달성!':'');$('noteOverlay').classList.add('open')}
+function openNotebook(){const list=$('notebookList');list.replaceChildren();for(let seq=1;seq<=noteTotal;seq++){const s=spots.find(x=>x.seq===seq),el=document.createElement(foundNotes.has(seq)?'button':'div');el.className='nb-item'+(foundNotes.has(seq)?' found':'');
+    if(foundNotes.has(seq)){const n=noteCache.get(seq);el.textContent='📜 '+(n?n.title:'쪽지 #'+seq);el.type='button';el.onclick=()=>{$('notebookOverlay').classList.remove('open');if(n)showNote(n,'📖 도감에서 다시 읽는 쪽지',false);else findNote(seq,'📖 도감에서 다시 읽는 쪽지')}}
+    else el.textContent='❔ '+(s?NOTE_HINT[s.kind]:'어딘가');list.appendChild(el)}
+  $('notebookOverlay').classList.add('open')}
+// 우체통
+let postData=null;
+function updateMailPill(){$('mailPill').textContent=unread>0?'📬 새 편지 '+unread:'📮 우체통';$('mailPill').classList.toggle('alert',unread>0)}
+function letterCard(l){const c=document.createElement('div');c.className='letter'+(!l.read&&!l.mine&&l.kind!=='board'?' new':'');const h=document.createElement('div');h.className='letter-from';h.textContent=l.from+(l.mine?' · 내가 쓴 글':'');const b=document.createElement('div');b.className='letter-body';b.textContent=l.body;const t=document.createElement('div');t.className='letter-at';try{t.textContent=new Date(l.at).toLocaleString('ko-KR',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'})}catch{t.textContent=''}c.append(h,b,t);return c}
+function emptyMsg(text){const p=document.createElement('p');p.className='post-empty';p.textContent=text;return p}
+function renderPost(){const inbox=$('postInbox'),board=$('postBoard');inbox.replaceChildren();board.replaceChildren();
+  if(!token||!postData){const m='🔒 개인 링크로 입장하면 우체통을 쓸 수 있어요.';inbox.append(emptyMsg(m));board.append(emptyMsg(m));return}
+  if(!postData.inbox.length)inbox.append(emptyMsg('아직 받은 편지가 없어요. 먼저 누군가에게 편지를 써볼까요? ✉️'));postData.inbox.forEach(l=>inbox.append(letterCard(l)));
+  if(!postData.board.length)board.append(emptyMsg('게시판이 비어 있어요. 첫 글을 붙여주세요! 💬'));postData.board.forEach(l=>board.append(letterCard(l)));
+  const sel=$('postTo');sel.replaceChildren();for(const p of postData.people){const o=document.createElement('option');o.value=p.id;o.textContent=p.name+' ('+p.group+')';sel.appendChild(o)}}
+async function loadPost(){if(!token)return;try{const r=await fetch('/api/letters?token='+encodeURIComponent(token),{cache:'no-store'}),d=await r.json();if(!r.ok)throw Error(d.error||'오류');postData=d}catch(e){toast('우체통을 열지 못했어요: '+e.message)}}
+function showPostTab(tab){for(const b of document.querySelectorAll('#postTabs button'))b.classList.toggle('on',b.dataset.tab===tab);$('postInbox').style.display=tab==='inbox'?'block':'none';$('postBoard').style.display=tab==='board'?'block':'none';$('postWrite').style.display=tab==='write'?'block':'none';
+  if(tab==='inbox'&&token&&unread>0){unread=0;updateMailPill();fetch('/api/letters?token='+encodeURIComponent(token),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'read'})}).catch(()=>{})}}
+async function openPost(tab){$('postOverlay').classList.add('open');renderPost();showPostTab(tab);await loadPost();renderPost();showPostTab(tab)}
+function syncPostForm(){const k=$('postKind').value;$('postToWrap').style.display=k==='direct'?'block':'none';$('postAnon').disabled=k==='manitto';if(k==='manitto')$('postAnon').checked=true}
+// 룰렛
+function spinRoulette(pool,final){return new Promise(done=>{const names=(pool||[]).filter(n=>n&&n!==final);if(!names.length){done();return}const el=$('rouletteName');$('rouletteHint').textContent='두근두근… 산타 룰렛이 돌아가는 중!';el.classList.remove('final');$('rouletteOverlay').classList.add('open');let i=0,delay=55,elapsed=0;
+  (function tick(){el.textContent=names[i++%names.length];el.classList.remove('pop');void el.offsetWidth;el.classList.add('pop');elapsed+=delay;delay*=elapsed>2400?1.2:elapsed>1400?1.08:1;
+    if(delay>430){el.textContent=final;el.classList.add('final');$('rouletteHint').textContent='🎉 당신의 마니또가 정해졌어요!';setTimeout(()=>{$('rouletteOverlay').classList.remove('open');done()},1300);return}setTimeout(tick,delay)})()})}
+function nearHint(){if(!started)return'';if(inRange())return'';if(dist(MAILBOX)<2.7)return'[E] 📮 편지 쓰기';if(dist(BOARD)<2.9)return'[E] 💬 게시판 보기';
+  if(nearestOf(spots.filter(s=>s.kind!=='snow'&&!foundNotes.has(s.seq)),2.9))return'[E] 🔍 살펴보기';if(nearestOf(spots.filter(s=>s.kind==='snow'&&!hiddenGroups.has(s.gid)),3.4))return'[Space] ❄️ 눈 뿌리기';if(nearestOf(trees,2.7))return'[E] 🌲 나무 흔들기';
+  for(const p of otherPlayers.values())if(dist(p)<3.2)return'[F] 🔨 '+p.name+'님에게 뿅망치';return''}
+
 
 function render(ts){if(!last)last=ts;let dt=Math.min((ts-last)/1000,.035);last=ts;clock+=dt;move(dt);const width=canvas.clientWidth,height=canvas.clientHeight;let pr=Math.min(window.devicePixelRatio||1,1.7);if(canvas.width!==Math.floor(width*pr)||canvas.height!==Math.floor(height*pr)){canvas.width=Math.floor(width*pr);canvas.height=Math.floor(height*pr);gl.viewport(0,0,canvas.width,canvas.height)}gl.enable(gl.DEPTH_TEST);gl.disable(gl.CULL_FACE);gl.enable(gl.BLEND);gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA);gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
-let targetCam=started?[player.x+11,13.2,player.z+15]:[12.8,15.6,19],targetLook=started?[player.x*.9,1.0,player.z-1.2]:[0,1,2.2];for(let j=0;j<3;j++){cam[j]+=(targetCam[j]-cam[j])*Math.min(1,dt*1.5);target[j]+=(targetLook[j]-target[j])*Math.min(1,dt*1.6)}let vp=mul(perspective(48*Math.PI/180,width/height,.1,100),lookAt(cam,target));gl.uniformMatrix4fv(U.vp,false,vp);gl.uniform3f(U.camera,...cam);
-for(const o of objects)draw(o.type,o.p,o.s,o.col,o.r,o.alpha,o.glow);
+let targetCam=started?[player.x+11,13.2,player.z+15]:[12.8,15.6,19],targetLook=started?[player.x*.9,1.0,player.z-1.2]:[0,1,2.2];for(let j=0;j<3;j++){cam[j]+=(targetCam[j]-cam[j])*Math.min(1,dt*1.5);target[j]+=(targetLook[j]-target[j])*Math.min(1,dt*1.6)}if(camShake>0)camShake=Math.max(0,camShake-dt);const sh=camShake>0?[Math.sin(clock*60)*camShake*.6,Math.cos(clock*53)*camShake*.4,0]:[0,0,0];let vp=mul(perspective(48*Math.PI/180,width/height,.1,100),lookAt([cam[0]+sh[0],cam[1]+sh[1],cam[2]],target));gl.uniformMatrix4fv(U.vp,false,vp);gl.uniform3f(U.camera,...cam);
+drawWorld(dt);
 for(let i=0;i<sparkles.length;i++){let sp=sparkles[i],yy=sp[1]+Math.sin(clock*1.8+sp[4])*.24;draw('sphere',[sp[0],yy,sp[2]],[sp[3],sp[3],sp[3]],i%4===0?'#fffcda':colors.gold,0,1,1)}
-for(const s of snow){s.y-=dt*s.spd;s.x+=Math.sin(clock*1.6+s.phase)*dt*.35;if(s.y<-.2){s.y=9+rnd()*3;s.x=(rnd()-.5)*40;s.z=(rnd()-.5)*40}draw('sphere',[s.x,s.y,s.z],[s.size,s.size,s.size],'#fff9e8',0,.85,1)}avatar();drawRemotes(dt);renderNameTags(vp,width,height);sendWorldMovement();requestAnimationFrame(render)}
+for(const s of snow){s.y-=dt*s.spd;s.x+=Math.sin(clock*1.6+s.phase)*dt*.35;if(s.y<-.2){s.y=9+rnd()*3;s.x=player.x+(rnd()-.5)*40;s.z=player.z+(rnd()-.5)*40}draw('sphere',[s.x,s.y,s.z],[s.size,s.size,s.size],'#fff9e8',0,.85,1)}avatar();drawRemotes(dt);renderNameTags(vp,width,height);sendWorldMovement();requestAnimationFrame(render)}
 requestAnimationFrame(render);
-function startGame(){if($('start').disabled)return;started=true;$('intro').classList.add('hidden');$('hud').classList.add('show');toast('🎄 반짝이는 산타마을에 오신 걸 환영해요!');connectWorld()}
-$('start').addEventListener('click',startGame);window.addEventListener('keydown',e=>{if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight',' '].includes(e.key))e.preventDefault();if(e.key.toLowerCase()==='e'&&started){if(inRange())openGift();else toast('🎁 선물 상자에 조금 더 가까이 다가가세요!')}keys.add(e.key.toLowerCase())});window.addEventListener('keyup',e=>keys.delete(e.key.toLowerCase()));window.addEventListener('blur',()=>keys.clear());
+function startGame(){if($('start').disabled)return;started=true;$('intro').classList.add('hidden');$('hud').classList.add('show');toast('🎄 산타마을에 오신 걸 환영해요! 숲·눈밭·호수·골목에 쪽지가 숨어 있어요');connectWorld();loadNotes();updateNotePill();updateMailPill()}
+$('start').addEventListener('click',startGame);window.addEventListener('keydown',e=>{if(e.target&&e.target.closest&&e.target.closest('input,textarea,select'))return;if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight',' '].includes(e.key))e.preventDefault();const k=e.key.toLowerCase();if(k==='escape'){if($('resultOverlay').classList.contains('open'))closeModal();document.querySelectorAll('.overlay.open').forEach(o=>{if(o.id!=='rouletteOverlay')o.classList.remove('open')})}else if(started&&!anyModal()&&!e.repeat){if(k==='e')interact();else if(k===' ')throwSnow();else if(k==='f')bonk()}keys.add(k)});window.addEventListener('keyup',e=>keys.delete(e.key.toLowerCase()));window.addEventListener('blur',()=>keys.clear());
 let joyPointer=null;const joyEl=$('joystick');function joyMove(e){const r=joyEl.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;let dx=e.clientX-cx,dy=e.clientY-cy,len=Math.hypot(dx,dy);if(len>41){dx=dx/len*41;dy=dy/len*41}joy.x=dx/41;joy.y=dy/41;$('stick').style.transform=`translate(${dx}px,${dy}px)`}joyEl.addEventListener('pointerdown',e=>{joyPointer=e.pointerId;joyEl.setPointerCapture(e.pointerId);joyMove(e);if(!started)startGame()});joyEl.addEventListener('pointermove',e=>{if(e.pointerId===joyPointer)joyMove(e)});function stopJoy(){joyPointer=null;joy.x=0;joy.y=0;$('stick').style.transform='translate(0,0)'}joyEl.addEventListener('pointerup',stopJoy);joyEl.addEventListener('pointercancel',stopJoy);
-$('openGift').addEventListener('click',openGift);$('mobileOpen').addEventListener('click',()=>{if(!started)startGame();if(inRange())openGift();else toast('선물 상자에 가까이 다가가세요!')});
-async function openGift(){if(opened)return;if(!inRange()){toast('상자 앞에서 열 수 있어요!');return}opened=true;toast('✨ 두근두근! 비밀 친구를 확인하는 중...');let name=receiver;try{if(token){let r=await fetch('/api/reveal?token='+encodeURIComponent(token),{cache:'no-store'}),data=await r.json();if(!r.ok)throw Error(data.error||'결과 확인 실패');name=data.recipient;actualMission=data.mission||actualMission;}}catch(e){opened=false;toast('결과를 불러오지 못했어요: '+e.message);return}receiver=name;$('resultName').textContent=receiver;$('resultMission').textContent=actualMission;$('resultOverlay').classList.add('open');refreshMissionStatus();$('openGift').classList.remove('visible');revealed=true;}
+$('openGift').addEventListener('click',openGift);$('mobileOpen').addEventListener('click',()=>{if(!started)startGame();else interact()});$('mobileSnow').addEventListener('click',()=>{if(started)throwSnow()});$('mobileBonk').addEventListener('click',()=>{if(started)bonk()});
+$('notesPill').onclick=openNotebook;$('mailPill').onclick=()=>openPost(unread>0?'inbox':'board');$('notebookClose').onclick=()=>$('notebookOverlay').classList.remove('open');$('noteClose').onclick=()=>$('noteOverlay').classList.remove('open');$('postClose').onclick=()=>$('postOverlay').classList.remove('open');
+for(const b of document.querySelectorAll('#postTabs button'))b.onclick=()=>showPostTab(b.dataset.tab);$('postKind').onchange=syncPostForm;syncPostForm();
+$('postWrite').addEventListener('submit',async e=>{e.preventDefault();if(!token){toast('🔒 개인 링크로 입장하면 편지를 쓸 수 있어요.');return}const body=$('postBody').value.trim();if(!body){toast('편지 내용을 써주세요 ✏️');return}const kind=$('postKind').value,btn=$('postSend');btn.disabled=true;try{const r=await fetch('/api/letters?token='+encodeURIComponent(token),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({kind,to:$('postTo').value,anonymous:$('postAnon').checked,body}),cache:'no-store'}),d=await r.json();if(!r.ok)throw Error(d.error||'전송 실패');$('postBody').value='';toast(kind==='board'?'💬 게시판에 붙였어요!':kind==='manitto'?'🎅 마니또에게 몰래 편지를 보냈어요!':'✉️ 편지를 보냈어요!');await loadPost();renderPost();showPostTab(kind==='board'?'board':'write')}catch(err){toast('⚠ '+err.message)}finally{btn.disabled=false}});
+async function openGift(){if(opened)return;if(!inRange()){toast('상자 앞에서 열 수 있어요!');return}opened=true;toast('✨ 두근두근! 비밀 친구를 확인하는 중...');let name=receiver,pool=[];try{if(token){let r=await fetch('/api/reveal?token='+encodeURIComponent(token),{cache:'no-store'}),data=await r.json();if(!r.ok)throw Error(data.error||'결과 확인 실패');name=data.recipient;actualMission=data.mission||actualMission;pool=data.pool||[];}else{pool=Array.from({length:14},(_,i)=>((demoNumber+i*5)%70+1)+'번')}}catch(e){opened=false;toast('결과를 불러오지 못했어요: '+e.message);return}if(!revealed)await spinRoulette(pool,name);receiver=name;$('resultName').textContent=receiver;$('resultMission').textContent=actualMission;$('resultOverlay').classList.add('open');refreshMissionStatus();$('openGift').classList.remove('visible');revealed=true;}
 function closeModal(){$('resultOverlay').classList.remove('open');opened=false} $('closeModal').addEventListener('click',closeModal);$('backWorld').addEventListener('click',closeModal);
 $('copyResult').addEventListener('click',async()=>{let s=`🎄 2026 마니또 월드\n나의 마니또 상대: ${receiver}\n미션: ${actualMission}\n선물 예산: 15,000원`;try{await navigator.clipboard.writeText(s);toast('📋 개인 결과를 복사했어요!')}catch{toast('브라우저에서 복사를 지원하지 않아요.')}});
-if(!token&&!new URLSearchParams(location.search).has('demo')){$('demoSelectWrap').style.display='none';$('start').disabled=true;$('start').style.opacity='.55';$('start').textContent='🔒 개인 링크로만 입장할 수 있어요';$('welcome').textContent='운영자에게 받은 개인 입장 링크로 접속해주세요.';}
-if(token){$('demoSelectWrap').style.display='none';$('modePill').textContent='🔒 개인 비밀 입장';$('missionWarning').textContent='※ 인증은 운영자 서버에 저장됩니다. 사진에 타인의 개인정보가 보이지 않도록 확인해주세요.';fetch('/api/me?token='+encodeURIComponent(token),{cache:'no-store'}).then(async r=>{let d=await r.json();if(!r.ok)throw Error(d.error||'초대 링크 오류');playerName=d.name;actualMission=d.mission||actualMission;villageCfg=d.village||null;myPid='p-'+d.id;worldCapacity=d.capacity||worldCapacity;if(started)connectWorld();missionRecord=d.status;$('missionTask').textContent=actualMission;$('welcome').textContent=playerName+'님 전용 입장권 · 개인 링크는 비밀로!';$('start').textContent='🎄 '+playerName+'님, 산타마을 입장하기 →';refreshMissionStatus()}).catch(e=>{$('welcome').textContent='⚠ 유효하지 않은 초대 링크: '+e.message;$('start').disabled=true;$('start').style.opacity='.55'})}
+if(!token&&!new URLSearchParams(location.search).has('demo')){$('demoSelectWrap').style.display='none';$('start').style.display='none';$('start').disabled=true;$('loginWrap').style.display='block';$('welcome').textContent='이름 · 생일 · PIN으로 나만의 산타마을에 입장해요';}
+$('loginWrap').addEventListener('submit',async e=>{e.preventDefault();const btn=$('loginBtn'),name=$('loginName').value.trim(),birth=$('loginBirth').value.replace(/\D/g,''),pin=$('loginPin').value.replace(/\D/g,'');if(!name||birth.length!==4||pin.length!==4){toast('이름, 생일 4자리, PIN 4자리를 모두 입력해주세요.');return}btn.disabled=true;btn.textContent='🔎 명단 확인 중...';try{const r=await fetch('/api/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,birth,pin}),cache:'no-store'}),d=await r.json();if(!r.ok)throw Error(d.error||'입장 실패');let saved=false;try{localStorage.setItem('manittoToken',d.token);saved=true}catch{}if(d.first)alert('🔐 PIN이 설정됐어요! 다음에 들어올 때도 같은 PIN '+pin.replace(/./g,'•')+' 을 입력해야 해요.');location.replace(saved?location.pathname:'/index.html?token='+encodeURIComponent(d.token))}catch(err){toast('⚠ '+err.message);btn.disabled=false;btn.textContent='🎄 산타마을 입장하기 →'}});
+$('logoutBtn').onclick=()=>{try{localStorage.removeItem('manittoToken')}catch{}location.replace(location.pathname)};if(tokenFromStore)$('logoutBtn').style.display='block';
+if(token){$('demoSelectWrap').style.display='none';$('modePill').textContent='🔒 개인 비밀 입장';$('missionWarning').textContent='※ 인증은 운영자 서버에 저장됩니다. 사진에 타인의 개인정보가 보이지 않도록 확인해주세요.';fetch('/api/me?token='+encodeURIComponent(token),{cache:'no-store'}).then(async r=>{let d=await r.json();if(!r.ok)throw Error(d.error||'초대 링크 오류');playerName=d.name;actualMission=d.mission||actualMission;villageCfg=d.village||null;myPid='p-'+d.id;worldCapacity=d.capacity||worldCapacity;if(started)connectWorld();missionRecord=d.status;$('missionTask').textContent=actualMission;$('welcome').textContent=playerName+'님 전용 입장권 · 개인 링크는 비밀로!';$('start').textContent='🎄 '+playerName+'님, 산타마을 입장하기 →';refreshMissionStatus()}).catch(e=>{if(tokenFromStore){try{localStorage.removeItem('manittoToken')}catch{}location.replace(location.pathname);return}$('welcome').textContent='⚠ 유효하지 않은 초대 링크: '+e.message;$('start').disabled=true;$('start').style.opacity='.55'})}
 function refreshMissionStatus(){const status=missionRecord?.status||'not_submitted';const labels={not_submitted:'📌 아직 미션을 인증하지 않았어요. 사진을 올려주세요!',pending:'🕒 인증 제출 완료! 운영자 확인을 기다리고 있어요.',approved:'🎉 운영자가 미션을 승인했어요!',rejected:'🔁 인증이 반려됐어요. 내용을 보완해 다시 제출해주세요.'};$('missionStatusBox').textContent=labels[status]+(missionRecord?.feedback?' 이유: '+missionRecord.feedback:'');$('missionForm').style.display=['pending','approved'].includes(status)?'none':'block';}
 function openMission(){if(!token)missionRecord=demoStatus();$('missionTask').textContent=actualMission;refreshMissionStatus();$('missionOverlay').classList.add('open')}
 $('missionTop').onclick=openMission;$('missionFromResult').onclick=()=>{$('resultOverlay').classList.remove('open');openMission()};$('missionClose').onclick=()=>$('missionOverlay').classList.remove('open');

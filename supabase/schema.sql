@@ -43,6 +43,11 @@ alter table public.manitto_event        enable row level security;
 alter table public.manitto_participants enable row level security;
 alter table public.village_positions    enable row level security;
 
+-- 서버(service_role 키)가 테이블을 쓸 수 있도록 명시적으로 권한 부여
+-- (프로젝트 생성 시 'Grant API access to new tables automatically'를 껐어도 동작하게)
+grant usage on schema public to service_role;
+grant select, insert, update, delete on public.manitto_event, public.manitto_participants, public.village_positions to service_role;
+
 -- 4) 위치 동기화 함수: 개인 토큰이 맞을 때만 내 위치 저장 + 최근 20초 안에 움직인 사람 목록 반환
 create or replace function public.village_sync(
   p_token text, p_x real, p_z real, p_yaw real, p_moving boolean
